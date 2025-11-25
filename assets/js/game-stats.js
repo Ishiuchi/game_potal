@@ -134,7 +134,7 @@ function renderRankingSection() {
     const container = document.getElementById('rankingContainer');
     if (!container) return;
     
-    const currentLang = localStorage.getItem('selectedLanguage') || 'ja';
+    const currentLang = localStorage.getItem('language') || 'ja';
     const periods = ['total', 'monthly', 'weekly'];
     let activePeriod = 'total';
     

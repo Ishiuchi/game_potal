@@ -199,6 +199,10 @@ const translations = {
                 email: 'メールアドレス',
                 subject: '件名',
                 message: 'メッセージ',
+                namePlaceholder: '山田 太郎',
+                emailPlaceholder: 'example@email.com',
+                subjectPlaceholder: 'お問い合わせ内容の件名',
+                messagePlaceholder: 'お問い合わせ内容をご記入ください（必須）',
                 submit: '送信する',
                 success: 'お問い合わせを送信しました。ありがとうございます！',
                 error: '送信に失敗しました。もう一度お試しください。'
@@ -328,6 +332,13 @@ const translations = {
                 players: '👥 2 Players',
                 duration: '⏱️ 10-20 min'
             },
+            memory: {
+                tag: 'Memory Game',
+                title: 'Memory Card Game',
+                description: 'A memory game where you flip cards to find matching pairs. A fun game that trains concentration and memory. Enjoy both single-player and two-player modes.',
+                players: '👥 1-2 Players',
+                duration: '⏱️ 5-15 min'
+            },
             playBtn: 'Play Now →'
         },
         contact: {
@@ -343,6 +354,10 @@ const translations = {
                 email: 'Email Address',
                 subject: 'Subject',
                 message: 'Message',
+                namePlaceholder: 'John Doe',
+                emailPlaceholder: 'example@email.com',
+                subjectPlaceholder: 'Subject of your inquiry',
+                messagePlaceholder: 'Please enter your message (required)',
                 submit: 'Send Message',
                 success: 'Your message has been sent successfully. Thank you!',
                 error: 'Failed to send message. Please try again.'
@@ -498,6 +513,13 @@ const translations = {
                 players: '👥 2名玩家',
                 duration: '⏱️ 10-20分钟'
             },
+            memory: {
+                tag: '记忆游戏',
+                title: '记忆卡片',
+                description: '翻牌找到配对的记忆力游戏。这是一个训练专注力和记忆力的有趣游戏。可以享受单人和双人对战模式。',
+                players: '👥 1-2名玩家',
+                duration: '⏱️ 5-15分钟'
+            },
             playBtn: '开始游戏 →'
         },
         contact: {
@@ -513,6 +535,10 @@ const translations = {
                 email: '电子邮件地址',
                 subject: '主题',
                 message: '消息',
+                namePlaceholder: '张三',
+                emailPlaceholder: 'example@email.com',
+                subjectPlaceholder: '咨询内容的主题',
+                messagePlaceholder: '请输入您的咨询内容（必填）',
                 submit: '发送消息',
                 success: '您的消息已成功发送。谢谢！',
                 error: '发送消息失败。请重试。'
@@ -668,6 +694,13 @@ const translations = {
                 players: '👥 2 खिलाड़ी',
                 duration: '⏱️ 10-20 मिनट'
             },
+            memory: {
+                tag: 'स्मृति खेल',
+                title: 'मेमोरी कार्ड',
+                description: 'कार्ड पलटें और मिलान जोड़ियाँ ढूंढें। एक मजेदार खेल जो ध्यान और स्मृति को प्रशिक्षित करता है। एकल और दो खिलाड़ियों के मोड का आनंद लें।',
+                players: '👥 1-2 खिलाड़ी',
+                duration: '⏱️ 5-15 मिनट'
+            },
             playBtn: 'अभी खेलें →'
         },
         contact: {
@@ -683,6 +716,10 @@ const translations = {
                 email: 'ईमेल पता',
                 subject: 'विषय',
                 message: 'संदेश',
+                namePlaceholder: 'राज कुमार',
+                emailPlaceholder: 'example@email.com',
+                subjectPlaceholder: 'पूछताछ का विषय',
+                messagePlaceholder: 'कृपया अपना संदेश दर्ज करें (आवश्यक)',
                 submit: 'संदेश भेजें',
                 success: 'आपका संदेश सफलतापूर्वक भेज दिया गया है। धन्यवाद!',
                 error: 'संदेश भेजने में विफल। कृपया पुनः प्रयास करें।'
@@ -838,6 +875,13 @@ const translations = {
                 players: '👥 2 Jugadores',
                 duration: '⏱️ 10-20 min'
             },
+            memory: {
+                tag: 'Juego de Memoria',
+                title: 'Juego de Memoria',
+                description: 'Un juego de memoria donde volteas cartas para encontrar pares coincidentes. Un juego divertido que entrena la concentración y la memoria. Disfruta de los modos para un jugador y dos jugadores.',
+                players: '👥 1-2 Jugadores',
+                duration: '⏱️ 5-15 min'
+            },
             playBtn: 'Jugar Ahora →'
         },
         contact: {
@@ -853,6 +897,10 @@ const translations = {
                 email: 'Dirección de Correo Electrónico',
                 subject: 'Asunto',
                 message: 'Mensaje',
+                namePlaceholder: 'Juan Pérez',
+                emailPlaceholder: 'ejemplo@email.com',
+                subjectPlaceholder: 'Asunto de su consulta',
+                messagePlaceholder: 'Por favor, ingrese su mensaje (requerido)',
                 submit: 'Enviar Mensaje',
                 success: '¡Tu mensaje ha sido enviado exitosamente. Gracias!',
                 error: 'Error al enviar el mensaje. Por favor, inténtalo de nuevo.'
@@ -1008,6 +1056,13 @@ const translations = {
                 players: '👥 2 Joueurs',
                 duration: '⏱️ 10-20 min'
             },
+            memory: {
+                tag: 'Jeu de Mémoire',
+                title: 'Jeu de Mémoire',
+                description: 'Un jeu de mémoire où vous retournez des cartes pour trouver des paires correspondantes. Un jeu amusant qui entraîne la concentration et la mémoire. Profitez des modes solo et deux joueurs.',
+                players: '👥 1-2 Joueurs',
+                duration: '⏱️ 5-15 min'
+            },
             playBtn: 'Jouer Maintenant →'
         },
         contact: {
@@ -1023,6 +1078,10 @@ const translations = {
                 email: 'Adresse Email',
                 subject: 'Sujet',
                 message: 'Message',
+                namePlaceholder: 'Jean Dupont',
+                emailPlaceholder: 'exemple@email.com',
+                subjectPlaceholder: 'Sujet de votre demande',
+                messagePlaceholder: 'Veuillez saisir votre message (requis)',
                 submit: 'Envoyer le Message',
                 success: 'Votre message a été envoyé avec succès. Merci!',
                 error: 'Échec de l\'envoi du message. Veuillez réessayer.'
@@ -1068,6 +1127,19 @@ function changeLanguage(lang) {
     localStorage.setItem('language', lang);
     applyLanguage(lang);
     updateLanguageButton();
+    
+    // ランキング表示を更新
+    if (typeof renderRankingSection === 'function') {
+        renderRankingSection();
+    }
+    
+    // ハンバーガーメニューを閉じる
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    if (hamburger && navMenu) {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+    }
 }
 
 // 言語を適用する関数
@@ -1084,6 +1156,17 @@ function applyLanguage(lang) {
             } else {
                 element.innerHTML = translation;
             }
+        }
+    });
+    
+    // プレースホルダー専用の翻訳を適用
+    const placeholderElements = document.querySelectorAll('[data-i18n-placeholder]');
+    placeholderElements.forEach(element => {
+        const key = element.getAttribute('data-i18n-placeholder');
+        const translation = getNestedTranslation(translations[lang], key);
+        
+        if (translation) {
+            element.placeholder = translation;
         }
     });
     

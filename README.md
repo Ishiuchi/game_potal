@@ -77,22 +77,36 @@ cd game_potal
 ```
 game_potal/
 ├── index.html               # メインページ
-├── styles.css               # 共通スタイル
-├── i18n.js                  # 多言語対応
-├── game-stats.js            # ゲーム統計・ランキング
-├── game-page.css            # ゲームページ共通スタイル
-├── chess.*                  # チェスゲーム
-├── gomoku.*                 # 五目並べ
-├── ludo.*                   # ルドー
-├── memory.*                 # 神経衰弱
-├── othello.*                # オセロ
-├── images/                  # 画像リソース
-│   ├── chess/
-│   ├── gomoku/
-│   ├── ludo/
-│   ├── memory/
-│   ├── othello/
-│   └── playing_cards/
+├── chess.html               # チェスゲーム
+├── gomoku.html              # 五目並べ
+├── ludo.html                # ルドー
+├── memory.html              # 神経衰弱
+├── othello.html             # オセロ
+├── assets/                  # アセットフォルダ
+│   ├── css/                 # スタイルシート
+│   │   ├── styles.css       # 共通スタイル
+│   │   ├── game-page.css    # ゲームページ共通スタイル
+│   │   ├── chess.css
+│   │   ├── gomoku.css
+│   │   ├── ludo.css
+│   │   ├── memory.css
+│   │   └── othello.css
+│   ├── js/                  # JavaScript
+│   │   ├── i18n.js          # 多言語対応
+│   │   ├── game-stats.js    # ゲーム統計・ランキング
+│   │   ├── chess.js
+│   │   ├── gomoku.js
+│   │   ├── ludo.js
+│   │   ├── memory.js
+│   │   └── othello.js
+│   └── img/                 # 画像リソース
+│       └── images/
+│           ├── chess/
+│           ├── gomoku/
+│           ├── ludo/
+│           ├── memory/
+│           ├── othello/
+│           └── playing_cards/
 └── doc/                     # ドキュメント
     ├── Chess_requirements_document.md
     ├── gomoku_requirements_document.md
