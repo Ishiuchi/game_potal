@@ -14,7 +14,12 @@
     <nav class="nav">
         <div class="nav-container">
             <div class="nav-logo">GAME PORTAL</div>
-            <ul class="nav-menu">
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
                 <li><a href="#games" class="nav-link" data-i18n="nav.games">ゲーム一覧</a></li>
                 <li><a href="#ranking" class="nav-link" data-i18n="nav.ranking">人気ランキング</a></li>
                 <li><a href="#contact" class="nav-link" data-i18n="nav.contact">お問い合わせ</a></li>
@@ -201,6 +206,31 @@
     <script src="assets/js/i18n.js"></script>
     <script src="assets/js/game-stats.js"></script>
     <script>
+        // ハンバーガーメニューの制御
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        // メニューリンクをクリックしたらメニューを閉じる
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // メニュー外をクリックしたら閉じる
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+        
         // お問い合わせフォーム送信処理
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
