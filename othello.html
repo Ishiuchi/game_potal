@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="othello.pageTitle">オセロ - ゲームサイト</title>
+    <link rel="stylesheet" href="game-page.css">
+    <link rel="stylesheet" href="othello.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1 data-i18n="othello.title">⚫⚪ オセロ</h1>
+            <div class="header-actions">
+                <div class="language-selector">
+                    <button class="lang-btn" id="langBtn">🌐 日本語</button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <button onclick="changeLanguage('ja')">🇯🇵 日本語</button>
+                        <button onclick="changeLanguage('en')">🇬🇧 English</button>
+                        <button onclick="changeLanguage('zh')">🇨🇳 中文</button>
+                        <button onclick="changeLanguage('hi')">🇮🇳 हिन्दी</button>
+                        <button onclick="changeLanguage('es')">🇪🇸 Español</button>
+                        <button onclick="changeLanguage('fr')">🇫🇷 Français</button>
+                    </div>
+                </div>
+                <a href="index.html" class="back-button" data-i18n="common.backHome">← ホームに戻る</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="game-mode-selection" id="modeSelection">
+            <h2 data-i18n="othello.selectMode">ゲームモードを選択</h2>
+            <button class="mode-button" onclick="startGame('pvp')" data-i18n="othello.pvp">プレイヤー vs プレイヤー</button>
+            <button class="mode-button" onclick="startGame('cpu')" data-i18n="othello.pvc">プレイヤー vs CPU</button>
+            
+            <div id="cpuLevelSelection" style="display: none;">
+                <h3 data-i18n="othello.selectLevel">CPUレベルを選択</h3>
+                <button class="level-button" onclick="setCPULevel(1)" data-i18n="othello.level1">レベル1 (ランダム)</button>
+                <button class="level-button" onclick="setCPULevel(2)" data-i18n="othello.level2">レベル2 (最大裏返し)</button>
+                <button class="level-button" onclick="setCPULevel(3)" data-i18n="othello.level3">レベル3 (評価関数)</button>
+            </div>
+
+            <div class="game-rules">
+                <h2 data-i18n="common.howToPlay">遊び方・ルール</h2>
+                <ul>
+                    <li data-i18n="othello.rule1"><strong>目的：</strong>相手より多くの石を盤面に置くことを目指します</li>
+                    <li data-i18n="othello.rule2"><strong>石の置き方：</strong>相手の石を挟むように自分の石を置きます</li>
+                    <li data-i18n="othello.rule3"><strong>裏返し：</strong>挟んだ相手の石はすべて自分の色に変わります</li>
+                    <li data-i18n="othello.rule4"><strong>ターン：</strong>黒と白が交互に石を置きます（黒が先手）</li>
+                    <li data-i18n="othello.rule5"><strong>パス：</strong>置ける場所がない場合は自動的にパスされます</li>
+                    <li data-i18n="othello.rule6"><strong>終了：</strong>両者ともパスになった時点でゲーム終了です</li>
+                    <li data-i18n="othello.rule7"><strong>勝敗：</strong>盤面の石が多い方が勝ちです</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="game-container" id="gameContainer" style="display: none;">
+            <div class="game-status">
+                <div class="turn-indicator">
+                    <span id="currentTurn">黒の番</span>
+                </div>
+                <div class="score-board">
+                    <div class="score-item">
+                        <span class="stone black"></span>
+                        <span id="blackScore">2</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="stone white"></span>
+                        <span id="whiteScore">2</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="board-container">
+                <div id="board"></div>
+            </div>
+
+            <div class="game-controls">
+                <button class="control-button" onclick="resetGame()" data-i18n="common.reset">リセット</button>
+                <button class="control-button" onclick="backToModeSelection()" data-i18n="othello.backToMode">モード選択に戻る</button>
+            </div>
+        </div>
+
+        <div id="gameOverModal" class="modal">
+            <div class="modal-content">
+                <h2 data-i18n="common.gameOver">ゲーム終了</h2>
+                <p id="gameResult"></p>
+                <div class="modal-scores">
+                    <div data-i18n="othello.blackScore">⚫ 黒: <span id="finalBlackScore"></span></div>
+                    <div data-i18n="othello.whiteScore">⚪ 白: <span id="finalWhiteScore"></span></div>
+                </div>
+                <button class="control-button" onclick="closeModal()" data-i18n="common.close">閉じる</button>
+                <button class="control-button" onclick="resetGame()" data-i18n="common.playAgain">もう一度</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p data-i18n="footer.copyright">&copy; 2025 GAME PORTAL. All rights reserved.</p>
+    </footer>
+
+    <script src="i18n.js"></script>
+    <script src="game-stats.js"></script>
+    <script src="othello.js"></script>
+</body>
+</html>

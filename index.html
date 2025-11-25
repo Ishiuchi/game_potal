@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAME PORTAL - 遊びを通じて新しい体験を</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-logo">GAME PORTAL</div>
+            <ul class="nav-menu">
+                <li><a href="#games" class="nav-link" data-i18n="nav.games">ゲーム一覧</a></li>
+                <li><a href="#ranking" class="nav-link" data-i18n="nav.ranking">人気ランキング</a></li>
+                <li><a href="#contact" class="nav-link" data-i18n="nav.contact">お問い合わせ</a></li>
+                <li class="language-selector">
+                    <button class="lang-btn" id="langBtn">🌐 日本語</button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <button onclick="changeLanguage('ja')">🇯🇵 日本語</button>
+                        <button onclick="changeLanguage('en')">🇬🇧 English</button>
+                        <button onclick="changeLanguage('zh')">🇨🇳 中文</button>
+                        <button onclick="changeLanguage('hi')">🇮🇳 हिन्दी</button>
+                        <button onclick="changeLanguage('es')">🇪🇸 Español</button>
+                        <button onclick="changeLanguage('fr')">🇫🇷 Français</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title" data-i18n="hero.title">遊びたいゲームが、<br>ここにある。</h1>
+            <p class="hero-subtitle" data-i18n="hero.subtitle">クラシックなボードゲームで、戦略的思考と創造性を育む</p>
+            <div class="hero-cta">
+                <a href="#games" class="btn btn-primary" data-i18n="hero.cta">ゲームを始める</a>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Games Section -->
+    <section id="games" class="games">
+        <div class="container">
+            <h2 class="section-title" data-i18n="games.title">ゲーム一覧</h2>
+            <p class="section-subtitle" data-i18n="games.subtitle">思考を深め、戦略を楽しむ、クラシックゲームの世界へようこそ</p>
+            
+            <div class="games-grid">
+                <div class="game-card">
+                    <div class="game-card-image othello-bg"></div>
+                    <div class="game-card-content">
+                        <div class="game-card-tag" data-i18n="games.othello.tag">戦略ゲーム</div>
+                        <h3 data-i18n="games.othello.title">オセロ</h3>
+                        <p data-i18n="games.othello.description">白と黒の石を使った戦略ゲーム。シンプルなルールながら奥深い戦略性を持つ、世界中で愛されるボードゲーム。相手の石を挟んでひっくり返し、盤面を支配しよう。</p>
+                        <div class="game-card-meta">
+                            <span class="meta-item" data-i18n="games.othello.players">👥 2プレイヤー</span>
+                            <span class="meta-item" data-i18n="games.othello.duration">⏱️ 15-30分</span>
+                        </div>
+                        <a href="othello.html" class="game-card-btn" data-i18n="games.playBtn">プレイする →</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-card-image ludo-bg"></div>
+                    <div class="game-card-content">
+                        <div class="game-card-tag" data-i18n="games.ludo.tag">ボードゲーム</div>
+                        <h3 data-i18n="games.ludo.title">ルドー</h3>
+                        <p data-i18n="games.ludo.description">サイコロを振ってコマを進める、運と戦略のボードゲーム。4人まで対戦可能で、家族や友人と盛り上がれます。シンプルながら予測不可能な展開が魅力です。</p>
+                        <div class="game-card-meta">
+                            <span class="meta-item" data-i18n="games.ludo.players">👥 2-4プレイヤー</span>
+                            <span class="meta-item" data-i18n="games.ludo.duration">⏱️ 20-40分</span>
+                        </div>
+                        <a href="ludo.html" class="game-card-btn" data-i18n="games.playBtn">プレイする →</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-card-image chess-bg"></div>
+                    <div class="game-card-content">
+                        <div class="game-card-tag" data-i18n="games.chess.tag">戦略ゲーム</div>
+                        <h3 data-i18n="games.chess.title">チェス</h3>
+                        <p data-i18n="games.chess.description">世界で最も有名な戦略ボードゲーム。キング、クイーン、ルークなど6種類の駒を使い、相手のキングをチェックメイトに追い込む知的な戦いを楽しめます。</p>
+                        <div class="game-card-meta">
+                            <span class="meta-item" data-i18n="games.chess.players">👥 2プレイヤー</span>
+                            <span class="meta-item" data-i18n="games.chess.duration">⏱️ 30-60分</span>
+                        </div>
+                        <a href="chess.html" class="game-card-btn" data-i18n="games.playBtn">プレイする →</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-card-image gomoku-bg"></div>
+                    <div class="game-card-content">
+                        <div class="game-card-tag" data-i18n="games.gomoku.tag">戦略ゲーム</div>
+                        <h3 data-i18n="games.gomoku.title">五目並べ</h3>
+                        <p data-i18n="games.gomoku.description">15×15の盤面で5つ並べることを目指す戦略ゲーム。シンプルながら奥深く、先を読む力が試されます。初心者から上級者まで楽しめる伝統的なボードゲームです。</p>
+                        <div class="game-card-meta">
+                            <span class="meta-item" data-i18n="games.gomoku.players">👥 2プレイヤー</span>
+                            <span class="meta-item" data-i18n="games.gomoku.duration">⏱️ 10-20分</span>
+                        </div>
+                        <a href="gomoku.html" class="game-card-btn" data-i18n="games.playBtn">プレイする →</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-card-image memory-bg"></div>
+                    <div class="game-card-content">
+                        <div class="game-card-tag" data-i18n="games.memory.tag">記憶ゲーム</div>
+                        <h3 data-i18n="games.memory.title">神経衰弱</h3>
+                        <p data-i18n="games.memory.description">カードをめくってペアを見つける記憶力ゲーム。集中力と記憶力を鍛える楽しいゲームです。1人プレイと2人対戦の両方が楽しめます。</p>
+                        <div class="game-card-meta">
+                            <span class="meta-item" data-i18n="games.memory.players">👥 1-2プレイヤー</span>
+                            <span class="meta-item" data-i18n="games.memory.duration">⏱️ 5-15分</span>
+                        </div>
+                        <a href="memory.html" class="game-card-btn" data-i18n="games.playBtn">プレイする →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ranking Section -->
+    <section id="ranking" class="ranking-section">
+        <div class="container">
+            <div id="rankingContainer">
+                <!-- ランキング内容は game-stats.js で生成 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-content">
+                <h2 class="section-title" data-i18n="contact.title">お問い合わせ</h2>
+                <p class="section-subtitle" data-i18n="contact.subtitle">ご質問やご要望がございましたら、お気軽にお問い合わせください</p>
+                
+                <form class="contact-form" id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name"><span data-i18n="contact.form.name">ニックネーム</span><span data-i18n="contact.optional">（任意）</span></label>
+                            <input type="text" id="name" name="name" placeholder="山田 太郎">
+                        </div>
+                        <div class="form-group">
+                            <label for="email"><span data-i18n="contact.form.email">メールアドレス</span><span data-i18n="contact.optional">（任意）</span></label>
+                            <input type="email" id="email" name="email" placeholder="example@email.com">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject"><span data-i18n="contact.form.subject">件名</span><span data-i18n="contact.optional">（任意）</span></label>
+                        <input type="text" id="subject" name="subject" placeholder="お問い合わせ内容の件名">
+                    </div>
+                    <div class="form-group">
+                        <label for="message"><span data-i18n="contact.form.message">メッセージ</span> <span class="required">*</span></label>
+                        <textarea id="message" name="message" rows="6" required placeholder="お問い合わせ内容をご記入ください（必須）"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" data-i18n="contact.form.submit">送信する</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>GAME PORTAL</h3>
+                    <p data-i18n="footer.tagline">遊びを通じて新しい体験を創造する</p>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer.games">ゲーム</h4>
+                    <ul>
+                        <li><a href="othello.html" data-i18n="games.othello.title">オセロ</a></li>
+                        <li><a href="ludo.html" data-i18n="games.ludo.title">ルドー</a></li>
+                        <li><a href="chess.html" data-i18n="games.chess.title">チェス</a></li>
+                        <li><a href="gomoku.html" data-i18n="games.gomoku.title">五目並べ</a></li>
+                        <li><a href="memory.html" data-i18n="games.memory.title">神経衰弱</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer.info">情報</h4>
+                    <ul>
+                        <li><a href="#contact" data-i18n="nav.contact">お問い合わせ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-i18n="footer.copyright">&copy; 2025 GAME PORTAL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="i18n.js"></script>
+    <script src="game-stats.js"></script>
+    <script>
+        // お問い合わせフォーム送信処理
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            };
+            
+            // ここで実際のフォーム送信処理を行う（例：fetch APIでサーバーに送信）
+            console.log('フォーム送信:', formData);
+            
+            // 成功メッセージを表示
+            const successMsg = translations[currentLanguage]?.contact?.form?.success || 'お問い合わせを送信しました。ありがとうございます!';
+            alert(successMsg);
+            
+            // フォームをリセット
+            this.reset();
+        });
+    </script>
+</body>
+</html>
