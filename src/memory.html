@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="memory.pageTitle">神経衰弱 - ゲームサイト</title>
+    <link rel="stylesheet" href="game-page.css">
+    <link rel="stylesheet" href="memory.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1 data-i18n="memory.title">🃏 神経衰弱</h1>
+            <div class="header-actions">
+                <div class="language-selector">
+                    <button class="lang-btn" id="langBtn">🌐 日本語</button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <button onclick="changeLanguage('ja')">🇯🇵 日本語</button>
+                        <button onclick="changeLanguage('en')">🇬🇧 English</button>
+                        <button onclick="changeLanguage('zh')">🇨🇳 中文</button>
+                        <button onclick="changeLanguage('hi')">🇮🇳 हिन्दी</button>
+                        <button onclick="changeLanguage('es')">🇪🇸 Español</button>
+                        <button onclick="changeLanguage('fr')">🇫🇷 Français</button>
+                    </div>
+                </div>
+                <a href="index.html" class="back-button" data-i18n="common.backHome">← ホームに戻る</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- ゲームモード選択画面 -->
+        <div id="gameSetup" class="game-mode-selection">
+            <h2 data-i18n="memory.selectMode">ゲームモードを選択</h2>
+            <div class="mode-buttons">
+                <button class="mode-button" onclick="selectMode('single')" data-i18n="memory.onePlayer">1人プレイ</button>
+                <button class="mode-button" onclick="selectMode('multi')" data-i18n="memory.twoPlayers">2人対戦</button>
+            </div>
+
+            <div id="difficultySelection" style="display: none;">
+                <h3 data-i18n="memory.selectDifficulty">難易度を選択</h3>
+                <button class="level-button" onclick="startGame('easy')" data-i18n="memory.easy">Easy (4×4)</button>
+                <button class="level-button" onclick="startGame('normal')" data-i18n="memory.normal">Normal (32枚)</button>
+                <button class="level-button" onclick="startGame('hard')" data-i18n="memory.hard">Hard (52枚)</button>
+            </div>
+
+            <div class="game-rules">
+                <h2 data-i18n="common.howToPlay">遊び方・ルール</h2>
+                <ul class="game-rules-list">
+                    <li data-i18n="memory.rule1"><strong>目的：</strong>全てのカードのペアを見つける</li>
+                    <li data-i18n="memory.rule2"><strong>めくり方：</strong>1ターンに2枚のカードをめくる</li>
+                    <li data-i18n="memory.rule3"><strong>一致：</strong>同じ絵柄ならカードは開いたまま</li>
+                    <li data-i18n="memory.rule4"><strong>不一致：</strong>違う絵柄なら裏返される</li>
+                    <li data-i18n="memory.rule5"><strong>勝利：</strong>全ペアを見つけたらクリア</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ゲーム画面 -->
+        <div id="gameContainer" style="display: none;">
+            <!-- ゲーム情報 -->
+            <div class="game-info">
+                <div class="info-item">
+                    <span data-i18n="memory.timer">時間:</span>
+                    <span id="timer">0:00</span>
+                </div>
+                <div class="info-item">
+                    <span data-i18n="memory.moves">手数:</span>
+                    <span id="moves">0</span>
+                </div>
+                <div class="info-item" id="pairsInfo">
+                    <span data-i18n="memory.pairs">ペア:</span>
+                    <span id="pairs">0 / 0</span>
+                </div>
+                <div class="info-item" id="player1Info" style="display: none;">
+                    <span data-i18n="memory.player1">プレイヤー1:</span>
+                    <span id="player1Score">0</span>
+                </div>
+                <div class="info-item" id="player2Info" style="display: none;">
+                    <span data-i18n="memory.player2">プレイヤー2:</span>
+                    <span id="player2Score">0</span>
+                </div>
+            </div>
+
+            <!-- 現在のプレイヤー表示 -->
+            <div id="currentPlayerDisplay" style="display: none;" class="current-player">
+                <span id="currentPlayerText"></span>
+            </div>
+
+            <!-- カードグリッド -->
+            <div class="board-container">
+                <div id="cardGrid" class="card-grid"></div>
+            </div>
+
+            <!-- コントロールボタン -->
+            <div class="game-controls">
+                <button class="control-button" onclick="resetGame()" data-i18n="common.reset">リセット</button>
+                <button class="control-button" onclick="backToModeSelection()" data-i18n="memory.backToMode">モード選択に戻る</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- ゲームクリアモーダル -->
+    <div id="gameModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle" data-i18n="memory.congratulations">おめでとうございます！</h2>
+            <div id="modalBody"></div>
+            <div class="modal-buttons">
+                <button class="control-button" onclick="resetGame()" data-i18n="common.playAgain">もう一度</button>
+                <button class="control-button" onclick="backToModeSelection()" data-i18n="memory.backToMode">モード選択に戻る</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 GAME PORTAL. All rights reserved.</p>
+    </footer>
+
+    <script src="i18n.js"></script>
+    <script src="game-stats.js"></script>
+    <script src="memory.js"></script>
+</body>
+</html>

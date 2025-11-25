@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="GAMENAME.pageTitle">ゲーム名 - ゲームサイト</title>
+    <link rel="stylesheet" href="game-page.css">
+    <link rel="stylesheet" href="GAMENAME.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1 data-i18n="GAMENAME.title">ゲーム名</h1>
+            <div class="header-actions">
+                <div class="language-selector">
+                    <button class="lang-btn" id="langBtn">🌐 日本語</button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <button onclick="changeLanguage('ja')">🇯🇵 日本語</button>
+                        <button onclick="changeLanguage('en')">🇬🇧 English</button>
+                        <button onclick="changeLanguage('zh')">🇨🇳 中文</button>
+                        <button onclick="changeLanguage('hi')">🇮🇳 हिन्दी</button>
+                        <button onclick="changeLanguage('es')">🇪🇸 Español</button>
+                        <button onclick="changeLanguage('fr')">🇫🇷 Français</button>
+                    </div>
+                </div>
+                <a href="index.html" class="back-button" data-i18n="common.backHome">← ホームに戻る</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- ゲームモード選択画面 -->
+        <div class="game-mode-selection" id="modeSelection">
+            <h2 data-i18n="GAMENAME.selectMode">ゲームモードを選択</h2>
+            <div class="mode-buttons">
+                <button class="mode-button" onclick="startGame('pvp')" data-i18n="GAMENAME.pvp">プレイヤー vs プレイヤー</button>
+                <button class="mode-button" onclick="startGame('cpu')" data-i18n="GAMENAME.pvc">プレイヤー vs CPU</button>
+            </div>
+            
+            <div id="cpuLevelSelection" style="display: none;">
+                <h3 data-i18n="GAMENAME.selectLevel">CPUレベルを選択</h3>
+                <button class="level-button" onclick="setCPULevel(1)" data-i18n="GAMENAME.level1">レベル1 (易しい)</button>
+                <button class="level-button" onclick="setCPULevel(2)" data-i18n="GAMENAME.level2">レベル2 (普通)</button>
+                <button class="level-button" onclick="setCPULevel(3)" data-i18n="GAMENAME.level3">レベル3 (難しい)</button>
+            </div>
+
+            <div class="game-rules">
+                <h2 data-i18n="common.howToPlay">遊び方・ルール</h2>
+                <ul>
+                    <li data-i18n="GAMENAME.rule1"><strong>目的：</strong>ゲームの目的を記述</li>
+                    <li data-i18n="GAMENAME.rule2"><strong>ルール1：</strong>基本ルールを記述</li>
+                    <li data-i18n="GAMENAME.rule3"><strong>ルール2：</strong>追加ルールを記述</li>
+                    <li data-i18n="GAMENAME.rule4"><strong>ルール3：</strong>追加ルールを記述</li>
+                    <li data-i18n="GAMENAME.rule5"><strong>勝利条件：</strong>勝利条件を記述</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ゲーム画面 -->
+        <div class="game-container" id="gameContainer" style="display: none;">
+            <div class="game-status">
+                <div class="turn-indicator">
+                    <span id="currentTurn">プレイヤー1の番</span>
+                </div>
+                <div class="score-board">
+                    <div class="score-item">
+                        <span data-i18n="GAMENAME.player1">プレイヤー1:</span>
+                        <span id="player1Score">0</span>
+                    </div>
+                    <div class="score-item">
+                        <span data-i18n="GAMENAME.player2">プレイヤー2:</span>
+                        <span id="player2Score">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="board-container">
+                <div id="gameBoard"></div>
+            </div>
+
+            <div class="game-controls">
+                <button class="control-button" onclick="resetGame()" data-i18n="common.reset">リセット</button>
+                <button class="control-button" onclick="backToModeSelection()" data-i18n="GAMENAME.backToMode">モード選択に戻る</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- ゲーム終了モーダル -->
+    <div id="gameModal" class="modal">
+        <div class="modal-content">
+            <h2 data-i18n="common.gameOver">ゲーム終了</h2>
+            <p id="gameResult"></p>
+            <div class="modal-buttons">
+                <button class="control-button" onclick="closeModal()" data-i18n="common.close">閉じる</button>
+                <button class="control-button" onclick="resetGame()" data-i18n="common.playAgain">もう一度</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p data-i18n="footer.copyright">&copy; 2025 GAME PORTAL. All rights reserved.</p>
+    </footer>
+
+    <script src="i18n.js"></script>
+    <script src="GAMENAME.js"></script>
+</body>
+</html>

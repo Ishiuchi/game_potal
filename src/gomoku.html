@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="gomoku.pageTitle">五目並べ - ゲームサイト</title>
+    <link rel="stylesheet" href="game-page.css">
+    <link rel="stylesheet" href="gomoku.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1 data-i18n="gomoku.title">🎯 五目並べ</h1>
+            <div class="header-actions">
+                <div class="language-selector">
+                    <button class="lang-btn" id="langBtn">🌐 日本語</button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <button onclick="changeLanguage('ja')">🇯🇵 日本語</button>
+                        <button onclick="changeLanguage('en')">🇬🇧 English</button>
+                        <button onclick="changeLanguage('zh')">🇨🇳 中文</button>
+                        <button onclick="changeLanguage('hi')">🇮🇳 हिन्दी</button>
+                        <button onclick="changeLanguage('es')">🇪🇸 Español</button>
+                        <button onclick="changeLanguage('fr')">🇫🇷 Français</button>
+                    </div>
+                </div>
+                <a href="index.html" class="back-button" data-i18n="common.backHome">← ホームに戻る</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- ゲームモード選択画面 -->
+        <div class="game-mode-selection" id="modeSelection">
+            <h2 data-i18n="gomoku.selectMode">ゲームモードを選択</h2>
+            <div class="mode-buttons">
+                <button class="mode-button" onclick="startGame('pvp')" data-i18n="gomoku.pvp">プレイヤー vs プレイヤー</button>
+                <button class="mode-button" onclick="startGame('cpu')" data-i18n="gomoku.pvc">プレイヤー vs CPU</button>
+            </div>
+            
+            <div id="cpuLevelSelection" style="display: none;">
+                <h3 data-i18n="gomoku.selectLevel">CPUレベルを選択</h3>
+                <button class="level-button" onclick="setCPULevel(1)" data-i18n="gomoku.level1">レベル1 (ランダム)</button>
+                <button class="level-button" onclick="setCPULevel(2)" data-i18n="gomoku.level2">レベル2 (評価関数)</button>
+                <button class="level-button" onclick="setCPULevel(3)" data-i18n="gomoku.level3">レベル3 (ミニマックス)</button>
+            </div>
+
+            <div class="game-rules">
+                <h2 data-i18n="common.howToPlay">遊び方・ルール</h2>
+                <ul>
+                    <li data-i18n="gomoku.rule1"><strong>目的：</strong>縦・横・斜めのいずれかに5つ並べることを目指します</li>
+                    <li data-i18n="gomoku.rule2"><strong>配置：</strong>交互に石を置きます（黒が先手）</li>
+                    <li data-i18n="gomoku.rule3"><strong>勝利：</strong>先に5つ並べた方が勝ちです</li>
+                    <li data-i18n="gomoku.rule4"><strong>ターン：</strong>黒と白が交互に打ちます</li>
+                    <li data-i18n="gomoku.rule5"><strong>引き分け：</strong>盤面が埋まっても勝者がいない場合</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ゲーム画面 -->
+        <div class="game-container" id="gameContainer" style="display: none;">
+            <div class="game-status">
+                <div class="turn-indicator">
+                    <span id="currentTurn" data-i18n="gomoku.blackTurn">黒の番</span>
+                </div>
+                <div class="move-count">
+                    <span data-i18n="gomoku.moveCount">手数:</span>
+                    <span id="moveCount">0</span>
+                </div>
+            </div>
+
+            <div class="board-container">
+                <div id="gameBoard"></div>
+            </div>
+
+            <div class="game-controls">
+                <button class="control-button" onclick="resetGame()" data-i18n="common.reset">リセット</button>
+                <button class="control-button" onclick="backToModeSelection()" data-i18n="gomoku.backToMode">モード選択に戻る</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- ゲーム終了モーダル -->
+    <div id="gameModal" class="modal">
+        <div class="modal-content">
+            <h2 data-i18n="common.gameOver">ゲーム終了</h2>
+            <p id="gameResult"></p>
+            <div class="modal-buttons">
+                <button class="control-button" onclick="closeModal()" data-i18n="common.close">閉じる</button>
+                <button class="control-button" onclick="resetGame()" data-i18n="common.playAgain">もう一度</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p data-i18n="footer.copyright">&copy; 2025 GAME PORTAL. All rights reserved.</p>
+    </footer>
+
+    <script src="i18n.js"></script>
+    <script src="game-stats.js"></script>
+    <script src="gomoku.js"></script>
+</body>
+</html>

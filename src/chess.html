@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="chess.pageTitle">チェス - ゲームサイト</title>
+    <link rel="stylesheet" href="game-page.css">
+    <link rel="stylesheet" href="chess.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1 data-i18n="chess.title">♔♕ チェス</h1>
+            <div class="header-actions">
+                <div class="language-selector">
+                    <button class="lang-btn" id="langBtn">🌐 日本語</button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <button onclick="changeLanguage('ja')">🇯🇵 日本語</button>
+                        <button onclick="changeLanguage('en')">🇬🇧 English</button>
+                        <button onclick="changeLanguage('zh')">🇨🇳 中文</button>
+                        <button onclick="changeLanguage('hi')">🇮🇳 हिन्दी</button>
+                        <button onclick="changeLanguage('es')">🇪🇸 Español</button>
+                        <button onclick="changeLanguage('fr')">🇫🇷 Français</button>
+                    </div>
+                </div>
+                <a href="index.html" class="back-button" data-i18n="common.backHome">← ホームに戻る</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- ゲームモード選択画面 -->
+        <div class="game-mode-selection" id="modeSelection">
+            <h2 data-i18n="chess.selectMode">ゲームモードを選択</h2>
+            <div class="mode-buttons">
+                <button class="mode-button" onclick="startGame('pvp')" data-i18n="chess.pvp">プレイヤー vs プレイヤー</button>
+                <button class="mode-button" onclick="startGame('cpu')" data-i18n="chess.pvc">プレイヤー vs CPU</button>
+            </div>
+            
+            <div id="cpuLevelSelection" style="display: none;">
+                <h3 data-i18n="chess.selectLevel">CPUレベルを選択</h3>
+                <button class="level-button" onclick="setCPULevel(1)" data-i18n="chess.level1">レベル1 (ランダム)</button>
+                <button class="level-button" onclick="setCPULevel(2)" data-i18n="chess.level2">レベル2 (駒価値)</button>
+                <button class="level-button" onclick="setCPULevel(3)" data-i18n="chess.level3">レベル3 (ミニマックス)</button>
+            </div>
+
+            <div class="game-rules">
+                <h2 data-i18n="common.howToPlay">遊び方・ルール</h2>
+                <ul>
+                    <li data-i18n="chess.rule1"><strong>目的：</strong>相手のキングをチェックメイトにすることを目指します</li>
+                    <li data-i18n="chess.rule2"><strong>移動：</strong>各駒は決まった動き方で移動できます</li>
+                    <li data-i18n="chess.rule3"><strong>ターン：</strong>白と黒が交互に駒を動かします（白が先手）</li>
+                    <li data-i18n="chess.rule4"><strong>チェック：</strong>キングが攻撃されている状態です</li>
+                    <li data-i18n="chess.rule5"><strong>チェックメイト：</strong>チェックから逃れられない時、ゲーム終了です</li>
+                    <li data-i18n="chess.rule6"><strong>特殊な動き：</strong>キャスリング、アンパッサン、プロモーションがあります</li>
+                    <li data-i18n="chess.rule7"><strong>引き分け：</strong>ステイルメイトや同一局面の繰り返しで引き分けになります</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ゲーム画面 -->
+        <div class="game-container" id="gameContainer" style="display: none;">
+            <div class="game-info">
+                <div class="turn-indicator">
+                    <span id="currentTurn" data-i18n="chess.whiteTurn">白の番</span>
+                    <span id="checkStatus"></span>
+                </div>
+                <div class="captured-pieces">
+                    <div class="captured-white">
+                        <span data-i18n="chess.capturedWhite">取った白駒:</span>
+                        <div id="capturedWhite"></div>
+                    </div>
+                    <div class="captured-black">
+                        <span data-i18n="chess.capturedBlack">取った黒駒:</span>
+                        <div id="capturedBlack"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="board-container">
+                <div id="chessBoard"></div>
+            </div>
+
+            <div class="game-sidebar">
+                <div class="move-history">
+                    <h3 data-i18n="chess.moveHistory">棋譜</h3>
+                    <div id="moveList"></div>
+                </div>
+
+                <div class="game-controls">
+                    <button class="control-button" onclick="resetGame()" data-i18n="common.reset">リセット</button>
+                    <button class="control-button" onclick="backToModeSelection()" data-i18n="chess.backToMode">モード選択に戻る</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 統合モーダル (ゲーム終了 & プロモーション) -->
+    <div id="gameModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle" data-i18n="common.gameOver">ゲーム終了</h2>
+            
+            <!-- ゲーム終了コンテンツ -->
+            <div id="gameOverContent" style="display: none;">
+                <p id="gameResult"></p>
+                <div class="modal-buttons">
+                    <button class="control-button" onclick="closeModal()" data-i18n="common.close">閉じる</button>
+                    <button class="control-button" onclick="resetGame()" data-i18n="common.playAgain">もう一度</button>
+                </div>
+            </div>
+            
+            <!-- プロモーションコンテンツ -->
+            <div id="promotionContent" style="display: none;">
+                <p data-i18n="chess.selectPromotion">昇格する駒を選択してください</p>
+                <div class="promotion-choices">
+                    <button class="promotion-button" onclick="promoteToQueen()">♕</button>
+                    <button class="promotion-button" onclick="promoteToRook()">♖</button>
+                    <button class="promotion-button" onclick="promoteToBishop()">♗</button>
+                    <button class="promotion-button" onclick="promoteToKnight()">♘</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p data-i18n="footer.copyright">&copy; 2025 GAME PORTAL. All rights reserved.</p>
+    </footer>
+
+    <script src="i18n.js"></script>
+    <script src="game-stats.js"></script>
+    <script src="chess.js"></script>
+</body>
+</html>
