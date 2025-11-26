@@ -1,0 +1,519 @@
+/* ストップウォッチゲーム専用スタイル */
+
+/* ゲームコンテナ */
+.game-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* 画面切り替え */
+.screen {
+    display: none;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.screen.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 開始画面 */
+.intro-section {
+    text-align: center;
+    padding: 2rem;
+}
+
+.intro-section h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #1f2937;
+}
+
+.rules-section {
+    margin: 2rem auto;
+    max-width: 600px;
+    text-align: left;
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+.rules-section summary {
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 1rem;
+    color: #2563eb;
+    user-select: none;
+}
+
+.rules-section summary:hover {
+    background: #e5e7eb;
+    border-radius: 8px;
+}
+
+.rules-list {
+    list-style: none;
+    padding: 1rem 1.5rem;
+    margin: 0;
+}
+
+.rules-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 1rem;
+}
+
+.rules-list li:last-child {
+    border-bottom: none;
+}
+
+.rules-list li::before {
+    content: '✓ ';
+    color: #10b981;
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+/* ボタン */
+.primary-button {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: white;
+    border: none;
+    padding: 1rem 3rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
+}
+
+.primary-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(37, 99, 235, 0.4);
+}
+
+.primary-button:active {
+    transform: translateY(0);
+}
+
+.secondary-button {
+    display: inline-block;
+    background: #6b7280;
+    color: white;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    margin-left: 1rem;
+}
+
+.secondary-button:hover {
+    background: #4b5563;
+    transform: translateY(-2px);
+}
+
+/* ゲーム画面 */
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%);
+    border-radius: 12px;
+}
+
+.turn-display,
+.target-display {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1f2937;
+}
+
+.target-display {
+    color: #2563eb;
+}
+
+/* タイマー表示 */
+.timer-section {
+    text-align: center;
+    margin: 3rem 0;
+}
+
+.timer-display {
+    font-family: 'Courier New', Consolas, monospace;
+    font-size: 5rem;
+    font-weight: bold;
+    color: #1f2937;
+    background: linear-gradient(135deg, #f0f9ff 0%, #dbeafe 100%);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    letter-spacing: 0.1em;
+}
+
+.status-indicator {
+    font-size: 1.25rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+/* コントロールボタン */
+.controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.control-button {
+    padding: 1rem 2.5rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 150px;
+}
+
+.start-button {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3);
+}
+
+.start-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(16, 185, 129, 0.4);
+}
+
+.stop-button {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);
+}
+
+.stop-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(239, 68, 68, 0.4);
+}
+
+.reset-button {
+    background: #6b7280;
+    color: white;
+}
+
+.reset-button:hover {
+    background: #4b5563;
+}
+
+.control-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.control-button:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+/* ターン結果 */
+.turn-result {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: #f9fafb;
+    border-radius: 16px;
+    text-align: center;
+    animation: slideIn 0.4s ease-out;
+}
+
+.turn-result.hidden {
+    display: none;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.result-details {
+    margin: 2rem 0;
+}
+
+.result-item {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    color: #1f2937;
+}
+
+/* ランクバッジ */
+.rank-badge-container {
+    margin: 2rem 0;
+}
+
+.rank-badge {
+    display: inline-block;
+    font-size: 3rem;
+    font-weight: bold;
+    padding: 1.5rem 3rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    animation: rankAppear 0.5s ease-out;
+}
+
+.rank-badge.large {
+    font-size: 4rem;
+    padding: 2rem 4rem;
+}
+
+@keyframes rankAppear {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) rotate(-10deg);
+    }
+    60% {
+        transform: scale(1.1) rotate(5deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+/* ランクカラー */
+.rank-SSS {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+    color: #7c2d12;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+    animation: rankAppear 0.5s ease-out, sparkle 2s infinite;
+}
+
+@keyframes sparkle {
+    0%, 100% {
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(1.2);
+    }
+}
+
+.rank-SS {
+    background: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 50%, #c0c0c0 100%);
+    color: #1f2937;
+    box-shadow: 0 0 20px rgba(192, 192, 192, 0.6);
+}
+
+.rank-S {
+    background: linear-gradient(135deg, #cd7f32 0%, #e8a864 50%, #cd7f32 100%);
+    color: #ffffff;
+    box-shadow: 0 0 20px rgba(205, 127, 50, 0.6);
+}
+
+.rank-A {
+    background: #2563eb;
+    color: white;
+}
+
+.rank-B {
+    background: #10b981;
+    color: white;
+}
+
+.rank-C {
+    background: #f59e0b;
+    color: white;
+}
+
+.rank-D {
+    background: #f97316;
+    color: white;
+}
+
+.rank-E {
+    background: #ef4444;
+    color: white;
+    animation: rankAppear 0.5s ease-out, shake 0.5s ease-out 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-10px);
+    }
+    75% {
+        transform: translateX(10px);
+    }
+}
+
+/* 最終結果画面 */
+.final-result {
+    padding: 2rem;
+}
+
+.final-result h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #1f2937;
+}
+
+.results-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.turn-summary {
+    background: #f9fafb;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 4px solid #2563eb;
+}
+
+.turn-summary h4 {
+    margin-bottom: 1rem;
+    color: #2563eb;
+    font-size: 1.25rem;
+}
+
+.turn-summary p {
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+    color: #1f2937;
+}
+
+.rank-text {
+    font-weight: bold;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+.total-score {
+    text-align: center;
+    margin: 3rem 0;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f0f9ff 0%, #dbeafe 100%);
+    border-radius: 16px;
+}
+
+.total-error {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 2rem;
+}
+
+.final-rank-container h3 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    color: #2563eb;
+}
+
+.rank-message {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    color: #1f2937;
+}
+
+.final-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .game-container {
+        padding: 1rem;
+    }
+
+    .intro-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .game-info {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .timer-display {
+        font-size: 3rem;
+        padding: 1.5rem;
+    }
+
+    .controls {
+        flex-direction: column;
+    }
+
+    .control-button {
+        width: 100%;
+    }
+
+    .rank-badge {
+        font-size: 2rem;
+        padding: 1rem 2rem;
+    }
+
+    .rank-badge.large {
+        font-size: 3rem;
+        padding: 1.5rem 3rem;
+    }
+
+    .results-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .final-buttons {
+        flex-direction: column;
+    }
+
+    .secondary-button {
+        margin-left: 0;
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .timer-display {
+        font-size: 2.5rem;
+        padding: 1rem;
+    }
+
+    .turn-display,
+    .target-display {
+        font-size: 1.2rem;
+    }
+
+    .result-item {
+        font-size: 1.2rem;
+    }
+}
