@@ -139,7 +139,7 @@
 }
 
 .card-back {
-    background-image: url('../img/images/playing_cards/card_back.png');
+    background-image: url('../img/playing_cards/card_back.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

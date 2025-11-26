@@ -210,7 +210,7 @@ function renderBoard() {
                 <div class="card-inner">
                     <div class="card-face card-back"></div>
                     <div class="card-face card-front">
-                        <img src="assets/img/images/playing_cards/${card.suit}_${card.symbol}.png" 
+                        <img src="assets/img/playing_cards/${card.suit}_${card.symbol}.png" 
                              alt="${card.suit} ${card.symbol}"
                              onerror="this.outerHTML='<div style=\\'font-size:2rem\\'>${card.symbol}</div>'">
                     </div>
