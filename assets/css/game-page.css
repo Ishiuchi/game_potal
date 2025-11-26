@@ -46,15 +46,35 @@ header {
 .header-content {
     max-width: 1200px;
     margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
+}
+
+.header-content .nav-logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.025em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.header-content .nav-logo:hover {
+    opacity: 0.7;
+}
+
+.header-content h1 {
+    text-align: center;
+    grid-column: 2;
 }
 
 .header-actions {
     display: flex;
     align-items: center;
     gap: 1rem;
+    justify-content: flex-end;
 }
 
 header h1 {
