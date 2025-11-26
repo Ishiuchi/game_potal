@@ -212,7 +212,51 @@ const translations = {
             tagline: '遊びを通じて新しい体験を創造する',
             games: 'ゲーム',
             info: '情報',
+            privacy: 'プライバシーポリシー',
             copyright: '© 2025 GAME PORTAL. All rights reserved.'
+        },
+        privacy: {
+            title: 'プライバシーポリシー',
+            intro: '「GAME PORTAL」（以下、「当サイト」といいます。）は、ユーザーの個人情報の取扱いについて、以下のとおりプライバシーポリシー（以下、「本ポリシー」といいます。）を定めます。',
+            section1: {
+                title: '1. 個人情報の収集と利用目的',
+                content: '当サイトでは、ユーザーからの個人情報の収集は行っておりません。お問い合わせフォームにご入力いただいた情報（お名前、メールアドレス、お問い合わせ内容）は、お問い合わせへの対応および今後のサービス改善のためにのみ使用いたします。'
+            },
+            section2: {
+                title: '2. 個人情報の第三者提供',
+                content: '当サイトは、法令に基づく場合を除き、ユーザーの個人情報を第三者に提供することはありません。'
+            },
+            section3: {
+                title: '3. Cookie（クッキー）について',
+                content: '当サイトでは、ユーザーエクスペリエンスの向上のため、Cookie を使用する場合があります。Cookie は、ユーザーのブラウザに保存される小さなデータファイルで、サイトの利用状況の分析に使用されます。ユーザーは、ブラウザの設定により Cookie の受け取りを拒否することができますが、一部の機能が制限される場合があります。'
+            },
+            section4: {
+                title: '4. ローカルストレージについて',
+                content: '当サイトでは、ゲームの進行状況や統計情報、言語設定を保存するためにブラウザのローカルストレージを使用しています。これらの情報はお使いのブラウザ内にのみ保存され、外部のサーバーに送信されることはありません。ローカルストレージに保存された情報は、ブラウザの設定からいつでも削除することができます。'
+            },
+            section5: {
+                title: '5. アクセス解析ツールについて',
+                content: '当サイトでは、サイトの利用状況を把握するため、Google Analytics などのアクセス解析ツールを使用する場合があります。これらのツールは Cookie を使用して情報を収集しますが、個人を特定する情報は含まれません。詳細については、各ツールのプライバシーポリシーをご確認ください。'
+            },
+            section6: {
+                title: '6. 免責事項',
+                content: '当サイトのコンテンツ・情報について、可能な限り正確な情報を掲載するよう努めておりますが、正確性や安全性を保証するものではありません。当サイトに掲載された内容によって生じた損害等の一切の責任を負いかねますのでご了承ください。また、当サイトからリンクやバナーなどによって他のサイトに移動した場合、移動先サイトで提供される情報、サービス等について一切の責任を負いません。'
+            },
+            section7: {
+                title: '7. 著作権・肖像権',
+                content: '当サイトで掲載している文章や画像などにつきましては、無断転載することを禁止します。当サイトは著作権や肖像権の侵害を目的としたものではありません。著作権や肖像権に関して問題がございましたら、お問い合わせフォームよりご連絡ください。迅速に対応いたします。'
+            },
+            section8: {
+                title: '8. プライバシーポリシーの変更',
+                content: '当サイトは、法令の変更や必要に応じて、本ポリシーを予告なく変更することがあります。変更後のプライバシーポリシーは、当サイトに掲載した時点で効力を生じるものとします。'
+            },
+            section9: {
+                title: '9. お問い合わせ',
+                content: '本ポリシーに関するお問い合わせは、当サイトのお問い合わせフォームよりご連絡ください。'
+            },
+            established: '制定日：2025年11月26日',
+            updated: '最終更新日：2025年11月26日',
+            backHome: '← ホームに戻る'
         }
     },
     en: {
@@ -397,7 +441,51 @@ const translations = {
             tagline: 'Creating new experiences through play',
             games: 'Games',
             info: 'Information',
+            privacy: 'Privacy Policy',
             copyright: '© 2025 GAME PORTAL. All rights reserved.'
+        },
+        privacy: {
+            title: 'Privacy Policy',
+            intro: 'GAME PORTAL (hereinafter referred to as "this site") establishes the following Privacy Policy (hereinafter referred to as "this policy") regarding the handling of users\' personal information.',
+            section1: {
+                title: '1. Collection and Purpose of Personal Information',
+                content: 'This site does not collect personal information from users. Information entered in the contact form (name, email address, and inquiry content) will be used only for responding to inquiries and improving our services in the future.'
+            },
+            section2: {
+                title: '2. Provision of Personal Information to Third Parties',
+                content: 'This site will not provide users\' personal information to third parties except when required by law.'
+            },
+            section3: {
+                title: '3. About Cookies',
+                content: 'This site may use cookies to improve user experience. Cookies are small data files stored in your browser and are used to analyze site usage. Users can refuse to accept cookies through browser settings, but some features may be limited.'
+            },
+            section4: {
+                title: '4. About Local Storage',
+                content: 'This site uses browser local storage to save game progress, statistics, and language settings. This information is stored only in your browser and is never sent to external servers. Information stored in local storage can be deleted at any time from your browser settings.'
+            },
+            section5: {
+                title: '5. About Analytics Tools',
+                content: 'This site may use analytics tools such as Google Analytics to understand site usage. These tools collect information using cookies but do not include personally identifiable information. For details, please refer to each tool\'s privacy policy.'
+            },
+            section6: {
+                title: '6. Disclaimer',
+                content: 'We strive to provide accurate information on this site\'s content, but we do not guarantee its accuracy or safety. We cannot be held responsible for any damages caused by the content posted on this site. Additionally, we are not responsible for information or services provided by sites accessed via links or banners from this site.'
+            },
+            section7: {
+                title: '7. Copyright and Portrait Rights',
+                content: 'Unauthorized reproduction of text and images posted on this site is prohibited. This site does not intend to infringe on copyrights or portrait rights. If there are any issues regarding copyrights or portrait rights, please contact us via the contact form. We will respond promptly.'
+            },
+            section8: {
+                title: '8. Changes to Privacy Policy',
+                content: 'This site may change this policy without notice as required by law or necessity. The revised privacy policy will take effect from the time it is posted on this site.'
+            },
+            section9: {
+                title: '9. Contact',
+                content: 'For inquiries regarding this policy, please contact us via the contact form on this site.'
+            },
+            established: 'Established: November 26, 2025',
+            updated: 'Last Updated: November 26, 2025',
+            backHome: '← Back to Home'
         }
     },
     zh: {
@@ -608,7 +696,51 @@ const translations = {
             tagline: '通过游戏创造新体验',
             games: '游戏',
             info: '信息',
+            privacy: '隐私政策',
             copyright: '© 2025 GAME PORTAL. 版权所有。'
+        },
+        privacy: {
+            title: '隐私政策',
+            intro: 'GAME PORTAL（以下简称"本站"）就用户个人信息的处理制定以下隐私政策（以下简称"本政策"）。',
+            section1: {
+                title: '1. 个人信息的收集和使用目的',
+                content: '本站不收集用户的个人信息。在联系表单中输入的信息（姓名、电子邮件地址、咨询内容）仅用于回复咨询和改进未来的服务。'
+            },
+            section2: {
+                title: '2. 向第三方提供个人信息',
+                content: '除法律规定的情况外，本站不会向第三方提供用户的个人信息。'
+            },
+            section3: {
+                title: '3. 关于Cookie（小型文本文件）',
+                content: '本站可能使用Cookie来改善用户体验。Cookie是存储在用户浏览器中的小型数据文件，用于分析网站使用情况。用户可以通过浏览器设置拒绝接受Cookie，但某些功能可能会受到限制。'
+            },
+            section4: {
+                title: '4. 关于本地存储',
+                content: '本站使用浏览器的本地存储来保存游戏进度、统计信息和语言设置。这些信息仅存储在您的浏览器中，不会发送到外部服务器。可以随时从浏览器设置中删除本地存储中保存的信息。'
+            },
+            section5: {
+                title: '5. 关于访问分析工具',
+                content: '本站可能使用Google Analytics等访问分析工具来了解网站使用情况。这些工具使用Cookie收集信息，但不包含可识别个人身份的信息。有关详细信息，请参阅各工具的隐私政策。'
+            },
+            section6: {
+                title: '6. 免责声明',
+                content: '我们努力在本站的内容中提供尽可能准确的信息，但不保证其准确性或安全性。对于本站发布的内容造成的任何损害，我们概不负责。此外，对于通过本站的链接或横幅移动到其他网站后提供的信息和服务，我们不承担任何责任。'
+            },
+            section7: {
+                title: '7. 版权和肖像权',
+                content: '禁止未经授权转载本站发布的文字和图像。本站无意侵犯版权或肖像权。如有版权或肖像权问题，请通过联系表单与我们联系。我们将迅速处理。'
+            },
+            section8: {
+                title: '8. 隐私政策的更改',
+                content: '本站可能会根据法律变更或必要性在不事先通知的情况下更改本政策。修订后的隐私政策自在本站发布之时起生效。'
+            },
+            section9: {
+                title: '9. 联系我们',
+                content: '有关本政策的咨询，请通过本站的联系表单与我们联系。'
+            },
+            established: '制定日期：2025年11月26日',
+            updated: '最后更新日期：2025年11月26日',
+            backHome: '← 返回主页'
         }
     },
     hi: {
@@ -819,7 +951,51 @@ const translations = {
             tagline: 'खेल के माध्यम से नए अनुभव बनाना',
             games: 'खेल',
             info: 'जानकारी',
+            privacy: 'गोपनीयता नीति',
             copyright: '© 2025 GAME PORTAL. सर्वाधिकार सुरक्षित।'
+        },
+        privacy: {
+            title: 'गोपनीयता नीति',
+            intro: 'GAME PORTAL (इसके बाद "इस साइट" के रूप में संदर्भित) उपयोगकर्ताओं की व्यक्तिगत जानकारी के प्रबंधन के संबंध में निम्नलिखित गोपनीयता नीति (इसके बाद "इस नीति" के रूप में संदर्भित) स्थापित करता है।',
+            section1: {
+                title: '1. व्यक्तिगत जानकारी का संग्रह और उपयोग का उद्देश्य',
+                content: 'यह साइट उपयोगकर्ताओं से व्यक्तिगत जानकारी एकत्र नहीं करती है। संपर्क फॉर्म में दर्ज की गई जानकारी (नाम, ईमेल पता, और पूछताछ की सामग्री) का उपयोग केवल पूछताछ का जवाब देने और भविष्य में हमारी सेवाओं में सुधार के लिए किया जाएगा।'
+            },
+            section2: {
+                title: '2. तीसरे पक्ष को व्यक्तिगत जानकारी का प्रावधान',
+                content: 'यह साइट कानून द्वारा आवश्यक होने के अलावा उपयोगकर्ताओं की व्यक्तिगत जानकारी तीसरे पक्ष को प्रदान नहीं करेगी।'
+            },
+            section3: {
+                title: '3. कुकीज़ के बारे में',
+                content: 'यह साइट उपयोगकर्ता अनुभव को बेहतर बनाने के लिए कुकीज़ का उपयोग कर सकती है। कुकीज़ छोटी डेटा फाइलें हैं जो आपके ब्राउज़र में संग्रहीत होती हैं और साइट के उपयोग का विश्लेषण करने के लिए उपयोग की जाती हैं। उपयोगकर्ता ब्राउज़र सेटिंग्स के माध्यम से कुकीज़ को स्वीकार करने से इनकार कर सकते हैं, लेकिन कुछ सुविधाएं सीमित हो सकती हैं।'
+            },
+            section4: {
+                title: '4. स्थानीय भंडारण के बारे में',
+                content: 'यह साइट खेल की प्रगति, आंकड़े और भाषा सेटिंग्स को सहेजने के लिए ब्राउज़र के स्थानीय भंडारण का उपयोग करती है। यह जानकारी केवल आपके ब्राउज़र में संग्रहीत होती है और कभी भी बाहरी सर्वर को नहीं भेजी जाती है। स्थानीय भंडारण में संग्रहीत जानकारी को आपकी ब्राउज़र सेटिंग्स से किसी भी समय हटाया जा सकता है।'
+            },
+            section5: {
+                title: '5. विश्लेषण उपकरणों के बारे में',
+                content: 'यह साइट साइट के उपयोग को समझने के लिए Google Analytics जैसे विश्लेषण उपकरणों का उपयोग कर सकती है। ये उपकरण कुकीज़ का उपयोग करके जानकारी एकत्र करते हैं लेकिन व्यक्तिगत रूप से पहचान योग्य जानकारी शामिल नहीं करते हैं। विवरण के लिए, कृपया प्रत्येक उपकरण की गोपनीयता नीति देखें।'
+            },
+            section6: {
+                title: '6. अस्वीकरण',
+                content: 'हम इस साइट की सामग्री में यथासंभव सटीक जानकारी प्रदान करने का प्रयास करते हैं, लेकिन हम इसकी सटीकता या सुरक्षा की गारंटी नहीं देते हैं। इस साइट पर पोस्ट की गई सामग्री के कारण होने वाले किसी भी नुकसान के लिए हम जिम्मेदार नहीं हैं। इसके अतिरिक्त, हम इस साइट से लिंक या बैनर के माध्यम से एक्सेस की गई साइटों द्वारा प्रदान की गई जानकारी या सेवाओं के लिए जिम्मेदार नहीं हैं।'
+            },
+            section7: {
+                title: '7. कॉपीराइट और चित्र अधिकार',
+                content: 'इस साइट पर पोस्ट किए गए पाठ और छवियों का अनधिकृत पुनरुत्पादन निषिद्ध है। यह साइट कॉपीराइट या चित्र अधिकारों का उल्लंघन करने का इरादा नहीं रखती है। यदि कॉपीराइट या चित्र अधिकारों के संबंध में कोई समस्या है, तो कृपया संपर्क फॉर्म के माध्यम से हमसे संपर्क करें। हम तुरंत प्रतिक्रिया देंगे।'
+            },
+            section8: {
+                title: '8. गोपनीयता नीति में परिवर्तन',
+                content: 'यह साइट कानून में बदलाव या आवश्यकता के अनुसार बिना किसी पूर्व सूचना के इस नीति को बदल सकती है। संशोधित गोपनीयता नीति इस साइट पर पोस्ट किए जाने के समय से प्रभावी हो जाएगी।'
+            },
+            section9: {
+                title: '9. संपर्क करें',
+                content: 'इस नीति के बारे में पूछताछ के लिए, कृपया इस साइट पर संपर्क फॉर्म के माध्यम से हमसे संपर्क करें।'
+            },
+            established: 'स्थापित: 26 नवंबर, 2025',
+            updated: 'अंतिम अपडेट: 26 नवंबर, 2025',
+            backHome: '← होम पर वापस जाएं'
         }
     },
     es: {
@@ -1030,7 +1206,51 @@ const translations = {
             tagline: 'Creando nuevas experiencias a través del juego',
             games: 'Juegos',
             info: 'Información',
+            privacy: 'Política de Privacidad',
             copyright: '© 2025 GAME PORTAL. Todos los derechos reservados.'
+        },
+        privacy: {
+            title: 'Política de Privacidad',
+            intro: 'GAME PORTAL (en adelante, "este sitio") establece la siguiente Política de Privacidad (en adelante, "esta política") con respecto al manejo de la información personal de los usuarios.',
+            section1: {
+                title: '1. Recopilación y Propósito de la Información Personal',
+                content: 'Este sitio no recopila información personal de los usuarios. La información ingresada en el formulario de contacto (nombre, dirección de correo electrónico y contenido de la consulta) se utilizará únicamente para responder a las consultas y mejorar nuestros servicios en el futuro.'
+            },
+            section2: {
+                title: '2. Provisión de Información Personal a Terceros',
+                content: 'Este sitio no proporcionará información personal de los usuarios a terceros, excepto cuando sea requerido por ley.'
+            },
+            section3: {
+                title: '3. Acerca de las Cookies',
+                content: 'Este sitio puede usar cookies para mejorar la experiencia del usuario. Las cookies son pequeños archivos de datos almacenados en su navegador y se utilizan para analizar el uso del sitio. Los usuarios pueden rechazar la aceptación de cookies a través de la configuración del navegador, pero algunas funciones pueden estar limitadas.'
+            },
+            section4: {
+                title: '4. Acerca del Almacenamiento Local',
+                content: 'Este sitio utiliza el almacenamiento local del navegador para guardar el progreso del juego, estadísticas y configuración de idioma. Esta información se almacena solo en su navegador y nunca se envía a servidores externos. La información almacenada en el almacenamiento local se puede eliminar en cualquier momento desde la configuración de su navegador.'
+            },
+            section5: {
+                title: '5. Acerca de las Herramientas de Análisis',
+                content: 'Este sitio puede usar herramientas de análisis como Google Analytics para comprender el uso del sitio. Estas herramientas recopilan información mediante cookies pero no incluyen información de identificación personal. Para obtener más detalles, consulte la política de privacidad de cada herramienta.'
+            },
+            section6: {
+                title: '6. Descargo de Responsabilidad',
+                content: 'Nos esforzamos por proporcionar información precisa en el contenido de este sitio, pero no garantizamos su exactitud o seguridad. No podemos ser responsables de ningún daño causado por el contenido publicado en este sitio. Además, no somos responsables de la información o servicios proporcionados por sitios accedidos a través de enlaces o banners desde este sitio.'
+            },
+            section7: {
+                title: '7. Derechos de Autor y Derechos de Retrato',
+                content: 'La reproducción no autorizada del texto y las imágenes publicadas en este sitio está prohibida. Este sitio no tiene la intención de infringir los derechos de autor o los derechos de retrato. Si hay algún problema con respecto a los derechos de autor o los derechos de retrato, póngase en contacto con nosotros a través del formulario de contacto. Responderemos de inmediato.'
+            },
+            section8: {
+                title: '8. Cambios en la Política de Privacidad',
+                content: 'Este sitio puede cambiar esta política sin previo aviso según lo requiera la ley o la necesidad. La política de privacidad revisada entrará en vigencia desde el momento en que se publique en este sitio.'
+            },
+            section9: {
+                title: '9. Contacto',
+                content: 'Para consultas sobre esta política, póngase en contacto con nosotros a través del formulario de contacto en este sitio.'
+            },
+            established: 'Establecido: 26 de noviembre de 2025',
+            updated: 'Última actualización: 26 de noviembre de 2025',
+            backHome: '← Volver al Inicio'
         }
     },
     fr: {
@@ -1241,7 +1461,51 @@ const translations = {
             tagline: 'Créer de nouvelles expériences par le jeu',
             games: 'Jeux',
             info: 'Information',
+            privacy: 'Politique de Confidentialité',
             copyright: '© 2025 GAME PORTAL. Tous droits réservés.'
+        },
+        privacy: {
+            title: 'Politique de Confidentialité',
+            intro: 'GAME PORTAL (ci-après dénommé "ce site") établit la Politique de Confidentialité suivante (ci-après dénommée "cette politique") concernant le traitement des informations personnelles des utilisateurs.',
+            section1: {
+                title: '1. Collecte et Objectif des Informations Personnelles',
+                content: 'Ce site ne collecte pas d\'informations personnelles auprès des utilisateurs. Les informations saisies dans le formulaire de contact (nom, adresse e-mail et contenu de la demande) seront utilisées uniquement pour répondre aux demandes et améliorer nos services à l\'avenir.'
+            },
+            section2: {
+                title: '2. Fourniture d\'Informations Personnelles à des Tiers',
+                content: 'Ce site ne fournira pas les informations personnelles des utilisateurs à des tiers, sauf si la loi l\'exige.'
+            },
+            section3: {
+                title: '3. À Propos des Cookies',
+                content: 'Ce site peut utiliser des cookies pour améliorer l\'expérience utilisateur. Les cookies sont de petits fichiers de données stockés dans votre navigateur et utilisés pour analyser l\'utilisation du site. Les utilisateurs peuvent refuser l\'acceptation des cookies via les paramètres du navigateur, mais certaines fonctionnalités peuvent être limitées.'
+            },
+            section4: {
+                title: '4. À Propos du Stockage Local',
+                content: 'Ce site utilise le stockage local du navigateur pour enregistrer la progression du jeu, les statistiques et les paramètres de langue. Ces informations sont stockées uniquement dans votre navigateur et ne sont jamais envoyées à des serveurs externes. Les informations stockées dans le stockage local peuvent être supprimées à tout moment depuis les paramètres de votre navigateur.'
+            },
+            section5: {
+                title: '5. À Propos des Outils d\'Analyse',
+                content: 'Ce site peut utiliser des outils d\'analyse tels que Google Analytics pour comprendre l\'utilisation du site. Ces outils collectent des informations à l\'aide de cookies mais n\'incluent pas d\'informations personnellement identifiables. Pour plus de détails, veuillez consulter la politique de confidentialité de chaque outil.'
+            },
+            section6: {
+                title: '6. Clause de Non-Responsabilité',
+                content: 'Nous nous efforçons de fournir des informations précises dans le contenu de ce site, mais nous ne garantissons pas son exactitude ou sa sécurité. Nous ne pouvons être tenus responsables de tout dommage causé par le contenu publié sur ce site. De plus, nous ne sommes pas responsables des informations ou services fournis par les sites accessibles via des liens ou des bannières depuis ce site.'
+            },
+            section7: {
+                title: '7. Droits d\'Auteur et Droits à l\'Image',
+                content: 'La reproduction non autorisée du texte et des images publiés sur ce site est interdite. Ce site n\'a pas l\'intention de porter atteinte aux droits d\'auteur ou aux droits à l\'image. S\'il y a des problèmes concernant les droits d\'auteur ou les droits à l\'image, veuillez nous contacter via le formulaire de contact. Nous répondrons rapidement.'
+            },
+            section8: {
+                title: '8. Modifications de la Politique de Confidentialité',
+                content: 'Ce site peut modifier cette politique sans préavis selon les exigences de la loi ou la nécessité. La politique de confidentialité révisée entrera en vigueur au moment de sa publication sur ce site.'
+            },
+            section9: {
+                title: '9. Contact',
+                content: 'Pour toute question concernant cette politique, veuillez nous contacter via le formulaire de contact sur ce site.'
+            },
+            established: 'Établi : 26 novembre 2025',
+            updated: 'Dernière mise à jour : 26 novembre 2025',
+            backHome: '← Retour à l\'Accueil'
         }
     }
 };
