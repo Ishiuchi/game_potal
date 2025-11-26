@@ -40,6 +40,96 @@
     color: #1f2937;
 }
 
+/* モード選択 */
+.mode-selection {
+    margin: 2rem auto;
+    max-width: 700px;
+}
+
+.mode-selection h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #1f2937;
+    text-align: center;
+}
+
+.mode-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.mode-btn {
+    background: white;
+    border: 3px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.mode-btn:hover {
+    border-color: #2563eb;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(37, 99, 235, 0.2);
+}
+
+.mode-btn.active {
+    border-color: #2563eb;
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.mode-icon {
+    font-size: 3rem;
+}
+
+.mode-name {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #1f2937;
+}
+
+.mode-desc {
+    font-size: 0.95rem;
+    color: #6b7280;
+}
+
+/* ブラインドモード */
+.blind-mode .timer-display::before {
+    content: attr(data-blind-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f0f9ff 0%, #dbeafe 100%);
+    border-radius: 20px;
+    font-size: 5rem;
+    color: #6b7280;
+    letter-spacing: 0.2em;
+}
+
+.blind-mode .timer-display {
+    position: relative;
+    color: transparent;
+}
+
+.blind-mode.timer-stopped .timer-display::before {
+    display: none;
+}
+
+.blind-mode.timer-stopped .timer-display {
+    color: #1f2937;
+}
+
 .rules-section {
     margin: 2rem auto;
     max-width: 600px;

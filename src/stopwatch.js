@@ -4,6 +4,7 @@
 const gameState = {
     currentTurn: 1,
     targetSeconds: [3, 5, 10],
+    isBlindMode: false,
     results: [
         { elapsed: 0, error: 0, absError: 0, rank: '' },
         { elapsed: 0, error: 0, absError: 0, rank: '' },
@@ -26,6 +27,8 @@ const elements = {
     
     // 開始画面
     startGameBtn: document.getElementById('startGameBtn'),
+    normalModeBtn: document.getElementById('normalModeBtn'),
+    blindModeBtn: document.getElementById('blindModeBtn'),
     
     // ゲーム画面
     currentTurn: document.getElementById('currentTurn'),
@@ -68,11 +71,21 @@ function init() {
 // イベントリスナー設定
 function setupEventListeners() {
     elements.startGameBtn.addEventListener('click', startGame);
+    elements.normalModeBtn.addEventListener('click', () => selectMode('normal'));
+    elements.blindModeBtn.addEventListener('click', () => selectMode('blind'));
     elements.startBtn.addEventListener('click', startTimer);
     elements.stopBtn.addEventListener('click', stopTimer);
     elements.resetBtn.addEventListener('click', resetGame);
     elements.nextTurnBtn.addEventListener('click', nextTurn);
     elements.playAgainBtn.addEventListener('click', resetGame);
+}
+
+// モード選択
+function selectMode(mode) {
+    gameState.isBlindMode = (mode === 'blind');
+    
+    elements.normalModeBtn.classList.toggle('active', mode === 'normal');
+    elements.blindModeBtn.classList.toggle('active', mode === 'blind');
 }
 
 // キーボード操作
@@ -92,6 +105,13 @@ function startGame() {
     showScreen('gameScreen');
     resetGameState();
     updateTurnDisplay();
+    
+    // ブラインドモードのクラスを適用
+    if (gameState.isBlindMode) {
+        document.body.classList.add('blind-mode');
+    } else {
+        document.body.classList.remove('blind-mode');
+    }
 }
 
 // タイマー開始
@@ -116,6 +136,11 @@ function stopTimer() {
     gameState.endTime = performance.now();
     
     clearInterval(gameState.timerInterval);
+    
+    // ブラインドモードの場合、停止時に時間を表示
+    if (gameState.isBlindMode) {
+        document.body.classList.add('timer-stopped');
+    }
     
     elements.startBtn.disabled = false;
     elements.stopBtn.disabled = true;
@@ -202,6 +227,11 @@ function resetTimerDisplay() {
     elements.statusIndicator.textContent = translations[currentLanguage]?.stopwatch?.waiting || '待機中';
     elements.startBtn.disabled = false;
     elements.stopBtn.disabled = true;
+    
+    // ブラインドモードの停止状態をリセット
+    if (gameState.isBlindMode) {
+        document.body.classList.remove('timer-stopped');
+    }
 }
 
 // 最終結果表示
