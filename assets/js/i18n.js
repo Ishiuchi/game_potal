@@ -12,7 +12,7 @@ const translations = {
         },
         hero: {
             title: '遊びたいゲームが、<br>ここにある。',
-            subtitle: 'クラシックなボードゲームで、戦略的思考と創造性を育む',
+            subtitle: 'ダウンロード不要、今すぐ遊べる無料ゲーム',
             cta: 'ゲームを始める'
         },
         common: {
@@ -223,7 +223,7 @@ const translations = {
         },
         hero: {
             title: 'The Games You Want,<br>Right Here.',
-            subtitle: 'Cultivate strategic thinking and creativity with classic board games',
+            subtitle: 'No Download Required, Play Free Games Now',
             cta: 'Start Playing'
         },
         common: {
@@ -408,7 +408,7 @@ const translations = {
         },
         hero: {
             title: '你想玩的游戏，<br>就在这里。',
-            subtitle: '通过经典棋盘游戏，培养战略思维和创造力',
+            subtitle: '无需下载，立即免费畅玩游戏',
             cta: '开始游戏'
         },
         common: {
@@ -619,7 +619,7 @@ const translations = {
         },
         hero: {
             title: 'आपके पसंदीदा गेम,<br>यहाँ हैं।',
-            subtitle: 'क्लासिक बोर्ड गेम्स के साथ रणनीतिक सोच और रचनात्मकता विकसित करें',
+            subtitle: 'डाउनलोड की आवश्यकता नहीं, अभी मुफ्त गेम खेलें',
             cta: 'खेलना शुरू करें'
         },
         common: {
@@ -830,7 +830,7 @@ const translations = {
         },
         hero: {
             title: 'Los Juegos que Quieres,<br>Aquí Están.',
-            subtitle: 'Cultiva el pensamiento estratégico y la creatividad con juegos de mesa clásicos',
+            subtitle: 'Sin Descarga, Juega Gratis Ahora',
             cta: 'Comenzar a Jugar'
         },
         common: {
@@ -1041,7 +1041,7 @@ const translations = {
         },
         hero: {
             title: 'Les Jeux que Vous Voulez,<br>Sont Ici.',
-            subtitle: 'Cultivez la pensée stratégique et la créativité avec des jeux de société classiques',
+            subtitle: 'Aucun Téléchargement Requis, Jouez Gratuitement Maintenant',
             cta: 'Commencer à Jouer'
         },
         common: {
