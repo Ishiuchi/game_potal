@@ -8,15 +8,23 @@
     <link rel="stylesheet" href="assets/css/privacy-policy.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="header-content">
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
             <a href="index.html" class="nav-logo">GAME PORTAL</a>
-            <div class="header-actions">
-                <div class="language-selector">
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html#games" class="nav-link" data-i18n="nav.games">ゲーム一覧</a></li>
+                <li><a href="index.html#ranking" class="nav-link" data-i18n="nav.ranking">人気ランキング</a></li>
+                <li><a href="index.html#contact" class="nav-link" data-i18n="nav.contact">お問い合わせ</a></li>
+                <li class="language-selector">
                     <button class="lang-btn" id="langBtn">🌐 日本語</button>
                     <div class="lang-dropdown" id="langDropdown">
                         <button onclick="changeLanguage('en')">🇬🇧 English</button>
@@ -26,10 +34,10 @@
                         <button onclick="changeLanguage('es')">🇪🇸 Español</button>
                         <button onclick="changeLanguage('fr')">🇫🇷 Français</button>
                     </div>
-                </div>
-            </div>
+                </li>
+            </ul>
         </div>
-    </header>
+    </nav>
 
     <!-- Main Content -->
     <main class="privacy-main">
@@ -134,23 +142,37 @@
 
     <script src="assets/js/i18n.js"></script>
     <script>
-        // Language selector
+        // ハンバーガーメニューの制御
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        // メニューリンクをクリックしたらメニューを閉じる
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // 言語セレクターの制御
         const langBtn = document.getElementById('langBtn');
         const langDropdown = document.getElementById('langDropdown');
 
-        langBtn.addEventListener('click', () => {
-            langDropdown.style.display = langDropdown.style.display === 'block' ? 'none' : 'block';
-        });
+        if (langBtn && langDropdown) {
+            langBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                langDropdown.classList.toggle('show');
+            });
 
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.language-selector')) {
-                langDropdown.style.display = 'none';
-            }
-        });
-
-        function changeLanguage(lang) {
-            setLanguage(lang);
-            langDropdown.style.display = 'none';
+            // ドロップダウン外をクリックしたら閉じる
+            document.addEventListener('click', () => {
+                langDropdown.classList.remove('show');
+            });
         }
     </script>
 </body>
