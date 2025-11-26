@@ -394,7 +394,9 @@ function getBestMoveByEvaluation(moves) {
  * ステータス更新
  */
 function updateStatus() {
-    const turnText = currentPlayer === BLACK ? '黒の番' : '白の番';
+    const turnText = currentPlayer === BLACK 
+        ? (translations[currentLanguage]?.othello?.blackTurn || '黒の番')
+        : (translations[currentLanguage]?.othello?.whiteTurn || '白の番');
     document.getElementById('currentTurn').textContent = turnText;
     
     const { black, white } = countStones();
@@ -458,7 +460,7 @@ function closeModal() {
  */
 function showThinking() {
     const turnEl = document.getElementById('currentTurn');
-    turnEl.textContent = '白のターン（思考中...）';
+    turnEl.textContent = translations[currentLanguage]?.othello?.whiteThinking || '白のターン（思考中...）';
     turnEl.style.opacity = '0.6';
 }
 

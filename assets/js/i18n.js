@@ -42,7 +42,10 @@ const translations = {
             rule7: '<strong>勝敗：</strong>盤面の石が多い方が勝ちです',
             backToMode: 'モード選択に戻る',
             blackScore: '⚫ 黒: <span id="finalBlackScore"></span>',
-            whiteScore: '⚪ 白: <span id="finalWhiteScore"></span>'
+            whiteScore: '⚪ 白: <span id="finalWhiteScore"></span>',
+            blackTurn: '黒の番',
+            whiteTurn: '白の番',
+            whiteThinking: '白のターン（思考中...）'
         },
         ludo: {
             pageTitle: 'ルドー - ゲームサイト',
@@ -297,7 +300,10 @@ const translations = {
             rule7: '<strong>Winner:</strong> Player with more stones wins',
             backToMode: 'Back to Mode Selection',
             blackScore: '⚫ Black: <span id="finalBlackScore"></span>',
-            whiteScore: '⚪ White: <span id="finalWhiteScore"></span>'
+            whiteScore: '⚪ White: <span id="finalWhiteScore"></span>',
+            blackTurn: "Black's Turn",
+            whiteTurn: "White's Turn",
+            whiteThinking: "White's Turn (Thinking...)"
         },
         ludo: {
             pageTitle: 'Ludo - Game Portal',
@@ -526,7 +532,10 @@ const translations = {
             rule7: '<strong>胜负：</strong>棋子多的一方获胜',
             backToMode: '返回模式选择',
             blackScore: '⚫ 黑: <span id="finalBlackScore"></span>',
-            whiteScore: '⚪ 白: <span id="finalWhiteScore"></span>'
+            whiteScore: '⚪ 白: <span id="finalWhiteScore"></span>',
+            blackTurn: '黑方回合',
+            whiteTurn: '白方回合',
+            whiteThinking: '白方回合（思考中...）'
         },
         ludo: {
             pageTitle: '飞行棋 - 游戏门户',
@@ -781,7 +790,10 @@ const translations = {
             rule7: '<strong>विजेता:</strong> अधिक पत्थर वाला खिलाड़ी जीतता है',
             backToMode: 'मोड चयन पर वापस जाएं',
             blackScore: '⚫ काला: <span id="finalBlackScore"></span>',
-            whiteScore: '⚪ सफेद: <span id="finalWhiteScore"></span>'
+            whiteScore: '⚪ सफेद: <span id="finalWhiteScore"></span>',
+            blackTurn: 'काले की बारी',
+            whiteTurn: 'सफेद की बारी',
+            whiteThinking: 'सफेद की बारी (सोच रहा है...)'
         },
         ludo: {
             pageTitle: 'लूडो - गेम पोर्टल',
@@ -1036,7 +1048,10 @@ const translations = {
             rule7: '<strong>Ganador:</strong> El jugador con más fichas gana',
             backToMode: 'Volver a Selección de Modo',
             blackScore: '⚫ Negro: <span id="finalBlackScore"></span>',
-            whiteScore: '⚪ Blanco: <span id="finalWhiteScore"></span>'
+            whiteScore: '⚪ Blanco: <span id="finalWhiteScore"></span>',
+            blackTurn: 'Turno de las Negras',
+            whiteTurn: 'Turno de las Blancas',
+            whiteThinking: 'Turno de las Blancas (Pensando...)'
         },
         ludo: {
             pageTitle: 'Ludo - Portal de Juegos',
@@ -1291,7 +1306,10 @@ const translations = {
             rule7: '<strong>Gagnant:</strong> Le joueur avec le plus de pions gagne',
             backToMode: 'Retour à la Sélection de Mode',
             blackScore: '⚫ Noir: <span id="finalBlackScore"></span>',
-            whiteScore: '⚪ Blanc: <span id="finalWhiteScore"></span>'
+            whiteScore: '⚪ Blanc: <span id="finalWhiteScore"></span>',
+            blackTurn: 'Tour des Noirs',
+            whiteTurn: 'Tour des Blancs',
+            whiteThinking: 'Tour des Blancs (Réflexion...)'
         },
         ludo: {
             pageTitle: 'Ludo - Portail de Jeux',
