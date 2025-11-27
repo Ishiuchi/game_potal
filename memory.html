@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="memory.pageTitle">神経衰弱 - ゲームサイト</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/game-page.css">
     <link rel="stylesheet" href="assets/css/memory.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,13 +12,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <div class="header-content">
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
             <a href="index.html" class="nav-logo">GAME PORTAL</a>
-            <h1 data-i18n="memory.title">🃏 神経衰弱</h1>
-            <div class="header-actions">
-                <a href="index.html" class="back-button" data-i18n="common.backHome">← ホームに戻る</a>
-                <div class="language-selector">
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html#games" class="nav-link" data-i18n="nav.games">ゲーム一覧</a></li>
+                <li><a href="index.html#ranking" class="nav-link" data-i18n="nav.ranking">人気ランキング</a></li>
+                <li><a href="index.html#contact" class="nav-link" data-i18n="nav.contact">お問い合わせ</a></li>
+                <li><a href="privacy-policy.html" class="nav-link" data-i18n="footer.privacy">プライバシーポリシー</a></li>
+                <li class="language-selector">
                     <button class="lang-btn" id="langBtn">🌐 日本語</button>
                     <div class="lang-dropdown" id="langDropdown">
                         <button onclick="changeLanguage('en')">🇬🇧 English</button>
@@ -27,24 +36,9 @@
                         <button onclick="changeLanguage('es')">🇪🇸 Español</button>
                         <button onclick="changeLanguage('fr')">🇫🇷 Français</button>
                     </div>
-                </div>
-            </div>
-            <button class="hamburger" id="hamburger" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+                </li>
+            </ul>
         </div>
-    </header>
-
-    <!-- Navigation Menu for Mobile -->
-    <nav class="nav-menu" id="navMenu">
-        <ul>
-            <li><a href="index.html#games" class="nav-link" data-i18n="nav.games">ゲーム一覧</a></li>
-            <li><a href="index.html#ranking" class="nav-link" data-i18n="nav.ranking">人気ランキング</a></li>
-            <li><a href="index.html#contact" class="nav-link" data-i18n="nav.contact">お問い合わせ</a></li>
-            <li><a href="privacy-policy.html" class="nav-link" data-i18n="footer.privacy">プライバシーポリシー</a></li>
-        </ul>
     </nav>
 
     <main>
