@@ -653,6 +653,12 @@ function getCurrentPlayer() {
  * 人間のプレイヤーがサイコロボタンをクリックした時に呼ばれる
  */
 function rollDice() {
+    // ゲームが終了している場合は何もしない
+    const allPlayersFinished = gameState.players.every(p => 
+        gameState.tokens[p.color].every(t => t.isFinished)
+    );
+    if (allPlayersFinished) return;
+    
     // 既にサイコロを振っている場合は何もしない（二重クリック防止）
     if (gameState.isRolled) return;
     
@@ -670,6 +676,14 @@ function rollDice() {
 function performDiceRoll() {
     const player = getCurrentPlayer();
     const tokens = gameState.tokens[player.color];
+    
+    // ゲームが終了しているかチェック
+    const allPlayersFinished = gameState.players.every(p => 
+        gameState.tokens[p.color].every(t => t.isFinished)
+    );
+    if (allPlayersFinished) {
+        return; // ゲーム終了済みなので何もしない
+    }
     
     // 現在のプレイヤーの全トークンがゴール済みかチェック
     const allTokensFinished = tokens.every(t => t.isFinished);
