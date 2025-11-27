@@ -1,0 +1,542 @@
+/* 2048 ゲーム固有のスタイル */
+
+.game-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* スタート画面 */
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
+#startScreen {
+    background-color: white;
+    border-radius: 15px;
+    padding: 2rem;
+    max-width: 500px;
+    margin: 2rem auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.game-title {
+    font-size: 3em;
+    font-weight: bold;
+    text-align: center;
+    background: linear-gradient(135deg, #f2b179 0%, #edc22e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 1rem;
+}
+
+.game-subtitle {
+    text-align: center;
+    color: #555;
+    font-size: 1.1em;
+    margin-bottom: 2rem;
+}
+
+.grid-size-selection {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.grid-size-selection h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-size: 1.3em;
+}
+
+.size-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.size-btn {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.size-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.size-btn.selected {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    box-shadow: 0 4px 12px rgba(245, 87, 108, 0.4);
+}
+
+.best-scores {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    color: #fff;
+}
+
+.best-scores h3 {
+    margin: 0 0 1rem;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.score-list {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.score-list div {
+    font-size: 1.1em;
+}
+
+.instructions {
+    background: #f9f6f2;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    border: 2px solid #e0e0e0;
+}
+
+.instructions h3 {
+    color: #333;
+    margin: 0 0 1rem;
+}
+
+.instructions ul {
+    color: #555;
+    line-height: 1.8;
+    list-style: none;
+    padding: 0;
+}
+
+.instructions li {
+    padding-left: 1.5rem;
+    position: relative;
+    margin-bottom: 0.5rem;
+}
+
+.instructions li::before {
+    content: "▶";
+    position: absolute;
+    left: 0;
+    color: #667eea;
+}
+
+/* ゲーム画面 */
+#gameScreen {
+    background-color: white;
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 2rem auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.game-header {
+    margin-bottom: 1.5rem;
+}
+
+.score-container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.score-box {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    color: #fff;
+    text-align: center;
+    min-width: 120px;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.score-label {
+    font-size: 0.9em;
+    opacity: 0.9;
+    margin-bottom: 5px;
+}
+
+.score-value {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+.game-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.control-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    transition: all 0.3s;
+    box-shadow: 0 2px 8px rgba(245, 87, 108, 0.3);
+}
+
+.control-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 87, 108, 0.4);
+}
+
+.control-btn:active {
+    transform: translateY(0);
+}
+
+/* グリッド */
+.grid-container {
+    background: #bbada0;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 20px auto;
+    position: relative;
+    touch-action: none;
+}
+
+.grid {
+    display: grid;
+    gap: 10px;
+    position: relative;
+}
+
+.grid.size-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.grid.size-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.grid.size-5 {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.cell {
+    background: #cdc1b4;
+    border-radius: 8px;
+    aspect-ratio: 1;
+    position: relative;
+}
+
+.tile {
+    position: absolute;
+    background: #eee4da;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #776e65;
+    transition: all 0.15s ease-in-out;
+    animation: appear 0.2s ease-in-out;
+}
+
+@keyframes appear {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes merge {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.tile.merged {
+    animation: merge 0.2s ease-in-out;
+}
+
+/* タイルの色 */
+.tile[data-value="2"] {
+    background: #eee4da;
+    color: #776e65;
+}
+
+.tile[data-value="4"] {
+    background: #ede0c8;
+    color: #776e65;
+}
+
+.tile[data-value="8"] {
+    background: #f2b179;
+    color: #f9f6f2;
+}
+
+.tile[data-value="16"] {
+    background: #f59563;
+    color: #f9f6f2;
+}
+
+.tile[data-value="32"] {
+    background: #f67c5f;
+    color: #f9f6f2;
+}
+
+.tile[data-value="64"] {
+    background: #f65e3b;
+    color: #f9f6f2;
+}
+
+.tile[data-value="128"] {
+    background: #edcf72;
+    color: #f9f6f2;
+    font-size: 0.9em;
+}
+
+.tile[data-value="256"] {
+    background: #edcc61;
+    color: #f9f6f2;
+    font-size: 0.9em;
+}
+
+.tile[data-value="512"] {
+    background: #edc850;
+    color: #f9f6f2;
+    font-size: 0.9em;
+}
+
+.tile[data-value="1024"] {
+    background: #edc53f;
+    color: #f9f6f2;
+    font-size: 0.8em;
+}
+
+.tile[data-value="2048"] {
+    background: #edc22e;
+    color: #f9f6f2;
+    font-size: 0.8em;
+}
+
+.tile[data-value="4096"] {
+    background: #3c3a32;
+    color: #f9f6f2;
+    font-size: 0.7em;
+}
+
+.tile[data-value="8192"] {
+    background: #3c3a32;
+    color: #f9f6f2;
+    font-size: 0.7em;
+}
+
+/* ゲーム情報 */
+.game-info {
+    display: flex;
+    justify-content: space-around;
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: #f9f6f2;
+    border-radius: 10px;
+    border: 2px solid #e0e0e0;
+}
+
+.info-item {
+    color: #555;
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+.controls-hint {
+    text-align: center;
+    color: #777;
+    margin-top: 1rem;
+    font-size: 0.95em;
+}
+
+/* モーダル */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 15px;
+    padding: 2.5rem;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    animation: modalAppear 0.3s ease-out;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes modalAppear {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-content h2 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 1.5rem;
+    font-size: 2em;
+}
+
+.modal-stats {
+    background: #f9f6f2;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border: 2px solid #e0e0e0;
+}
+
+.modal-stats p {
+    color: #555;
+    font-size: 1.2em;
+    margin: 10px 0;
+    font-weight: 500;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.game-btn {
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.game-btn.primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.game-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.game-btn.secondary {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(245, 87, 108, 0.3);
+}
+
+.game-btn.secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 87, 108, 0.4);
+}
+
+.game-btn:active {
+    transform: translateY(0);
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+    .game-title {
+        font-size: 3em;
+    }
+
+    .grid-container {
+        max-width: 90vw;
+    }
+
+    .size-buttons {
+        flex-direction: column;
+    }
+
+    .size-btn {
+        width: 100%;
+    }
+
+    .score-container {
+        flex-direction: row;
+    }
+
+    .score-box {
+        flex: 1;
+        min-width: auto;
+    }
+
+    .game-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .modal-content {
+        padding: 30px 20px;
+    }
+
+    .modal-buttons {
+        flex-direction: column;
+    }
+
+    .game-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-title {
+        font-size: 2.5em;
+    }
+
+    .score-value {
+        font-size: 1.5em;
+    }
+}

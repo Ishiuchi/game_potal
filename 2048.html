@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="2048.pageTitle">2048 - ゲームポータル</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/game-page.css">
+    <link rel="stylesheet" href="assets/css/2048.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">GAME PORTAL</a>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html#games" class="nav-link" data-i18n="nav.games">ゲーム一覧</a></li>
+                <li><a href="index.html#ranking" class="nav-link" data-i18n="nav.ranking">人気ランキング</a></li>
+                <li><a href="index.html#contact" class="nav-link" data-i18n="nav.contact">お問い合わせ</a></li>
+                <li><a href="privacy-policy.html" class="nav-link" data-i18n="footer.privacy">プライバシーポリシー</a></li>
+                <li class="language-selector">
+                    <button class="lang-btn" id="langBtn">🌐 日本語</button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <button onclick="changeLanguage('en')">🇬🇧 English</button>
+                        <button onclick="changeLanguage('ja')">🇯🇵 日本語</button>
+                        <button onclick="changeLanguage('zh')">🇨🇳 中文</button>
+                        <button onclick="changeLanguage('hi')">🇮🇳 हिन्दी</button>
+                        <button onclick="changeLanguage('es')">🇪🇸 Español</button>
+                        <button onclick="changeLanguage('fr')">🇫🇷 Français</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+    <div class="game-container">
+        <div id="startScreen" class="screen active">
+            <h1 class="game-title" data-i18n="2048.title">2048</h1>
+            <p class="game-subtitle" data-i18n="2048.subtitle">数字を合体させて2048を目指そう！</p>
+            
+            <div class="grid-size-selection">
+                <h2 data-i18n="2048.gridSize.title">グリッドサイズを選択</h2>
+                <div class="size-buttons">
+                    <button class="size-btn" data-size="3" data-i18n="2048.gridSize.3x3">3×3 (ハード)</button>
+                    <button class="size-btn selected" data-size="4" data-i18n="2048.gridSize.4x4">4×4 (クラシック)</button>
+                    <button class="size-btn" data-size="5" data-i18n="2048.gridSize.5x5">5×5 (イージー)</button>
+                </div>
+            </div>
+
+            <div class="best-scores">
+                <h3 data-i18n="2048.stats.bestScore">ベストスコア</h3>
+                <div class="score-list">
+                    <div><span data-i18n="2048.gridSize.3x3">3×3</span>: <span id="best3x3">0</span></div>
+                    <div><span data-i18n="2048.gridSize.4x4">4×4</span>: <span id="best4x4">0</span></div>
+                    <div><span data-i18n="2048.gridSize.5x5">5×5</span>: <span id="best5x5">0</span></div>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <h3 data-i18n="2048.instructions.title">遊び方</h3>
+                <ul>
+                    <li data-i18n="2048.instructions.move">矢印キーまたはスワイプでタイルを移動</li>
+                    <li data-i18n="2048.instructions.merge">同じ数字のタイルを合体させる</li>
+                    <li data-i18n="2048.instructions.goal">2048を作ることが目標</li>
+                </ul>
+            </div>
+
+            <button id="startBtn" class="game-btn primary" data-i18n="2048.controls.start">ゲーム開始</button>
+        </div>
+
+        <div id="gameScreen" class="screen">
+            <div class="game-header">
+                <div class="score-container">
+                    <div class="score-box">
+                        <div class="score-label" data-i18n="2048.stats.score">スコア</div>
+                        <div id="currentScore" class="score-value">0</div>
+                    </div>
+                    <div class="score-box">
+                        <div class="score-label" data-i18n="2048.stats.bestScore">ベスト</div>
+                        <div id="bestScore" class="score-value">0</div>
+                    </div>
+                </div>
+                <div class="game-controls">
+                    <button id="newGameBtn" class="control-btn" data-i18n="2048.controls.newGame">🔄 新規</button>
+                    <button id="undoBtn" class="control-btn" data-i18n="2048.controls.undo">↶ やり直し</button>
+                    <button id="hintBtn" class="control-btn" data-i18n="2048.controls.hint">💡</button>
+                </div>
+            </div>
+
+            <div id="gridContainer" class="grid-container">
+                <!-- グリッドはJSで生成 -->
+            </div>
+
+            <div class="game-info">
+                <div class="info-item">
+                    <span data-i18n="2048.stats.moves">移動回数</span>: <span id="moveCount">0</span>
+                </div>
+                <div class="info-item">
+                    <span data-i18n="2048.stats.maxTile">最大タイル</span>: <span id="maxTile">0</span>
+                </div>
+            </div>
+
+            <div class="controls-hint">
+                <p data-i18n="2048.instructions.keyboard">操作: ← ↑ → ↓ または スワイプ</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="winModal" class="modal">
+        <div class="modal-content">
+            <h2 data-i18n="2048.messages.win">おめでとうございます！2048達成！</h2>
+            <div class="modal-stats">
+                <p><span data-i18n="2048.stats.score">スコア</span>: <span id="winScore">0</span></p>
+                <p><span data-i18n="2048.stats.moves">移動回数</span>: <span id="winMoves">0</span></p>
+            </div>
+            <div class="modal-buttons">
+                <button id="keepPlayingBtn" class="game-btn primary" data-i18n="2048.messages.keepPlaying">続ける</button>
+                <button id="newGameFromWinBtn" class="game-btn secondary" data-i18n="2048.controls.newGame">新しいゲーム</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="gameOverModal" class="modal">
+        <div class="modal-content">
+            <h2 data-i18n="2048.messages.gameOver">ゲームオーバー</h2>
+            <div class="modal-stats">
+                <p><span data-i18n="2048.stats.score">スコア</span>: <span id="gameOverScore">0</span></p>
+                <p><span data-i18n="2048.stats.maxTile">最大タイル</span>: <span id="gameOverMaxTile">0</span></p>
+                <p><span data-i18n="2048.stats.moves">移動回数</span>: <span id="gameOverMoves">0</span></p>
+            </div>
+            <div class="modal-buttons">
+                <button id="tryAgainBtn" class="game-btn primary" data-i18n="2048.messages.tryAgain">もう一度</button>
+                <button id="backToMenuBtn" class="game-btn secondary" data-i18n="2048.messages.backToMenu">メニューに戻る</button>
+            </div>
+        </div>
+    </div>
+
+    </main>
+
+    <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/2048.js"></script>
+</body>
+</html>

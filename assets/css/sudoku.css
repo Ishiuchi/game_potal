@@ -1,0 +1,542 @@
+/* 数独ゲーム固有のスタイル */
+
+.game-container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* スタート画面 */
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
+#startScreen {
+    background-color: white;
+    border-radius: 15px;
+    padding: 2rem;
+    max-width: 600px;
+    margin: 2rem auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.game-title {
+    font-size: 3em;
+    font-weight: bold;
+    text-align: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 1rem;
+}
+
+.game-subtitle {
+    text-align: center;
+    color: #555;
+    font-size: 1.1em;
+    margin-bottom: 2rem;
+}
+
+.difficulty-selection {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.difficulty-selection h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-size: 1.3em;
+}
+
+.difficulty-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.difficulty-btn {
+    padding: 1.2rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.3s;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.difficulty-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.difficulty-btn:active {
+    transform: translateY(0);
+}
+
+.best-times {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    color: #fff;
+}
+
+.best-times h3 {
+    margin: 0 0 1rem;
+    text-align: center;
+    font-size: 1.3em;
+}
+
+.times-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.times-list div {
+    font-size: 1.05em;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.instructions {
+    background: #f9f6f2;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    border: 2px solid #e0e0e0;
+}
+
+.instructions h3 {
+    color: #333;
+    margin: 0 0 1rem;
+}
+
+.instructions ul {
+    color: #555;
+    line-height: 1.8;
+    list-style: none;
+    padding: 0;
+}
+
+.instructions li {
+    padding-left: 1.5rem;
+    position: relative;
+    margin-bottom: 0.5rem;
+}
+
+.instructions li::before {
+    content: "▶";
+    position: absolute;
+    left: 0;
+    color: #667eea;
+}
+
+/* ゲーム画面 */
+#gameScreen {
+    background-color: white;
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 2rem auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.game-header {
+    margin-bottom: 1.5rem;
+}
+
+.game-info-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    color: white;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.info-item {
+    font-size: 1.05em;
+    font-weight: 500;
+}
+
+.timer-display {
+    font-size: 1.3em;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.game-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.control-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    transition: all 0.3s;
+    box-shadow: 0 2px 8px rgba(245, 87, 108, 0.3);
+}
+
+.control-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 87, 108, 0.4);
+}
+
+/* 数独グリッド */
+.sudoku-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 0;
+    width: 100%;
+    max-width: 540px;
+    margin: 0 auto 2rem;
+    background: #000;
+    border: 3px solid #000;
+    aspect-ratio: 1;
+}
+
+.sudoku-cell {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1.8em;
+    font-weight: 700;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.sudoku-cell:hover:not(.fixed):not(.error) {
+    background: #f0f0f0;
+}
+
+.sudoku-cell.selected {
+    background: #e3f2fd !important;
+    box-shadow: inset 0 0 0 2px #2196f3;
+}
+
+.sudoku-cell.highlighted {
+    background: #fff9c4;
+}
+
+.sudoku-cell.same-number {
+    background: #e8f5e9;
+}
+
+.sudoku-cell.fixed {
+    color: #000;
+    font-weight: 900;
+    cursor: default;
+    background: #f5f5f5;
+}
+
+.sudoku-cell.user-input {
+    color: #0066cc;
+}
+
+.sudoku-cell.error {
+    background: #ffebee !important;
+    color: #d32f2f;
+    animation: shake 0.3s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    75% { transform: translateX(3px); }
+}
+
+/* 3×3ブロック境界 */
+.sudoku-cell:nth-child(9n + 4),
+.sudoku-cell:nth-child(9n + 7) {
+    border-left: 2px solid #000;
+}
+
+.sudoku-cell:nth-child(n + 28):nth-child(-n + 36),
+.sudoku-cell:nth-child(n + 55):nth-child(-n + 63) {
+    border-top: 2px solid #000;
+}
+
+/* メモ表示 */
+.sudoku-cell .notes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    font-size: 0.35em;
+    color: #999;
+    position: absolute;
+    inset: 2px;
+    align-items: start;
+    justify-items: center;
+}
+
+.sudoku-cell .notes span {
+    width: 100%;
+    text-align: center;
+}
+
+/* 入力パネル */
+.input-panel {
+    max-width: 540px;
+    margin: 0 auto;
+}
+
+.number-buttons {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 8px;
+    margin-bottom: 1rem;
+}
+
+.num-btn {
+    aspect-ratio: 1;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1.5em;
+    font-weight: bold;
+    border: none;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+}
+
+.num-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
+}
+
+.num-btn:active {
+    transform: scale(0.95);
+}
+
+.action-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.action-btn {
+    padding: 0.8rem;
+    font-size: 0.95em;
+    font-weight: bold;
+    border: none;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(79, 172, 254, 0.3);
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(79, 172, 254, 0.4);
+}
+
+.action-btn.active {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* モーダル */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 15px;
+    padding: 2.5rem;
+    max-width: 450px;
+    width: 90%;
+    text-align: center;
+    animation: modalAppear 0.3s ease-out;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes modalAppear {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-content h2 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 1rem;
+    font-size: 2em;
+}
+
+.modal-content p {
+    color: #555;
+    font-size: 1.1em;
+    margin-bottom: 1.5rem;
+}
+
+.modal-stats {
+    background: #f9f6f2;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border: 2px solid #e0e0e0;
+}
+
+.modal-stats p {
+    color: #555;
+    font-size: 1.1em;
+    margin: 10px 0;
+    font-weight: 500;
+}
+
+.new-record {
+    color: #f5576c;
+    font-weight: bold;
+    font-size: 1.3em !important;
+    margin-top: 1rem !important;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.game-btn {
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.game-btn.primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.game-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.game-btn.secondary {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(245, 87, 108, 0.3);
+}
+
+.game-btn.secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 87, 108, 0.4);
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    #startScreen, #gameScreen {
+        padding: 1.5rem;
+    }
+
+    .game-title {
+        font-size: 2.5em;
+    }
+
+    .difficulty-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .times-list {
+        grid-template-columns: 1fr;
+    }
+
+    .sudoku-cell {
+        font-size: 1.3em;
+    }
+
+    .number-buttons {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    .action-buttons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .game-info-bar {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-title {
+        font-size: 2em;
+    }
+
+    .sudoku-cell {
+        font-size: 1.1em;
+    }
+
+    .num-btn {
+        font-size: 1.2em;
+    }
+
+    .action-btn {
+        font-size: 0.85em;
+        padding: 0.6rem;
+    }
+}

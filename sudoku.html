@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="sudoku.title">数独 - GAME PORTAL</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/game-page.css">
+    <link rel="stylesheet" href="assets/css/sudoku.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <a href="index.html" class="nav-logo">GAME PORTAL</a>
+        <div class="nav-links">
+            <a href="index.html#games" data-i18n="nav.games">ゲーム一覧</a>
+            <a href="index.html#ranking" data-i18n="nav.ranking">人気ランキング</a>
+            <a href="index.html#contact" data-i18n="nav.contact">お問い合わせ</a>
+        </div>
+        <button class="lang-btn" id="langBtn">🌐 日本語</button>
+        <div class="lang-dropdown" id="langDropdown">
+            <button onclick="changeLanguage('en')">🇬🇧 English</button>
+            <button onclick="changeLanguage('ja')">🇯🇵 日本語</button>
+            <button onclick="changeLanguage('zh')">🇨🇳 中文</button>
+            <button onclick="changeLanguage('hi')">🇮🇳 हिन्दी</button>
+            <button onclick="changeLanguage('es')">🇪🇸 Español</button>
+            <button onclick="changeLanguage('fr')">🇫🇷 Français</button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="game-container">
+            <!-- スタート画面 -->
+            <div id="startScreen" class="screen active">
+                <h1 class="game-title" data-i18n="sudoku.title">数独</h1>
+                <p class="game-subtitle" data-i18n="sudoku.subtitle">論理的思考で全てのマスを埋めよう！</p>
+
+                <div class="difficulty-selection">
+                    <h2 data-i18n="sudoku.selectDifficulty">難易度を選択してください</h2>
+                    <div class="difficulty-buttons">
+                        <button class="difficulty-btn" data-difficulty="easy" data-i18n="sudoku.difficulty.easy">簡単</button>
+                        <button class="difficulty-btn" data-difficulty="normal" data-i18n="sudoku.difficulty.normal">普通</button>
+                        <button class="difficulty-btn" data-difficulty="hard" data-i18n="sudoku.difficulty.hard">難しい</button>
+                        <button class="difficulty-btn" data-difficulty="expert" data-i18n="sudoku.difficulty.expert">超難問</button>
+                    </div>
+                </div>
+
+                <div class="best-times">
+                    <h3 data-i18n="sudoku.bestTimes">📊 ベストタイム</h3>
+                    <div class="times-list">
+                        <div><span data-i18n="sudoku.difficulty.easy">簡単</span>: <span id="bestEasy">--:--</span></div>
+                        <div><span data-i18n="sudoku.difficulty.normal">普通</span>: <span id="bestNormal">--:--</span></div>
+                        <div><span data-i18n="sudoku.difficulty.hard">難しい</span>: <span id="bestHard">--:--</span></div>
+                        <div><span data-i18n="sudoku.difficulty.expert">超難問</span>: <span id="bestExpert">--:--</span></div>
+                    </div>
+                </div>
+
+                <div class="instructions">
+                    <h3 data-i18n="sudoku.instructions.title">ℹ️ ゲームルール</h3>
+                    <ul>
+                        <li data-i18n="sudoku.instructions.rule1">9×9のグリッドを数字で埋める</li>
+                        <li data-i18n="sudoku.instructions.rule2">各行に1～9の数字を1つずつ配置</li>
+                        <li data-i18n="sudoku.instructions.rule3">各列に1～9の数字を1つずつ配置</li>
+                        <li data-i18n="sudoku.instructions.rule4">各3×3ブロックに1～9を1つずつ配置</li>
+                        <li data-i18n="sudoku.instructions.controls">クリックで選択、数字キーまたはボタンで入力</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ゲーム画面 -->
+            <div id="gameScreen" class="screen">
+                <div class="game-header">
+                    <div class="game-info-bar">
+                        <div class="info-item">
+                            <span data-i18n="sudoku.difficulty.label">難易度</span>: <span id="currentDifficulty">普通</span>
+                        </div>
+                        <div class="info-item timer-display">
+                            <span>⏱️</span> <span id="timer">00:00</span>
+                        </div>
+                        <div class="info-item">
+                            <span data-i18n="sudoku.hintsRemaining">ヒント残り</span>: <span id="hintsCount">3</span>
+                        </div>
+                    </div>
+                    
+                    <div class="game-controls">
+                        <button class="control-btn" id="pauseBtn" data-i18n="sudoku.controls.pause">⏸️ 一時停止</button>
+                        <button class="control-btn" id="newGameBtn" data-i18n="sudoku.controls.newGame">🔄 新しいゲーム</button>
+                    </div>
+                </div>
+
+                <div id="sudokuGrid" class="sudoku-grid">
+                    <!-- グリッドはJavaScriptで生成 -->
+                </div>
+
+                <div class="input-panel">
+                    <div class="number-buttons">
+                        <button class="num-btn" data-number="1">1</button>
+                        <button class="num-btn" data-number="2">2</button>
+                        <button class="num-btn" data-number="3">3</button>
+                        <button class="num-btn" data-number="4">4</button>
+                        <button class="num-btn" data-number="5">5</button>
+                        <button class="num-btn" data-number="6">6</button>
+                        <button class="num-btn" data-number="7">7</button>
+                        <button class="num-btn" data-number="8">8</button>
+                        <button class="num-btn" data-number="9">9</button>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="action-btn" id="notesBtn" data-i18n="sudoku.controls.notes">✏️ メモ</button>
+                        <button class="action-btn" id="eraseBtn" data-i18n="sudoku.controls.erase">🗑️ 消去</button>
+                        <button class="action-btn" id="hintBtn" data-i18n="sudoku.controls.hint">💡 ヒント</button>
+                        <button class="action-btn" id="undoBtn" data-i18n="sudoku.controls.undo">↶ やり直し</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 完了モーダル -->
+        <div id="completeModal" class="modal">
+            <div class="modal-content">
+                <h2 data-i18n="sudoku.messages.complete">🎉 おめでとうございます！</h2>
+                <p data-i18n="sudoku.messages.puzzleComplete">パズルを完成させました！</p>
+                
+                <div class="modal-stats">
+                    <p><span data-i18n="sudoku.stats.time">タイム</span>: <span id="finalTime">00:00</span></p>
+                    <p><span data-i18n="sudoku.stats.difficulty">難易度</span>: <span id="finalDifficulty">普通</span></p>
+                    <p><span data-i18n="sudoku.stats.hintsUsed">ヒント使用</span>: <span id="finalHints">0</span><span data-i18n="sudoku.stats.times">回</span></p>
+                    <p id="newRecordMsg" class="new-record" style="display: none;" data-i18n="sudoku.messages.newRecord">🏆 新記録達成！</p>
+                </div>
+                
+                <div class="modal-buttons">
+                    <button class="game-btn primary" id="playAgainBtn" data-i18n="sudoku.controls.playAgain">もう一度プレイ</button>
+                    <button class="game-btn secondary" id="backToMenuBtn" data-i18n="sudoku.controls.backToMenu">メニューに戻る</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 一時停止モーダル -->
+        <div id="pauseModal" class="modal">
+            <div class="modal-content">
+                <h2 data-i18n="sudoku.messages.paused">⏸️ 一時停止中</h2>
+                <div class="modal-buttons">
+                    <button class="game-btn primary" id="resumeBtn" data-i18n="sudoku.controls.resume">再開</button>
+                    <button class="game-btn secondary" id="quitBtn" data-i18n="sudoku.controls.quit">ゲームを終了</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/sudoku.js"></script>
+</body>
+</html>

@@ -194,7 +194,61 @@ const translations = {
                 players: '👥 1プレイヤー',
                 duration: '⏱️ 1分'
             },
+            2048: {
+                tag: 'パズルゲーム',
+                title: '2048',
+                description: '数字を合体させて2048を目指すパズルゲーム。シンプルなルールながら戦略性が高く、世界中で人気のゲームです。3×3から5×5まで難易度を選択できます。',
+                players: '👥 1プレイヤー',
+                duration: '⏱️ 3-15分'
+            },
+            sudoku: {
+                tag: 'パズルゲーム',
+                title: '数独',
+                description: '9×9のグリッドに1～9の数字を配置するロジックパズル。各行、各列、各3×3ブロックに重複なく配置する論理的思考力が試されるゲームです。',
+                players: '👥 1プレイヤー',
+                duration: '⏱️ 5-40分'
+            },
             playBtn: 'プレイする →'
+        },
+        '2048': {
+            title: '2048',
+            subtitle: '数字を合体させて2048を目指そう！',
+            gridSize: {
+                title: 'グリッドサイズを選択',
+                '3x3': '3×3 (ハード)',
+                '4x4': '4×4 (クラシック)',
+                '5x5': '5×5 (イージー)'
+            },
+            controls: {
+                start: 'ゲーム開始',
+                newGame: '新しいゲーム',
+                undo: 'やり直し',
+                hint: 'ヒント'
+            },
+            stats: {
+                score: 'スコア',
+                bestScore: 'ベストスコア',
+                moves: '移動回数',
+                maxTile: '最大タイル'
+            },
+            messages: {
+                win: 'おめでとうございます！2048達成！',
+                keepPlaying: '続ける',
+                gameOver: 'ゲームオーバー',
+                tryAgain: 'もう一度',
+                backToMenu: 'メニューに戻る',
+                newRecord: '新記録達成！',
+                noUndo: 'やり直しできません',
+                noHints: 'ヒントを使い切りました'
+            },
+            instructions: {
+                title: '遊び方',
+                move: '矢印キーまたはスワイプでタイルを移動',
+                merge: '同じ数字のタイルを合体させる',
+                goal: '2048を作ることが目標',
+                keyboard: 'キーボード: ← ↑ → ↓',
+                touch: 'タッチ: スワイプで移動'
+            }
         },
         stopwatch: {
             title: '⏱️ ストップウォッチチャレンジ',
@@ -238,6 +292,55 @@ const translations = {
             rankC: '普通',
             rankD: '要練習',
             rankE: 'ネタレベル'
+        },
+        sudoku: {
+            title: '数独',
+            subtitle: '論理的思考で全てのマスを埋めよう！',
+            selectDifficulty: '難易度を選択してください',
+            difficulty: {
+                label: '難易度',
+                easy: '簡単',
+                normal: '普通',
+                hard: '難しい',
+                expert: '超難問'
+            },
+            bestTimes: '📊 ベストタイム',
+            instructions: {
+                title: 'ℹ️ ゲームルール',
+                rule1: '9×9のグリッドを数字で埋める',
+                rule2: '各行に1～9の数字を1つずつ配置',
+                rule3: '各列に1～9の数字を1つずつ配置',
+                rule4: '各3×3ブロックに1～9を1つずつ配置',
+                controls: 'クリックで選択、数字キーまたはボタンで入力'
+            },
+            controls: {
+                hint: '💡 ヒント',
+                undo: '↶ やり直し',
+                erase: '🗑️ 消去',
+                notes: '✏️ メモ',
+                pause: '⏸️ 一時停止',
+                newGame: '🔄 新しいゲーム',
+                playAgain: 'もう一度プレイ',
+                backToMenu: 'メニューに戻る',
+                resume: '再開',
+                quit: 'ゲームを終了'
+            },
+            hintsRemaining: 'ヒント残り',
+            stats: {
+                time: 'タイム',
+                bestTime: 'ベストタイム',
+                difficulty: '難易度',
+                hintsUsed: 'ヒント使用',
+                times: '回'
+            },
+            messages: {
+                complete: '🎉 おめでとうございます！',
+                puzzleComplete: 'パズルを完成させました！',
+                newRecord: '🏆 新記録達成！',
+                paused: '⏸️ 一時停止中',
+                confirmNew: '新しいゲームを始めますか？',
+                noHints: 'ヒントがありません'
+            }
         },
         contact: {
             title: 'お問い合わせ',
@@ -476,7 +579,61 @@ const translations = {
                 players: '👥 1 Player',
                 duration: '⏱️ 1 min'
             },
+            2048: {
+                tag: 'Puzzle Game',
+                title: '2048',
+                description: 'A puzzle game where you merge numbers to reach 2048. Simple rules but highly strategic, popular worldwide. Choose difficulty from 3×3 to 5×5 grid sizes.',
+                players: '👥 1 Player',
+                duration: '⏱️ 3-15 min'
+            },
+            sudoku: {
+                tag: 'Puzzle Game',
+                title: 'Sudoku',
+                description: 'A logic puzzle where you place numbers 1-9 in a 9×9 grid. Test your logical thinking as you ensure no duplicates in each row, column, and 3×3 block.',
+                players: '👥 1 Player',
+                duration: '⏱️ 5-40 min'
+            },
             playBtn: 'Play Now →'
+        },
+        '2048': {
+            title: '2048',
+            subtitle: 'Merge numbers to reach 2048!',
+            gridSize: {
+                title: 'Select Grid Size',
+                '3x3': '3×3 (Hard)',
+                '4x4': '4×4 (Classic)',
+                '5x5': '5×5 (Easy)'
+            },
+            controls: {
+                start: 'Start Game',
+                newGame: 'New Game',
+                undo: 'Undo',
+                hint: 'Hint'
+            },
+            stats: {
+                score: 'Score',
+                bestScore: 'Best Score',
+                moves: 'Moves',
+                maxTile: 'Max Tile'
+            },
+            messages: {
+                win: 'Congratulations! You reached 2048!',
+                keepPlaying: 'Keep Going',
+                gameOver: 'Game Over',
+                tryAgain: 'Try Again',
+                backToMenu: 'Back to Menu',
+                newRecord: 'New Record!',
+                noUndo: 'Cannot undo',
+                noHints: 'No hints remaining'
+            },
+            instructions: {
+                title: 'How to Play',
+                move: 'Move tiles with arrow keys or swipe',
+                merge: 'Merge tiles with the same number',
+                goal: 'Reach 2048 tile',
+                keyboard: 'Keyboard: ← ↑ → ↓',
+                touch: 'Touch: Swipe to move'
+            }
         },
         stopwatch: {
             title: '⏱️ Stopwatch Challenge',
@@ -520,6 +677,55 @@ const translations = {
             rankC: 'Average',
             rankD: 'Needs Practice',
             rankE: 'Epic Fail'
+        },
+        sudoku: {
+            title: 'Sudoku',
+            subtitle: 'Fill all squares with logical thinking!',
+            selectDifficulty: 'Select Difficulty',
+            difficulty: {
+                label: 'Difficulty',
+                easy: 'Easy',
+                normal: 'Normal',
+                hard: 'Hard',
+                expert: 'Expert'
+            },
+            bestTimes: '📊 Best Times',
+            instructions: {
+                title: 'ℹ️ Game Rules',
+                rule1: 'Fill the 9×9 grid with numbers',
+                rule2: 'Place 1-9 once in each row',
+                rule3: 'Place 1-9 once in each column',
+                rule4: 'Place 1-9 once in each 3×3 block',
+                controls: 'Click to select, use number keys or buttons'
+            },
+            controls: {
+                hint: '💡 Hint',
+                undo: '↶ Undo',
+                erase: '🗑️ Erase',
+                notes: '✏️ Notes',
+                pause: '⏸️ Pause',
+                newGame: '🔄 New Game',
+                playAgain: 'Play Again',
+                backToMenu: 'Back to Menu',
+                resume: 'Resume',
+                quit: 'Quit Game'
+            },
+            hintsRemaining: 'Hints Left',
+            stats: {
+                time: 'Time',
+                bestTime: 'Best Time',
+                difficulty: 'Difficulty',
+                hintsUsed: 'Hints Used',
+                times: ''
+            },
+            messages: {
+                complete: '🎉 Congratulations!',
+                puzzleComplete: 'You completed the puzzle!',
+                newRecord: '🏆 New Record!',
+                paused: '⏸️ Paused',
+                confirmNew: 'Start a new game?',
+                noHints: 'No hints available'
+            }
         },
         contact: {
             title: 'Contact Us',
@@ -784,7 +990,61 @@ const translations = {
                 players: '👥 1名玩家',
                 duration: '⏱️ 1分钟'
             },
+            2048: {
+                tag: '益智游戏',
+                title: '2048',
+                description: '合并数字达到2048的益智游戏。规则简单但策略性强，风靡全球。可选择3×3到5×5的难度。',
+                players: '👥 1名玩家',
+                duration: '⏱️ 3-15分钟'
+            },
+            sudoku: {
+                tag: '益智游戏',
+                title: '数独',
+                description: '在9×9网格中放置1-9数字的逻辑谜题。每行、每列、每个3×3方块中无重复，考验逻辑思维能力。',
+                players: '👥 1名玩家',
+                duration: '⏱️ 5-40分钟'
+            },
             playBtn: '开始游戏 →'
+        },
+        '2048': {
+            title: '2048',
+            subtitle: '合并数字达到2048！',
+            gridSize: {
+                title: '选择网格大小',
+                '3x3': '3×3 (困难)',
+                '4x4': '4×4 (经典)',
+                '5x5': '5×5 (简单)'
+            },
+            controls: {
+                start: '开始游戏',
+                newGame: '新游戏',
+                undo: '撤销',
+                hint: '提示'
+            },
+            stats: {
+                score: '分数',
+                bestScore: '最高分',
+                moves: '移动次数',
+                maxTile: '最大方块'
+            },
+            messages: {
+                win: '恭喜！达到2048！',
+                keepPlaying: '继续',
+                gameOver: '游戏结束',
+                tryAgain: '再试一次',
+                backToMenu: '返回菜单',
+                newRecord: '新纪录！',
+                noUndo: '无法撤销',
+                noHints: '没有提示了'
+            },
+            instructions: {
+                title: '玩法',
+                move: '用方向键或滑动移动方块',
+                merge: '合并相同数字的方块',
+                goal: '达到2048方块',
+                keyboard: '键盘: ← ↑ → ↓',
+                touch: '触摸: 滑动移动'
+            }
         },
         stopwatch: {
             title: '⏱️ 秒表挑战',
@@ -828,6 +1088,55 @@ const translations = {
             rankC: '普通',
             rankD: '需练习',
             rankE: '搞笑级'
+        },
+        sudoku: {
+            title: '数独',
+            subtitle: '用逻辑思维填满所有方格！',
+            selectDifficulty: '请选择难度',
+            difficulty: {
+                label: '难度',
+                easy: '简单',
+                normal: '普通',
+                hard: '困难',
+                expert: '超难'
+            },
+            bestTimes: '📊 最佳时间',
+            instructions: {
+                title: 'ℹ️ 游戏规则',
+                rule1: '填满9×9网格的数字',
+                rule2: '每行放置1-9的数字各一次',
+                rule3: '每列放置1-9的数字各一次',
+                rule4: '每个3×3方块放置1-9各一次',
+                controls: '点击选择，用数字键或按钮输入'
+            },
+            controls: {
+                hint: '💡 提示',
+                undo: '↶ 撤销',
+                erase: '🗑️ 清除',
+                notes: '✏️ 备注',
+                pause: '⏸️ 暂停',
+                newGame: '🔄 新游戏',
+                playAgain: '再玩一次',
+                backToMenu: '返回菜单',
+                resume: '继续',
+                quit: '结束游戏'
+            },
+            hintsRemaining: '剩余提示',
+            stats: {
+                time: '时间',
+                bestTime: '最佳时间',
+                difficulty: '难度',
+                hintsUsed: '使用提示',
+                times: '次'
+            },
+            messages: {
+                complete: '🎉 恭喜你！',
+                puzzleComplete: '完成了谜题！',
+                newRecord: '🏆 新纪录！',
+                paused: '⏸️ 暂停中',
+                confirmNew: '开始新游戏吗？',
+                noHints: '没有提示了'
+            }
         },
         contact: {
             title: '联系我们',
@@ -1092,7 +1401,54 @@ const translations = {
                 players: '👥 1 खिलाड़ी',
                 duration: '⏱️ 1 मिनट'
             },
+            2048: {
+                tag: 'पहेली खेल',
+                title: '2048',
+                description: '2048 तक पहुंचने के लिए संख्याओं को मर्ज करें। सरल नियम लेकिन अत्यधिक रणनीतिक, दुनिया भर में लोकप्रिय। 3×3 से 5×5 ग्रिड आकार से कठिनाई चुनें।',
+                players: '👥 1 खिलाड़ी',
+                duration: '⏱️ 3-15 मिनट'
+            },
             playBtn: 'अभी खेलें →'
+        },
+        '2048': {
+            title: '2048',
+            subtitle: '2048 तक पहुंचने के लिए संख्याएं मर्ज करें!',
+            gridSize: {
+                title: 'ग्रिड आकार चुनें',
+                '3x3': '3×3 (कठिन)',
+                '4x4': '4×4 (क्लासिक)',
+                '5x5': '5×5 (आसान)'
+            },
+            controls: {
+                start: 'खेल शुरू करें',
+                newGame: 'नया खेल',
+                undo: 'पूर्ववत करें',
+                hint: 'संकेत'
+            },
+            stats: {
+                score: 'स्कोर',
+                bestScore: 'सर्वश्रेष्ठ स्कोर',
+                moves: 'चालें',
+                maxTile: 'अधिकतम टाइल'
+            },
+            messages: {
+                win: 'बधाई हो! आप 2048 पर पहुंच गए!',
+                keepPlaying: 'जारी रखें',
+                gameOver: 'खेल समाप्त',
+                tryAgain: 'फिर कोशिश करें',
+                backToMenu: 'मेनू पर वापस',
+                newRecord: 'नया रिकॉर्ड!',
+                noUndo: 'पूर्ववत नहीं कर सकते',
+                noHints: 'कोई संकेत शेष नहीं'
+            },
+            instructions: {
+                title: 'कैसे खेलें',
+                move: 'तीर कुंजी या स्वाइप से टाइलें हिलाएं',
+                merge: 'समान संख्या वाली टाइलें मर्ज करें',
+                goal: '2048 टाइल तक पहुंचें',
+                keyboard: 'कीबोर्ड: ← ↑ → ↓',
+                touch: 'टच: स्वाइप करके हिलाएं'
+            }
         },
         stopwatch: {
             title: '⏱️ स्टॉपवॉच चुनौती',
@@ -1400,7 +1756,54 @@ const translations = {
                 players: '👥 1 Jugador',
                 duration: '⏱️ 1 min'
             },
+            2048: {
+                tag: 'Juego de Puzzle',
+                title: '2048',
+                description: 'Un juego de puzzle donde fusionas números para alcanzar 2048. Reglas simples pero altamente estratégico, popular en todo el mundo. Elige la dificultad desde cuadrícula 3×3 hasta 5×5.',
+                players: '👥 1 Jugador',
+                duration: '⏱️ 3-15 min'
+            },
             playBtn: 'Jugar Ahora →'
+        },
+        '2048': {
+            title: '2048',
+            subtitle: '¡Fusiona números para alcanzar 2048!',
+            gridSize: {
+                title: 'Seleccionar Tamaño de Cuadrícula',
+                '3x3': '3×3 (Difícil)',
+                '4x4': '4×4 (Clásico)',
+                '5x5': '5×5 (Fácil)'
+            },
+            controls: {
+                start: 'Iniciar Juego',
+                newGame: 'Nuevo Juego',
+                undo: 'Deshacer',
+                hint: 'Pista'
+            },
+            stats: {
+                score: 'Puntuación',
+                bestScore: 'Mejor Puntuación',
+                moves: 'Movimientos',
+                maxTile: 'Ficha Máxima'
+            },
+            messages: {
+                win: '¡Felicitaciones! ¡Alcanzaste 2048!',
+                keepPlaying: 'Continuar',
+                gameOver: 'Juego Terminado',
+                tryAgain: 'Intentar de Nuevo',
+                backToMenu: 'Volver al Menú',
+                newRecord: '¡Nuevo Récord!',
+                noUndo: 'No se puede deshacer',
+                noHints: 'No quedan pistas'
+            },
+            instructions: {
+                title: 'Cómo Jugar',
+                move: 'Mueve fichas con teclas de flecha o desliza',
+                merge: 'Fusiona fichas con el mismo número',
+                goal: 'Alcanza la ficha 2048',
+                keyboard: 'Teclado: ← ↑ → ↓',
+                touch: 'Táctil: Desliza para mover'
+            }
         },
         stopwatch: {
             title: '⏱️ Desafío de Cronómetro',
@@ -1708,7 +2111,54 @@ const translations = {
                 players: '👥 1 Joueur',
                 duration: '⏱️ 1 min'
             },
+            2048: {
+                tag: 'Jeu de Puzzle',
+                title: '2048',
+                description: 'Un jeu de puzzle où vous fusionnez des nombres pour atteindre 2048. Règles simples mais très stratégique, populaire dans le monde entier. Choisissez la difficulté de grille 3×3 à 5×5.',
+                players: '👥 1 Joueur',
+                duration: '⏱️ 3-15 min'
+            },
             playBtn: 'Jouer Maintenant →'
+        },
+        '2048': {
+            title: '2048',
+            subtitle: 'Fusionnez les nombres pour atteindre 2048!',
+            gridSize: {
+                title: 'Sélectionner la Taille de Grille',
+                '3x3': '3×3 (Difficile)',
+                '4x4': '4×4 (Classique)',
+                '5x5': '5×5 (Facile)'
+            },
+            controls: {
+                start: 'Commencer le Jeu',
+                newGame: 'Nouveau Jeu',
+                undo: 'Annuler',
+                hint: 'Indice'
+            },
+            stats: {
+                score: 'Score',
+                bestScore: 'Meilleur Score',
+                moves: 'Mouvements',
+                maxTile: 'Tuile Max'
+            },
+            messages: {
+                win: 'Félicitations! Vous avez atteint 2048!',
+                keepPlaying: 'Continuer',
+                gameOver: 'Jeu Terminé',
+                tryAgain: 'Réessayer',
+                backToMenu: 'Retour au Menu',
+                newRecord: 'Nouveau Record!',
+                noUndo: 'Impossible d\'annuler',
+                noHints: 'Plus d\'indices'
+            },
+            instructions: {
+                title: 'Comment Jouer',
+                move: 'Déplacez les tuiles avec les flèches ou glissez',
+                merge: 'Fusionnez les tuiles avec le même nombre',
+                goal: 'Atteignez la tuile 2048',
+                keyboard: 'Clavier: ← ↑ → ↓',
+                touch: 'Tactile: Glissez pour déplacer'
+            }
         },
         stopwatch: {
             title: '⏱️ Défi Chronomètre',
