@@ -14,20 +14,30 @@
 <body>
     <!-- Navigation -->
     <nav class="nav">
-        <a href="index.html" class="nav-logo">GAME PORTAL</a>
-        <div class="nav-links">
-            <a href="index.html#games" data-i18n="nav.games">ゲーム一覧</a>
-            <a href="index.html#ranking" data-i18n="nav.ranking">人気ランキング</a>
-            <a href="index.html#contact" data-i18n="nav.contact">お問い合わせ</a>
-        </div>
-        <button class="lang-btn" id="langBtn">🌐 日本語</button>
-        <div class="lang-dropdown" id="langDropdown">
-            <button onclick="changeLanguage('en')">🇬🇧 English</button>
-            <button onclick="changeLanguage('ja')">🇯🇵 日本語</button>
-            <button onclick="changeLanguage('zh')">🇨🇳 中文</button>
-            <button onclick="changeLanguage('hi')">🇮🇳 हिन्दी</button>
-            <button onclick="changeLanguage('es')">🇪🇸 Español</button>
-            <button onclick="changeLanguage('fr')">🇫🇷 Français</button>
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">GAME PORTAL</a>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html#games" class="nav-link" data-i18n="nav.games">ゲーム一覧</a></li>
+                <li><a href="index.html#ranking" class="nav-link" data-i18n="nav.ranking">人気ランキング</a></li>
+                <li><a href="index.html#contact" class="nav-link" data-i18n="nav.contact">お問い合わせ</a></li>
+                <li><a href="privacy-policy.html" class="nav-link" data-i18n="footer.privacy">プライバシーポリシー</a></li>
+                <li class="language-selector">
+                    <button class="lang-btn" id="langBtn">🌐 日本語</button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <button onclick="changeLanguage('en')">🇬🇧 English</button>
+                        <button onclick="changeLanguage('ja')">🇯🇵 日本語</button>
+                        <button onclick="changeLanguage('zh')">🇨🇳 中文</button>
+                        <button onclick="changeLanguage('hi')">🇮🇳 हिन्दी</button>
+                        <button onclick="changeLanguage('es')">🇪🇸 Español</button>
+                        <button onclick="changeLanguage('fr')">🇫🇷 Français</button>
+                    </div>
+                </li>
+            </ul>
         </div>
     </nav>
 
