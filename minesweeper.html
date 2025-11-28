@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="minesweeper.title">マインスイーパー - GAME PORTAL</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/game-page.css">
+    <link rel="stylesheet" href="assets/css/minesweeper.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <a href="index.html" class="nav-logo">GAME PORTAL</a>
+        <div class="nav-links">
+            <a href="index.html#games" data-i18n="nav.games">ゲーム一覧</a>
+            <a href="index.html#ranking" data-i18n="nav.ranking">人気ランキング</a>
+            <a href="index.html#contact" data-i18n="nav.contact">お問い合わせ</a>
+        </div>
+        <button class="lang-btn" id="langBtn">🌐 日本語</button>
+        <div class="lang-dropdown" id="langDropdown">
+            <button onclick="changeLanguage('en')">🇬🇧 English</button>
+            <button onclick="changeLanguage('ja')">🇯🇵 日本語</button>
+            <button onclick="changeLanguage('zh')">🇨🇳 中文</button>
+            <button onclick="changeLanguage('hi')">🇮🇳 हिन्दी</button>
+            <button onclick="changeLanguage('es')">🇪🇸 Español</button>
+            <button onclick="changeLanguage('fr')">🇫🇷 Français</button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="game-container">
+            <!-- スタート画面 -->
+            <div id="startScreen" class="screen active">
+                <h1 class="game-title" data-i18n="minesweeper.title">💣 マインスイーパー</h1>
+                <p class="game-subtitle" data-i18n="minesweeper.subtitle">地雷を避けて全てのマスを開こう！</p>
+
+                <div class="difficulty-selection">
+                    <h2 data-i18n="minesweeper.selectDifficulty">難易度を選択してください</h2>
+                    <div class="difficulty-buttons">
+                        <button class="difficulty-btn" data-difficulty="beginner">
+                            <div class="diff-title" data-i18n="minesweeper.difficulty.beginner">初級</div>
+                            <div class="diff-info">9×9 (10 💣)</div>
+                        </button>
+                        <button class="difficulty-btn" data-difficulty="intermediate">
+                            <div class="diff-title" data-i18n="minesweeper.difficulty.intermediate">中級</div>
+                            <div class="diff-info">16×16 (40 💣)</div>
+                        </button>
+                        <button class="difficulty-btn" data-difficulty="expert">
+                            <div class="diff-title" data-i18n="minesweeper.difficulty.expert">上級</div>
+                            <div class="diff-info">30×16 (99 💣)</div>
+                        </button>
+                        <button class="difficulty-btn" data-difficulty="custom">
+                            <div class="diff-title" data-i18n="minesweeper.difficulty.custom">カスタム</div>
+                            <div class="diff-info" data-i18n="minesweeper.customInfo">自由設定</div>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="best-times">
+                    <h3 data-i18n="minesweeper.bestTimes">🏆 ベストタイム</h3>
+                    <div class="times-list">
+                        <div><span data-i18n="minesweeper.difficulty.beginner">初級</span>: <span id="bestBeginner">--:--</span></div>
+                        <div><span data-i18n="minesweeper.difficulty.intermediate">中級</span>: <span id="bestIntermediate">--:--</span></div>
+                        <div><span data-i18n="minesweeper.difficulty.expert">上級</span>: <span id="bestExpert">--:--</span></div>
+                    </div>
+                </div>
+
+                <div class="instructions">
+                    <h3 data-i18n="minesweeper.instructions.title">ℹ️ ゲームルール</h3>
+                    <ul>
+                        <li data-i18n="minesweeper.instructions.rule1">地雷を避けてマスを開く</li>
+                        <li data-i18n="minesweeper.instructions.rule2">数字は周囲8マスの地雷数を示す</li>
+                        <li data-i18n="minesweeper.instructions.rule3">右クリックで旗を立てる</li>
+                        <li data-i18n="minesweeper.instructions.rule4">全ての安全なマスを開けば勝利</li>
+                        <li data-i18n="minesweeper.instructions.controls">左クリック: 開く / 右クリック: 旗</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- カスタム設定画面 -->
+            <div id="customScreen" class="screen">
+                <h2 data-i18n="minesweeper.customSettings">カスタム設定</h2>
+                
+                <div class="custom-settings">
+                    <div class="setting-group">
+                        <label data-i18n="minesweeper.width">幅:</label>
+                        <input type="number" id="customWidth" min="5" max="50" value="15">
+                    </div>
+                    <div class="setting-group">
+                        <label data-i18n="minesweeper.height">高さ:</label>
+                        <input type="number" id="customHeight" min="5" max="30" value="15">
+                    </div>
+                    <div class="setting-group">
+                        <label data-i18n="minesweeper.mines">地雷数:</label>
+                        <input type="number" id="customMines" min="1" max="200" value="30">
+                    </div>
+                    <div class="setting-info">
+                        <span data-i18n="minesweeper.density">密度:</span> <span id="densityDisplay">13.3%</span>
+                    </div>
+                </div>
+
+                <div class="custom-buttons">
+                    <button class="game-btn primary" id="startCustomBtn" data-i18n="minesweeper.controls.startGame">ゲーム開始</button>
+                    <button class="game-btn secondary" id="backToMenuBtn" data-i18n="minesweeper.controls.backToMenu">戻る</button>
+                </div>
+            </div>
+
+            <!-- ゲーム画面 -->
+            <div id="gameScreen" class="screen">
+                <div class="game-header">
+                    <div class="game-info-bar">
+                        <div class="info-item mines-display">
+                            <span>💣</span> <span id="minesCount">10</span>
+                        </div>
+                        <div class="info-item status-display">
+                            <button id="resetBtn" class="emoji-btn">😊</button>
+                        </div>
+                        <div class="info-item timer-display">
+                            <span>⏱️</span> <span id="timer">000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="gameBoard" class="game-board">
+                    <!-- グリッドはJavaScriptで生成 -->
+                </div>
+
+                <div class="game-controls">
+                    <button class="control-btn" id="newGameBtn" data-i18n="minesweeper.controls.newGame">🔄 新しいゲーム</button>
+                    <button class="control-btn" id="menuBtn" data-i18n="minesweeper.controls.backToMenu">🏠 メニューに戻る</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 完了モーダル -->
+        <div id="completeModal" class="modal">
+            <div class="modal-content">
+                <h2 id="resultTitle" data-i18n="minesweeper.messages.win">🎉 クリア！</h2>
+                <p id="resultMessage"></p>
+                
+                <div class="modal-stats">
+                    <p><span data-i18n="minesweeper.stats.time">タイム</span>: <span id="finalTime">0</span><span data-i18n="minesweeper.stats.seconds">秒</span></p>
+                    <p><span data-i18n="minesweeper.stats.difficulty">難易度</span>: <span id="finalDifficulty"></span></p>
+                    <p id="newRecordMsg" class="new-record" style="display: none;" data-i18n="minesweeper.messages.newRecord">🏆 新記録達成！</p>
+                </div>
+                
+                <div class="modal-buttons">
+                    <button class="game-btn primary" id="playAgainBtn" data-i18n="minesweeper.controls.playAgain">もう一度プレイ</button>
+                    <button class="game-btn secondary" id="backToStartBtn" data-i18n="minesweeper.controls.backToMenu">メニューに戻る</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/minesweeper.js"></script>
+</body>
+</html>

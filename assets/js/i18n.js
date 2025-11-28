@@ -208,6 +208,13 @@ const translations = {
                 players: '👥 1プレイヤー',
                 duration: '⏱️ 5-40分'
             },
+            minesweeper: {
+                tag: 'パズルゲーム',
+                title: 'マインスイーパー',
+                description: '地雷を踏まないようにすべてのマスを開ける論理パズル。3つの難易度とカスタムモードで自分に合った挑戦が可能です。',
+                players: '👥 1プレイヤー',
+                duration: '⏱️ 1-20分'
+            },
             playBtn: 'プレイする →'
         },
         '2048': {
@@ -340,6 +347,64 @@ const translations = {
                 paused: '⏸️ 一時停止中',
                 confirmNew: '新しいゲームを始めますか？',
                 noHints: 'ヒントがありません'
+            }
+        },
+        minesweeper: {
+            title: 'マインスイーパー',
+            subtitle: '地雷を避けて全てのマスを開けよう！',
+            selectDifficulty: '難易度を選択してください',
+            difficulty: {
+                beginner: '初級',
+                intermediate: '中級',
+                expert: '上級',
+                custom: 'カスタム'
+            },
+            difficultyInfo: {
+                beginner: '9×9 (地雷10個)',
+                intermediate: '16×16 (地雷40個)',
+                expert: '30×16 (地雷99個)',
+                custom: '自由設定'
+            },
+            bestTimes: '📊 ベストタイム',
+            customSettings: {
+                title: 'カスタム設定',
+                width: '幅',
+                height: '高さ',
+                mines: '地雷数',
+                density: '地雷密度',
+                start: 'スタート',
+                back: '戻る',
+                widthRange: '5-50',
+                heightRange: '5-30',
+                minesRange: '1-999'
+            },
+            instructions: {
+                title: 'ℹ️ ゲームルール',
+                rule1: '左クリックでマスを開く',
+                rule2: '右クリックで旗を立てる',
+                rule3: '数字は周囲の地雷の数を示す',
+                rule4: '全ての地雷以外のマスを開ければクリア',
+                rule5: '地雷を踏むとゲームオーバー',
+                hint: '💡 最初のクリックは必ず安全です'
+            },
+            controls: {
+                newGame: '🔄 新しいゲーム',
+                menu: '📋 メニュー',
+                playAgain: 'もう一度プレイ',
+                backToStart: 'スタート画面へ'
+            },
+            stats: {
+                time: 'タイム',
+                difficulty: '難易度',
+                minesRemaining: '残り地雷'
+            },
+            messages: {
+                win: '🎉 クリア！',
+                complete: 'おめでとうございます！',
+                gameOver: '💣 ゲームオーバー',
+                tryAgain: 'もう一度チャレンジ！',
+                newRecord: '🏆 新記録達成！',
+                invalidSize: 'グリッドサイズが無効です'
             }
         },
         contact: {
@@ -593,6 +658,13 @@ const translations = {
                 players: '👥 1 Player',
                 duration: '⏱️ 5-40 min'
             },
+            minesweeper: {
+                tag: 'Puzzle Game',
+                title: 'Minesweeper',
+                description: 'A logic puzzle where you reveal all squares without hitting mines. Choose from 3 difficulty levels or custom mode for your challenge.',
+                players: '👥 1 Player',
+                duration: '⏱️ 1-20 min'
+            },
             playBtn: 'Play Now →'
         },
         '2048': {
@@ -725,6 +797,64 @@ const translations = {
                 paused: '⏸️ Paused',
                 confirmNew: 'Start a new game?',
                 noHints: 'No hints available'
+            }
+        },
+        minesweeper: {
+            title: 'Minesweeper',
+            subtitle: 'Avoid mines and reveal all squares!',
+            selectDifficulty: 'Select Difficulty',
+            difficulty: {
+                beginner: 'Beginner',
+                intermediate: 'Intermediate',
+                expert: 'Expert',
+                custom: 'Custom'
+            },
+            difficultyInfo: {
+                beginner: '9×9 (10 mines)',
+                intermediate: '16×16 (40 mines)',
+                expert: '30×16 (99 mines)',
+                custom: 'Custom Settings'
+            },
+            bestTimes: '📊 Best Times',
+            customSettings: {
+                title: 'Custom Settings',
+                width: 'Width',
+                height: 'Height',
+                mines: 'Mines',
+                density: 'Mine Density',
+                start: 'Start',
+                back: 'Back',
+                widthRange: '5-50',
+                heightRange: '5-30',
+                minesRange: '1-999'
+            },
+            instructions: {
+                title: 'ℹ️ Game Rules',
+                rule1: 'Left click to reveal squares',
+                rule2: 'Right click to place flags',
+                rule3: 'Numbers show adjacent mine count',
+                rule4: 'Reveal all non-mine squares to win',
+                rule5: 'Hit a mine and it\'s game over',
+                hint: '💡 First click is always safe'
+            },
+            controls: {
+                newGame: '🔄 New Game',
+                menu: '📋 Menu',
+                playAgain: 'Play Again',
+                backToStart: 'Back to Start'
+            },
+            stats: {
+                time: 'Time',
+                difficulty: 'Difficulty',
+                minesRemaining: 'Mines Left'
+            },
+            messages: {
+                win: '🎉 You Win!',
+                complete: 'Congratulations!',
+                gameOver: '💣 Game Over',
+                tryAgain: 'Try Again!',
+                newRecord: '🏆 New Record!',
+                invalidSize: 'Invalid grid size'
             }
         },
         contact: {
@@ -1004,6 +1134,13 @@ const translations = {
                 players: '👥 1名玩家',
                 duration: '⏱️ 5-40分钟'
             },
+            minesweeper: {
+                tag: '益智游戏',
+                title: '扫雷',
+                description: '避开地雷揭开所有方格的逻辑益智游戏。3个难度级别和自定义模式可供挑战。',
+                players: '👥 1名玩家',
+                duration: '⏱️ 1-20分钟'
+            },
             playBtn: '开始游戏 →'
         },
         '2048': {
@@ -1136,6 +1273,64 @@ const translations = {
                 paused: '⏸️ 暂停中',
                 confirmNew: '开始新游戏吗？',
                 noHints: '没有提示了'
+            }
+        },
+        minesweeper: {
+            title: '扫雷',
+            subtitle: '避开地雷揭开所有方格！',
+            selectDifficulty: '请选择难度',
+            difficulty: {
+                beginner: '初级',
+                intermediate: '中级',
+                expert: '高级',
+                custom: '自定义'
+            },
+            difficultyInfo: {
+                beginner: '9×9（10个地雷）',
+                intermediate: '16×16（40个地雷）',
+                expert: '30×16（99个地雷）',
+                custom: '自由设置'
+            },
+            bestTimes: '📊 最佳时间',
+            customSettings: {
+                title: '自定义设置',
+                width: '宽度',
+                height: '高度',
+                mines: '地雷数',
+                density: '地雷密度',
+                start: '开始',
+                back: '返回',
+                widthRange: '5-50',
+                heightRange: '5-30',
+                minesRange: '1-999'
+            },
+            instructions: {
+                title: 'ℹ️ 游戏规则',
+                rule1: '左键点击揭开方格',
+                rule2: '右键点击插旗标记',
+                rule3: '数字显示周围地雷数量',
+                rule4: '揭开所有非地雷方格即可获胜',
+                rule5: '踩到地雷游戏结束',
+                hint: '💡 第一次点击一定安全'
+            },
+            controls: {
+                newGame: '🔄 新游戏',
+                menu: '📋 菜单',
+                playAgain: '再玩一次',
+                backToStart: '返回开始画面'
+            },
+            stats: {
+                time: '时间',
+                difficulty: '难度',
+                minesRemaining: '剩余地雷'
+            },
+            messages: {
+                win: '🎉 成功通关！',
+                complete: '恭喜你！',
+                gameOver: '💣 游戏结束',
+                tryAgain: '再挑战一次！',
+                newRecord: '🏆 新纪录！',
+                invalidSize: '网格大小无效'
             }
         },
         contact: {
