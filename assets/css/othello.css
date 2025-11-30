@@ -23,25 +23,37 @@
 .mode-button, .level-button {
     display: block;
     width: 100%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
+    background: rgba(102, 126, 234, 0.15);
+    color: #667eea;
+    border: 1px solid rgba(102, 126, 234, 0.3);
     padding: 1rem;
     margin: 0.5rem 0;
-    border-radius: 8px;
+    border-radius: 12px;
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .mode-button:hover, .level-button:hover {
+    background: rgba(102, 126, 234, 0.25);
+    border-color: rgba(102, 126, 234, 0.4);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 8px 32px 0 rgba(102, 126, 234, 0.15);
 }
 
 .level-button {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    background: rgba(240, 147, 251, 0.15);
+    border-color: rgba(240, 147, 251, 0.3);
+    color: #f093fb;
+}
+
+.level-button:hover {
+    background: rgba(240, 147, 251, 0.25);
+    border-color: rgba(240, 147, 251, 0.4);
+    box-shadow: 0 8px 32px 0 rgba(240, 147, 251, 0.15);
 }
 
 .game-rules {
