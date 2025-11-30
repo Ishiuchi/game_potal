@@ -102,6 +102,11 @@ function setupKeyboardControls() {
 
 // ゲーム開始
 function startGame() {
+    // プレイ数を記録
+    if (typeof GameStats !== 'undefined') {
+        GameStats.incrementPlayCount('stopwatch');
+    }
+    
     showScreen('gameScreen');
     resetGameState();
     updateTurnDisplay();

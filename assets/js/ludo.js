@@ -181,8 +181,8 @@ function getColorHex(color) {
  */
 function startGame() {
     // ゲームのプレイ回数を記録（game-stats.jsが読み込まれている場合）
-    if (typeof GameStats !== 'undefined' && GameStats.recordPlay) {
-        GameStats.recordPlay('ludo');
+    if (typeof GameStats !== 'undefined') {
+        GameStats.incrementPlayCount('ludo');
     }
     
     // プレイヤー人数が選択されているかを確認

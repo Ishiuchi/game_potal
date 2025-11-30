@@ -294,6 +294,11 @@ class MinesweeperUI {
     }
 
     startGame(difficulty) {
+        // プレイ数を記録
+        if (typeof GameStats !== 'undefined') {
+            GameStats.incrementPlayCount('minesweeper');
+        }
+        
         this.currentDifficulty = difficulty;
 
         const configs = {

@@ -345,6 +345,11 @@ class SudokuUI {
     }
 
     startGame(difficulty) {
+        // プレイ数を記録
+        if (typeof GameStats !== 'undefined') {
+            GameStats.incrementPlayCount('sudoku');
+        }
+        
         this.currentDifficulty = difficulty;
         this.game.generatePuzzle(difficulty);
         

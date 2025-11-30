@@ -28,7 +28,11 @@ const GameStats = {
                 ludo: { total: 0, weekly: 0, monthly: 0, lastPlayed: null },
                 chess: { total: 0, weekly: 0, monthly: 0, lastPlayed: null },
                 gomoku: { total: 0, weekly: 0, monthly: 0, lastPlayed: null },
-                memory: { total: 0, weekly: 0, monthly: 0, lastPlayed: null }
+                memory: { total: 0, weekly: 0, monthly: 0, lastPlayed: null },
+                stopwatch: { total: 0, weekly: 0, monthly: 0, lastPlayed: null },
+                '2048': { total: 0, weekly: 0, monthly: 0, lastPlayed: null },
+                sudoku: { total: 0, weekly: 0, monthly: 0, lastPlayed: null },
+                minesweeper: { total: 0, weekly: 0, monthly: 0, lastPlayed: null }
             },
             lastWeekReset: Date.now(),
             lastMonthReset: Date.now()
@@ -116,7 +120,11 @@ const GameStats = {
             ludo: { ja: 'ルドー', en: 'Ludo', zh: '飞行棋', hi: 'लूडो', es: 'Ludo', fr: 'Ludo' },
             chess: { ja: 'チェス', en: 'Chess', zh: '国际象棋', hi: 'शतरंज', es: 'Ajedrez', fr: 'Échecs' },
             gomoku: { ja: '五目並べ', en: 'Gomoku', zh: '五子棋', hi: 'गोमोकु', es: 'Gomoku', fr: 'Gomoku' },
-            memory: { ja: '神経衰弱', en: 'Memory', zh: '记忆游戏', hi: 'मेमोरी', es: 'Memoria', fr: 'Mémoire' }
+            memory: { ja: '神経衰弱', en: 'Memory', zh: '记忆游戏', hi: 'मेमोरी', es: 'Memoria', fr: 'Mémoire' },
+            stopwatch: { ja: 'ストップウォッチチャレンジ', en: 'Stopwatch Challenge', zh: '秒表挑战', hi: 'स्टॉपवॉच चैलेंज', es: 'Desafío del Cronómetro', fr: 'Défi Chronomètre' },
+            '2048': { ja: '2048', en: '2048', zh: '2048', hi: '2048', es: '2048', fr: '2048' },
+            sudoku: { ja: '数独', en: 'Sudoku', zh: '数独', hi: 'सुडोकू', es: 'Sudoku', fr: 'Sudoku' },
+            minesweeper: { ja: 'マインスイーパー', en: 'Minesweeper', zh: '扫雷', hi: 'माइनस्वीपर', es: 'Buscaminas', fr: 'Démineur' }
         };
         
         return titles[gameName]?.[lang] || gameName;
@@ -213,7 +221,7 @@ function renderRankingSection() {
             <div class="ranking-list">
                 ${ranking.length === 0 || totalPlays === 0 ? `
                     <p class="no-data">${t.noData}</p>
-                ` : ranking.map((game, index) => {
+                ` : ranking.slice(0, 5).map((game, index) => {
                     const percentage = totalPlays > 0 ? (game.playCount / totalPlays * 100).toFixed(1) : 0;
                     const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '';
                     

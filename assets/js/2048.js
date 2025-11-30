@@ -270,6 +270,11 @@ class GameUI {
     }
 
     startGame() {
+        // プレイ数を記録
+        if (typeof GameStats !== 'undefined') {
+            GameStats.incrementPlayCount('2048');
+        }
+        
         this.game = new Game2048(this.selectedSize);
         this.startScreen.classList.remove('active');
         this.gameScreen.classList.add('active');
