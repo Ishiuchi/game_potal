@@ -1,17 +1,25 @@
 /* ルドー専用スタイル */
 
-.game-setup {
+/* ゲーム設定画面（オセロスタイル） */
+.game-mode-selection {
     background-color: white;
     border-radius: 15px;
     padding: 2rem;
     max-width: 700px;
     margin: 2rem auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
-.game-setup h2 {
+.game-mode-selection h1 {
     color: #333;
-    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.game-mode-selection h2 {
+    color: #666;
+    font-size: 1.2rem;
+    font-weight: normal;
     margin-bottom: 2rem;
 }
 
@@ -21,12 +29,13 @@
     border-bottom: 1px solid #e0e0e0;
 }
 
-.setup-section:last-child {
+.setup-section:last-of-type {
     border-bottom: none;
 }
 
 .setup-section h3 {
-    color: #555;
+    color: #333;
+    font-size: 1.1rem;
     margin-bottom: 1rem;
 }
 
@@ -37,23 +46,28 @@
 }
 
 .setup-button {
-    background-color: #f0f0f0;
-    color: #333;
-    border: 2px solid #ddd;
+    background: rgba(102, 126, 234, 0.15);
+    color: #667eea;
+    border: 1px solid rgba(102, 126, 234, 0.3);
     padding: 0.8rem 2rem;
-    border-radius: 8px;
+    border-radius: 12px;
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .setup-button:hover {
-    background-color: #e0e0e0;
+    background: rgba(102, 126, 234, 0.25);
+    border-color: rgba(102, 126, 234, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px 0 rgba(102, 126, 234, 0.15);
 }
 
 .setup-button.active {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #667eea;
     color: white;
     border-color: #667eea;
 }
@@ -92,6 +106,19 @@
     font-size: 0.9rem;
 }
 
+.rule-options-section {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #e0e0e0;
+    text-align: left;
+}
+
+.rule-options-section h2 {
+    color: #333;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
 .rule-options {
     display: flex;
     flex-direction: column;
@@ -112,13 +139,26 @@
     cursor: pointer;
 }
 
-.game-rules-list {
+.game-rules {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #e0e0e0;
+    text-align: left;
+}
+
+.game-rules h2 {
+    color: #333;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.game-rules ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.game-rules-list li {
+.game-rules li {
     color: #555;
     line-height: 1.8;
     margin-bottom: 0.8rem;
@@ -126,31 +166,11 @@
     position: relative;
 }
 
-.game-rules-list li::before {
-    content: "🎲";
+.game-rules li::before {
+    content: "➤";
     position: absolute;
     left: 0;
-}
-
-.start-game-button {
-    display: block;
-    width: 100%;
-    max-width: 300px;
-    margin: 2rem auto 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
-    padding: 1rem 2rem;
-    border-radius: 25px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.start-game-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    color: #667eea;
 }
 
 /* ゲーム画面 */

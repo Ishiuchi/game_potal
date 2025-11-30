@@ -43,7 +43,7 @@
 
     <main>
         <!-- ゲーム設定画面 -->
-        <div class="game-setup" id="gameSetup">
+        <div class="game-mode-selection" id="gameSetup">
             <h1 class="game-title" data-i18n="ludo.title">ルドー</h1>
             <h2 data-i18n="ludo.gameSettings">ゲーム設定</h2>
             
@@ -62,7 +62,7 @@
             </div>
 
             <div class="setup-section">
-                <h3 data-i18n="ludo.gameRules">ゲームルール</h3>
+                <h3>ゲームオプション</h3>
                 <div class="rule-options">
                     <label>
                         <input type="checkbox" id="requireSixToStart" checked>
@@ -87,9 +87,9 @@
                 </div>
             </div>
 
-            <div class="setup-section">
+            <div class="game-rules">
                 <h2 data-i18n="common.howToPlay">遊び方・ルール</h2>
-                <ul class="game-rules-list">
+                <ul>
                     <li data-i18n="ludo.rule1"><strong>目的：</strong>4個のコマを全てゴールに入れることを目指します</li>
                     <li data-i18n="ludo.rule2"><strong>スタート：</strong>6を出すとベースからコマを出せます</li>
                     <li data-i18n="ludo.rule3"><strong>移動：</strong>サイコロの目の数だけコマを進めます</li>
@@ -99,7 +99,7 @@
                 </ul>
             </div>
 
-            <button class="start-game-button" onclick="startGame()" data-i18n="ludo.startGame">ゲーム開始</button>
+            <button class="mode-button" onclick="startGame()" data-i18n="ludo.startGame">ゲーム開始</button>
         </div>
 
         <!-- ゲーム画面 -->

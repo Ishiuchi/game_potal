@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ポーカー - Game Portal</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/game-page.css">
+    <link rel="stylesheet" href="assets/css/poker.css">
+</head>
+<body>
+    <!-- ナビゲーション -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">GAME PORTAL</a>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html#games" class="nav-link" data-i18n="nav.games">ゲーム一覧</a></li>
+                <li><a href="index.html#ranking" class="nav-link" data-i18n="nav.ranking">人気ランキング</a></li>
+                <li><a href="index.html#contact" class="nav-link" data-i18n="nav.contact">お問い合わせ</a></li>
+                <li><a href="privacy-policy.html" class="nav-link" data-i18n="footer.privacy">プライバシーポリシー</a></li>
+                <li class="language-selector">
+                    <button class="lang-btn" id="langBtn">🌐 日本語</button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <button onclick="changeLanguage('en')">🇬🇧 English</button>
+                        <button onclick="changeLanguage('ja')">🇯🇵 日本語</button>
+                        <button onclick="changeLanguage('zh')">🇨🇳 中文</button>
+                        <button onclick="changeLanguage('hi')">🇮🇳 हिन्दी</button>
+                        <button onclick="changeLanguage('es')">🇪🇸 Español</button>
+                        <button onclick="changeLanguage('fr')">🇫🇷 Français</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="game-mode-selection" id="startScreen">
+            <h1 class="game-title" data-i18n="poker.title">ポーカー</h1>
+            <h2 data-i18n="poker.subtitle">ファイブカードドロー</h2>
+
+            <div class="game-settings">
+                <h3 data-i18n="poker.settings">ゲーム設定</h3>
+                
+                <div class="setting-group">
+                    <label data-i18n="poker.numPlayers">プレイヤー人数</label>
+                    <div class="button-group">
+                        <button class="setting-btn" data-players="2">2人</button>
+                        <button class="setting-btn" data-players="3">3人</button>
+                        <button class="setting-btn active" data-players="4">4人</button>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label data-i18n="poker.difficulty">CPU難易度</label>
+                    <div class="button-group">
+                        <button class="setting-btn" data-difficulty="easy" data-i18n="poker.easy">イージー</button>
+                        <button class="setting-btn active" data-difficulty="normal" data-i18n="poker.normal">ノーマル</button>
+                        <button class="setting-btn" data-difficulty="hard" data-i18n="poker.hard">ハード</button>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label data-i18n="poker.initialChips">初期チップ</label>
+                    <select id="initialChips" class="setting-select">
+                        <option value="500">500</option>
+                        <option value="1000" selected>1000</option>
+                        <option value="2000">2000</option>
+                    </select>
+                </div>
+
+                <div class="setting-group">
+                    <label data-i18n="poker.ante">アンティ</label>
+                    <select id="ante" class="setting-select">
+                        <option value="5">5</option>
+                        <option value="10" selected>10</option>
+                        <option value="20">20</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="stats-section">
+                <h3 data-i18n="poker.statistics">統計情報</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label" data-i18n="poker.totalGames">総ゲーム数:</span>
+                        <span class="stat-value" id="totalGames">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label" data-i18n="poker.winRate">勝率:</span>
+                        <span class="stat-value" id="winRate">0%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label" data-i18n="poker.maxChips">最高チップ:</span>
+                        <span class="stat-value" id="maxChips">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label" data-i18n="poker.bestHand">最高役:</span>
+                        <span class="stat-value" id="bestHand" data-i18n="poker.none">なし</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-rules">
+                <h2 data-i18n="poker.rules">遊び方・ルール</h2>
+                <ul>
+                    <li data-i18n="poker.rule1"><strong>目的：</strong>5枚のカードで役を作り、最も強い役で勝利を目指します</li>
+                    <li data-i18n="poker.rule2"><strong>ドロー：</strong>最初の配布後、不要なカードを交換できます（0-5枚）</li>
+                    <li data-i18n="poker.rule3"><strong>ベット：</strong>チェック、ベット、コール、レイズ、フォールドから選択</li>
+                    <li data-i18n="poker.rule4"><strong>役：</strong>ワンペア、ツーペア、スリーカード、ストレート、フラッシュなど</li>
+                    <li data-i18n="poker.rule5"><strong>ショーダウン：</strong>最終ベット後、手札を公開して勝者を決定</li>
+                    <li data-i18n="poker.rule6"><strong>勝敗：</strong>最も強い役を持つプレイヤーがポットを獲得</li>
+                    <li data-i18n="poker.rule7"><strong>ゲームオーバー：</strong>チップがなくなると終了</li>
+                </ul>
+            </div>
+
+            <button class="mode-button" id="startBtn" data-i18n="poker.start">ゲーム開始</button>
+        </div>
+
+        <div class="game-container" id="gameContainer" style="display: none;">
+
+            <!-- ゲーム画面 -->
+            <div id="gameScreen">
+                <div class="game-header">
+                    <div class="pot-display">
+                        <span data-i18n="poker.pot">POT:</span>
+                        <span id="potAmount">0</span>💰
+                    </div>
+                    <div class="round-display" id="roundDisplay">第1ベット</div>
+                </div>
+
+                <!-- 対戦相手エリア -->
+                <div class="opponents-area" id="opponentsArea">
+                    <!-- 動的に生成 -->
+                </div>
+
+                <!-- プレイヤーエリア -->
+                <div class="player-area">
+                    <div class="player-info">
+                        <span class="player-name">YOU ⭐</span>
+                        <span class="player-chips">💰 <span id="playerChips">1000</span></span>
+                        <span class="player-bet">Bet: <span id="playerBet">0</span></span>
+                    </div>
+                    
+                    <div class="player-hand" id="playerHand">
+                        <!-- カードが表示される -->
+                    </div>
+
+                    <div class="hand-result" id="handResult">
+                        <span data-i18n="poker.currentHand">現在の役:</span>
+                        <span id="currentHandName">ハイカード</span>
+                    </div>
+                </div>
+
+                <!-- アクションエリア -->
+                <div class="action-area" id="actionArea">
+                    <div class="action-buttons" id="actionButtons">
+                        <button class="action-btn" id="checkBtn" data-i18n="poker.check">チェック</button>
+                        <button class="action-btn" id="betBtn" data-i18n="poker.bet">ベット</button>
+                        <button class="action-btn" id="callBtn" data-i18n="poker.call">コール</button>
+                        <button class="action-btn" id="raiseBtn" data-i18n="poker.raise">レイズ</button>
+                        <button class="action-btn btn-danger" id="foldBtn" data-i18n="poker.fold">フォールド</button>
+                    </div>
+
+                    <div class="bet-slider-container" id="betSliderContainer" style="display: none;">
+                        <label for="betSlider" data-i18n="poker.betAmount">ベット額:</label>
+                        <input type="range" id="betSlider" min="10" max="100" value="10" step="10">
+                        <span id="betSliderValue">10</span>💰
+                        <button class="action-btn" id="confirmBetBtn" data-i18n="poker.confirm">確定</button>
+                    </div>
+
+                    <div class="draw-area" id="drawArea" style="display: none;">
+                        <p data-i18n="poker.selectCards">交換するカードを選択してください</p>
+                        <button class="action-btn btn-primary" id="drawBtn" data-i18n="poker.draw">ドロー</button>
+                        <button class="action-btn" id="standBtn" data-i18n="poker.stand">スタンド</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="showdownScreen" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h2 data-i18n="poker.showdown">ショーダウン</h2>
+                
+                <div class="showdown-results" id="showdownResults">
+                    <!-- 動的に生成 -->
+                </div>
+
+                <div class="game-actions">
+                    <button class="control-button" id="nextGameBtn" data-i18n="poker.nextGame">次のゲーム</button>
+                    <button class="control-button" id="quitBtn" data-i18n="poker.quit">ゲーム終了</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ゲームオーバー画面 -->
+        <div id="gameOverScreen" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h2 data-i18n="poker.gameOver">ゲームオーバー</h2>
+                
+                <div class="game-over-message">
+                    <p data-i18n="poker.gameOverMessage">チップがなくなりました</p>
+                    <div class="final-stats" id="finalStats">
+                        <!-- 統計情報 -->
+                    </div>
+                </div>
+
+                <button class="control-button" id="restartBtn" data-i18n="poker.restart">もう一度プレイ</button>
+                <button class="control-button" id="backToMenuBtn" data-i18n="poker.backToMenu">メインメニュー</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/game-stats.js"></script>
+    <script src="assets/js/poker.js"></script>
+</body>
+</html>

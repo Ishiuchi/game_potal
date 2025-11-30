@@ -32,7 +32,8 @@ const GameStats = {
                 stopwatch: { total: 0, weekly: 0, monthly: 0, lastPlayed: null },
                 '2048': { total: 0, weekly: 0, monthly: 0, lastPlayed: null },
                 sudoku: { total: 0, weekly: 0, monthly: 0, lastPlayed: null },
-                minesweeper: { total: 0, weekly: 0, monthly: 0, lastPlayed: null }
+                minesweeper: { total: 0, weekly: 0, monthly: 0, lastPlayed: null },
+                poker: { total: 0, weekly: 0, monthly: 0, lastPlayed: null }
             },
             lastWeekReset: Date.now(),
             lastMonthReset: Date.now()
@@ -124,7 +125,8 @@ const GameStats = {
             stopwatch: { ja: 'ストップウォッチチャレンジ', en: 'Stopwatch Challenge', zh: '秒表挑战', hi: 'स्टॉपवॉच चैलेंज', es: 'Desafío del Cronómetro', fr: 'Défi Chronomètre' },
             '2048': { ja: '2048', en: '2048', zh: '2048', hi: '2048', es: '2048', fr: '2048' },
             sudoku: { ja: '数独', en: 'Sudoku', zh: '数独', hi: 'सुडोकू', es: 'Sudoku', fr: 'Sudoku' },
-            minesweeper: { ja: 'マインスイーパー', en: 'Minesweeper', zh: '扫雷', hi: 'माइनस्वीपर', es: 'Buscaminas', fr: 'Démineur' }
+            minesweeper: { ja: 'マインスイーパー', en: 'Minesweeper', zh: '扫雷', hi: 'माइनस्वीपर', es: 'Buscaminas', fr: 'Démineur' },
+            poker: { ja: 'ポーカー', en: 'Poker', zh: '扑克', hi: 'पोकर', es: 'Póker', fr: 'Poker' }
         };
         
         return titles[gameName]?.[lang] || gameName;
