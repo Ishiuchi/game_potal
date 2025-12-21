@@ -151,13 +151,20 @@ function makeMove(row, col, player) {
     board[row][col] = player;
     
     // 裏返す
-    flipStones(row, col, player);
+    const flippedCount = flipStones(row, col, player);
     
     // パスカウントをリセット
     passCount = 0;
     
-    // ターン交代
-    switchTurn();
+    // 盤面を更新
+    updateStatus();
+    renderBoard();
+    
+    // アニメーション完了後にターン交代（アニメーションの時間を考慮）
+    const animationDelay = flippedCount * 50 + 700; // 各石50ms + 最後のアニメーション600ms + 余裕100ms
+    setTimeout(() => {
+        switchTurn();
+    }, animationDelay);
 }
 
 /**
@@ -198,6 +205,7 @@ function isLegalMove(row, col, player) {
  */
 function flipStones(row, col, player) {
     const opponent = player === BLACK ? WHITE : BLACK;
+    const allFlipped = [];
     
     // 8方向を探索
     for (const [dx, dy] of DIRECTIONS) {
@@ -214,6 +222,7 @@ function flipStones(row, col, player) {
                 // 自分の石に到達したら、この方向の石を裏返す
                 for (const [fx, fy] of toFlip) {
                     board[fx][fy] = player;
+                    allFlipped.push([fx, fy]);
                 }
                 break;
             }
@@ -221,6 +230,25 @@ function flipStones(row, col, player) {
             y += dy;
         }
     }
+    
+    // アニメーション付きで石を裏返す
+    allFlipped.forEach(([fx, fy], index) => {
+        setTimeout(() => {
+            const cell = document.querySelector(`[data-row="${fx}"][data-col="${fy}"]`);
+            if (cell) {
+                const disc = cell.querySelector('.disc');
+                if (disc) {
+                    disc.classList.add('flipping');
+                    setTimeout(() => {
+                        disc.classList.remove('flipping');
+                    }, 600);
+                }
+            }
+        }, index * 50); // 順番にアニメーションさせる
+    });
+    
+    // 裏返した石の数を返す
+    return allFlipped.length;
 }
 
 /**

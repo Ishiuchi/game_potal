@@ -702,7 +702,7 @@ section {
 
 .footer-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: 1fr 2fr 0.7fr;
     gap: 3rem;
     margin-bottom: 3rem;
 }
@@ -732,6 +732,17 @@ section {
 
 .footer-section ul li {
     margin-bottom: 0.75rem;
+}
+
+.footer-section ul.games-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    column-gap: 1.5rem;
+}
+
+.footer-section ul.games-list li {
+    margin-bottom: 0;
 }
 
 .footer-section ul li a {

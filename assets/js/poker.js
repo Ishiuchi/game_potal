@@ -998,6 +998,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const ante = parseInt(document.getElementById('ante').value);
 
         document.getElementById('startScreen').style.display = 'none';
+        document.getElementById('gameContainer').style.display = 'block';
         document.getElementById('gameScreen').classList.add('active');
 
         game.startGame(numPlayers, difficulty, initialChips, ante);
