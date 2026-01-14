@@ -931,6 +931,648 @@ const homePathEntry = {
 
 ---
 
+## 3. アルゴリズム・処理フロー
+
+### 3.1 ゲームループ
+
+```mermaid
+graph TD
+    A[ゲーム開始] --> B[プレイヤー初期化]
+    B --> C[トークン初期化]
+    C --> D[ボード描画]
+    D --> E{現在プレイヤーの<br/>タイプ}
+    E -->|human| F[サイコロボタン待機]
+    E -->|ai1/ai2/ai3| G[CPU自動ターン]
+    F --> H[サイコロを振る]
+    G --> H
+    H --> I[移動可能トークン計算]
+    I --> J{移動可能<br/>トークンあり?}
+    J -->|No| K[1.5秒待機]
+    K --> L[次ターンへ]
+    J -->|Yes| M{プレイヤー<br/>タイプ}
+    M -->|human| N[トークンクリック待機]
+    M -->|ai| O[CPU思考]
+    N --> P[トークン移動]
+    O --> P
+    P --> Q[捕獲チェック]
+    Q --> R[勝利チェック]
+    R --> S{全員<br/>ゴール?}
+    S -->|Yes| T[ゲーム終了]
+    S -->|No| U{サイコロの目<br/>== 6?}
+    U -->|Yes かつ<br/>extraTurnOnSix| V[追加ターン]
+    U -->|No| L
+    V --> E
+    L --> E
+    T --> W[勝利モーダル表示]
+```
+
+---
+
+### 3.2 ターン処理シーケンス
+
+#### 3.2.1 ターン開始フロー
+
+```
+開始
+  ↓
+┌─────────────────────┐
+│ ターン開始          │
+│ - currentPlayerIndex│
+│ - turnCount++       │
+└──────────┬──────────┘
+           ↓
+┌─────────────────────┐
+│ プレイヤータイプ判定│
+└──────────┬──────────┘
+           ↓
+     ┌─────┴─────┐
+     ↓           ↓
+ [Human]     [CPU ai1/ai2/ai3]
+     ↓           ↓
+ ボタン待機  CPU思考時間表示
+     ↓           ↓
+ クリック    performDiceRoll()
+     ↓           ↓
+     └─────┬─────┘
+           ↓
+   performDiceRoll()
+```
+
+#### 3.2.2 サイコロ処理フロー
+
+```
+performDiceRoll()
+  ↓
+┌─────────────────────┐
+│ 前提条件チェック    │
+│ - ゲーム終了済み?  │
+│ - 全トークンゴール?│
+└──────────┬──────────┘
+           ↓ OK
+┌─────────────────────┐
+│ 自動パス判定        │
+│ - ボード上0個      │
+│ - ベース1個以上    │
+│ - requireSixToStart│
+│ - スタート位置占有 │
+└──────────┬──────────┘
+           ↓ パスでない
+┌─────────────────────┐
+│ アニメーション開始  │
+│ - 'rolling'追加    │
+└──────────┬──────────┘
+           ↓ 500ms待機
+┌─────────────────────┐
+│ サイコロ値決定      │
+│ value = rand(1-6)  │
+│ diceValue = value  │
+│ isRolled = true    │
+└──────────┬──────────┘
+           ↓
+┌─────────────────────┐
+│ 移動可能計算        │
+│ calculateMovableTokens()│
+└──────────┬──────────┘
+           ↓
+     ┌─────┴─────┐
+     ↓           ↓
+[トークン0個]  [トークン1個以上]
+     ↓           ↓
+ 1.5秒待機   renderTokens()
+     ↓           ↓
+ nextTurn()      ↓
+             ┌───┴───┐
+             ↓       ↓
+          [Human]  [CPU]
+             ↓       ↓
+          待機   aiMove()
+```
+
+---
+
+### 3.3 移動可能判定アルゴリズム
+
+#### 3.3.1 `calculateMovableTokens()` 処理フロー
+
+```
+開始
+  ↓
+movableTokens = []
+  ↓
+全トークンループ
+  ↓
+┌──────────────────────┐
+│ トークン状態判定     │
+└────────┬─────────────┘
+         ↓
+   ┌─────┴─────┐
+   ↓           ↓
+[ゴール済み] [未ゴール]
+   ↓           ↓
+ スキップ    位置判定
+               ↓
+         ┌─────┴─────┐
+         ↓     ↓     ↓
+      [ベース][ホームパス][メインパス]
+      position position   position
+      == -1   1000-1003   0-39
+         ↓     ↓           ↓
+      [判定A][判定B]    [判定C]
+```
+
+**[判定A] ベースからの出発判定**:
+```
+条件1: diceValue == 6 OR !requireSixToStart
+  ↓ True
+条件2: START_POSITIONS[color]に自分の他トークンなし
+  ↓ True
+movableTokensに追加
+```
+
+**[判定B] ホームパス内移動判定**:
+```
+現在位置: homePos = position - 1000  (0-3)
+新位置: newHomePos = homePos + diceValue
+  ↓
+┌─────────────────────┐
+│ exactRollToFinish? │
+└──────────┬──────────┘
+     ┌─────┴─────┐
+     ↓           ↓
+  [True]      [False]
+     ↓           ↓
+newHomePos    newHomePos
+== 4?         >= 4?
+     ↓           ↓
+   [Yes]       [Yes]
+     ↓           ↓
+newHomePos < HOME_PATH_LENGTH (4)?
+     ↓ True
+移動先に自分のトークンなし?
+     ↓ True
+movableTokensに追加
+```
+
+**[判定C] メインパス移動判定**:
+```
+相対位置計算:
+startPos = START_POSITIONS[color]
+relativePos = (position - startPos + PATH_LENGTH) % PATH_LENGTH
+newRelativePos = relativePos + diceValue
+  ↓
+┌───────────────────┐
+│newRelativePos     │
+│>= PATH_LENGTH?   │
+└────────┬──────────┘
+    ┌────┴────┐
+    ↓         ↓
+  [Yes]     [No]
+    ↓         ↓
+ホームパス  通常移動
+進入判定
+    ↓
+excessSteps = newRelativePos - PATH_LENGTH
+    ↓
+excessSteps < HOME_PATH_LENGTH?
+    ↓ True
+targetHomePos = 1000 + excessSteps
+    ↓
+移動先に自分のトークンなし?
+    ↓ True
+movableTokensに追加
+```
+
+---
+
+### 3.4 トークン移動処理
+
+#### 3.4.1 `moveToken(color, tokenId)` フロー
+
+```
+開始
+  ↓
+トークン取得
+  ↓
+┌────────────────────┐
+│ 現在位置判定       │
+└────────┬───────────┘
+         ↓
+   ┌─────┴─────┐
+   ↓           ↓
+[position    [position
+ == -1]       != -1]
+   ↓           ↓
+[出発処理]  [移動処理]
+```
+
+**[出発処理]**:
+```
+1. position = START_POSITIONS[color]
+2. renderTokens()
+3. 300ms待機
+4. ログ出力: "スタートしました"
+5. checkCapture(color, position)
+6. → ターン終了処理へ
+```
+
+**[移動処理]**:
+```
+相対位置計算
+  ↓
+┌────────────────────┐
+│ 現在位置タイプ     │
+└────────┬───────────┘
+         ↓
+   ┌─────┴─────┐
+   ↓           ↓
+[ホームパス]  [メインパス]
+position     position
+1000-1003    0-39
+   ↓           ↓
+[処理D]     [処理E]
+```
+
+**[処理D] ホームパス内移動**:
+```
+For i = 1 to diceValue:
+  ↓
+  homePos = position - 1000
+  newHomePos = homePos + i
+  ↓
+  newHomePos < HOME_PATH_LENGTH?
+  ↓ True
+  position = 1000 + homePos + i
+  renderTokens()
+  300ms待機
+  ↓
+  最終ステップ?
+  ↓ Yes
+  position == 1003?
+  ↓ Yes
+  isFinished = true
+  ログ: "ゴールしました！"
+```
+
+**[処理E] メインパス移動（1マスずつアニメーション）**:
+```
+For i = 1 to diceValue:
+  ↓
+  relativePos++
+  ↓
+  ┌────────────────────┐
+  │relativePos         │
+  │>= PATH_LENGTH?    │
+  └────────┬───────────┘
+      ┌────┴────┐
+      ↓         ↓
+    [Yes]     [No]
+      ↓         ↓
+  ホームパス  通常移動
+  進入
+      ↓
+  excessSteps = relativePos - PATH_LENGTH
+      ↓
+  position = 1000 + excessSteps
+  renderTokens()
+  300ms待機
+      ↓
+  最終ステップ かつ position == 1003?
+      ↓ Yes
+  isFinished = true
+  ログ: "ゴールしました！"
+  
+  [通常移動]
+      ↓
+  newPos = (startPos + relativePos) % PATH_LENGTH
+  position = newPos
+  renderTokens()
+  300ms待機
+      ↓
+  最終ステップ?
+      ↓ Yes
+  ログ: "移動しました"
+  checkCapture(color, position)
+```
+
+---
+
+### 3.5 捕獲処理ロジック
+
+#### 3.5.1 `checkCapture(color, position)` フロー
+
+```
+開始
+  ↓
+┌────────────────────┐
+│ セーフマス判定     │
+│ SAFE_POSITIONSに  │
+│ 含まれる?         │
+└────────┬───────────┘
+         ↓ No（セーフでない）
+全プレイヤーループ
+  ↓
+自分の色は除外
+  ↓
+各プレイヤーのトークンループ
+  ↓
+┌────────────────────┐
+│ 位置一致判定       │
+│ token.position    │
+│ == position?      │
+└────────┬───────────┘
+         ↓ Yes
+┌────────────────────┐
+│ 捕獲実行           │
+│ position = -1     │
+│ (ベースに戻す)    │
+└────────┬───────────┘
+         ↓
+ログ出力: "捕獲しました"
+renderTokens()
+```
+
+**条件**:
+- 移動先のpositionが同じ
+- 異なる色のトークン
+- セーフマスでない（SAFE_POSITIONS配列は空なので常に捕獲可能）
+
+**効果**:
+- 捕獲されたトークンは`position = -1`（ベース）に戻る
+- 再度スタートするには6が必要（requireSixToStartの場合）
+
+---
+
+### 3.6 勝利判定アルゴリズム
+
+#### 3.6.1 `checkWin()` フロー
+
+```
+開始
+  ↓
+全プレイヤーループ
+  ↓
+各プレイヤーのトークン確認
+  ↓
+finishedCount = トークンのisFinished == trueの数
+  ↓
+┌────────────────────┐
+│ ゴール完了判定     │
+│ finishedCount     │
+│ == TOKENS_PER_PLAYER?│
+└────────┬───────────┘
+         ↓ Yes
+┌────────────────────┐
+│ 既に順位リストに   │
+│ 存在する?         │
+└────────┬───────────┘
+         ↓ No
+┌────────────────────┐
+│ 順位確定           │
+│ rank = winners.length + 1│
+└────────┬───────────┘
+         ↓
+┌────────────────────┐
+│ winnersに追加      │
+│ {color, rank, type}│
+└────────┬───────────┘
+         ↓
+ログ: "🎉 N位でゴール！"
+  ↓
+全プレイヤーゴール判定
+  ↓
+allPlayersFinished?
+  ↓ Yes
+ログ: "ゲーム終了"
+800ms待機
+showWinModal()
+```
+
+**WinnerObject構造**:
+```javascript
+{
+    color: string,    // プレイヤー色
+    rank: number,     // 順位（1, 2, 3, 4）
+    type: string      // 'human', 'ai1', 'ai2', 'ai3'
+}
+```
+
+**順位決定ロジック**:
+- 最初にゴールしたプレイヤー: `rank = 1`
+- 2番目にゴール: `rank = 2`
+- 順次追加される
+
+---
+
+### 3.7 次ターン処理
+
+#### 3.7.1 `nextTurn()` フロー
+
+```
+開始
+  ↓
+┌────────────────────┐
+│ ゲーム終了判定     │
+│ 全プレイヤーの     │
+│ 全トークンゴール? │
+└────────┬───────────┘
+         ↓ Yes
+      return（終了）
+         ↓ No
+┌────────────────────┐
+│ 現プレイヤーの     │
+│ 全トークンゴール判定│
+└────────┬───────────┘
+    ┌────┴────┐
+    ↓         ↓
+  [Yes]     [No]
+    ↓         ↓
+次へ進む   ループ開始
+    ↓
+┌────────────────────┐
+│ プレイヤーインデックス│
+│ 循環的にインクリメント│
+│ (i + 1) % playerCount│
+└────────┬───────────┘
+         ↓
+┌────────────────────┐
+│ 次プレイヤーの     │
+│ 全トークンゴール? │
+└────────┬───────────┘
+    ┌────┴────┐
+    ↓         ↓
+  [Yes]     [No]
+    ↓         ↓
+  次へ    ループ終了
+    ↓
+currentPlayerIndex更新
+turnCount++
+  ↓
+isRolled = false
+movableTokens = []
+diceValue = null
+  ↓
+updateStatus()
+renderTokens()
+  ↓
+┌────────────────────┐
+│ プレイヤータイプ判定│
+└────────┬───────────┘
+    ┌────┴────┐
+    ↓         ↓
+ [Human]    [CPU]
+    ↓         ↓
+  待機    aiStartTurn()
+```
+
+**スキップロジック**:
+- 全トークンがゴール済みのプレイヤーは自動的にスキップ
+- 次の未ゴールプレイヤーを探す
+- 全員ゴールしていたらゲーム終了
+
+---
+
+### 3.8 AI思考アルゴリズム
+
+#### 3.8.1 AI全体フロー
+
+```
+aiStartTurn()
+  ↓
+cpuThinkingTime設定?
+  ↓ Yes
+思考時間表示（0.6-1.8秒）
+  ↓
+aiTurn()
+  ↓
+performDiceRoll()
+  ↓
+movableTokens計算
+  ↓ 1個以上
+aiMove()
+  ↓
+cpuThinkingTime設定?
+  ↓ Yes
+思考時間表示（0.5-1.5秒）
+  ↓
+getAIMove(level)
+  ↓
+┌────────────────────┐
+│ AIレベル分岐       │
+└────────┬───────────┘
+    ┌────┴────┬────┐
+    ↓         ↓    ↓
+ [Level1]  [Level2][Level3]
+    ↓         ↓      ↓
+  ランダム  貪欲法  評価関数
+    ↓         ↓      ↓
+    └────┬────┴────┘
+         ↓
+   選択したmove
+         ↓
+   moveToken(color, id)
+```
+
+#### 3.8.2 Level 1: ランダム選択
+
+```
+アルゴリズム:
+  movableTokensからランダムに1つ選択
+  
+実装:
+  index = Math.floor(Math.random() * movableTokens.length)
+  return movableTokens[index]
+```
+
+**特徴**:
+- 最も単純
+- 戦略性なし
+- 初心者向け
+
+#### 3.8.3 Level 2: 貪欲法（捕獲優先）
+
+```
+アルゴリズム:
+1. 各movableTokensについてループ
+2. 移動先位置を計算
+3. 敵トークンがいるかチェック
+4. 敵トークンがいれば即座にそのmoveを返す
+5. 捕獲可能なmoveがなければ最初のmoveを返す
+
+実装:
+for each move in movableTokens:
+    token = gameState.tokens[move.color][move.id]
+    
+    // 新位置計算
+    if token.position == -1:
+        newPos = START_POSITIONS[move.color]
+    else:
+        newPos = (token.position + diceValue) % PATH_LENGTH
+    
+    // 捕獲判定
+    for each color (自分以外):
+        if gameState.tokens[color]に newPosのトークンあり:
+            return move（即座に選択）
+    
+// 捕獲不可なら最初のmove
+return movableTokens[0]
+```
+
+**特徴**:
+- 捕獲を最優先
+- 短期的な利益重視
+- 中級者向け
+
+#### 3.8.4 Level 3: 評価関数
+
+```
+アルゴリズム:
+1. 各movableTokensについてスコア計算
+2. 最高スコアのmoveを選択
+
+スコア計算式:
+score = 0
+
+// ベースからの出発ボーナス
+if token.position == -1:
+    score += 10
+
+// 進行距離ボーナス
+else:
+    score += diceValue * 2
+    
+    // 捕獲ボーナス
+    newPos = (token.position + diceValue) % PATH_LENGTH
+    for each color (自分以外):
+        if gameState.tokens[color]に newPosのトークンあり:
+            score += 50
+
+// 最高スコアのmoveを選択
+bestMove = movableTokens[0]
+bestScore = -Infinity
+
+for each move in movableTokens:
+    score = calculateScore(move)
+    if score > bestScore:
+        bestScore = score
+        bestMove = move
+
+return bestMove
+```
+
+**スコア配分**:
+| 要素 | スコア | 理由 |
+|-----|-------|------|
+| ベースから出発 | +10 | トークンを動かすことが重要 |
+| 進行距離 | +diceValue×2 | ゴールに近づく |
+| 捕獲可能 | +50 | 敵を妨害する最大の利益 |
+
+**特徴**:
+- 複数要素を評価
+- バランスの取れた戦略
+- 上級者向け
+
+---
+
 ## 次回更新予定
 
-次回は「3. アルゴリズム・処理フロー」を追加します。
+次回は「4. 状態遷移図」を追加します。
