@@ -215,6 +215,13 @@ const translations = {
                 players: '👥 1プレイヤー',
                 duration: '⏱️ 1-20分'
             },
+            poker: {
+                tag: 'カードゲーム',
+                title: 'ポーカー',
+                description: 'ファイブカードドローポーカーで心理戦と運を楽しむカードゲーム。CPU対戦で戦略を磨き、役を作ってチップを獲得しよう。',
+                players: '👥 2-4プレイヤー',
+                duration: '⏱️ 10-30分'
+            },
             playBtn: 'プレイする →'
         },
         '2048': {
@@ -664,6 +671,13 @@ const translations = {
                 description: 'A logic puzzle where you reveal all squares without hitting mines. Choose from 3 difficulty levels or custom mode for your challenge.',
                 players: '👥 1 Player',
                 duration: '⏱️ 1-20 min'
+            },
+            poker: {
+                tag: 'Card Game',
+                title: 'Poker',
+                description: 'Enjoy Five Card Draw Poker with psychological warfare and luck. Sharpen your strategy against CPU and win chips by creating hands.',
+                players: '👥 2-4 Players',
+                duration: '⏱️ 10-30 min'
             },
             playBtn: 'Play Now →'
         },
@@ -1141,6 +1155,13 @@ const translations = {
                 players: '👥 1名玩家',
                 duration: '⏱️ 1-20分钟'
             },
+            poker: {
+                tag: '纸牌游戏',
+                title: '扑克',
+                description: '五张牌梭哈扑克的心理战和运气游戏。与电脑对战磨练策略，组成牌型赢取筹码。',
+                players: '👥 2-4名玩家',
+                duration: '⏱️ 10-30分钟'
+            },
             playBtn: '开始游戏 →'
         },
         '2048': {
@@ -1603,6 +1624,27 @@ const translations = {
                 players: '👥 1 खिलाड़ी',
                 duration: '⏱️ 3-15 मिनट'
             },
+            sudoku: {
+                tag: 'पहेली खेल',
+                title: 'सुडोकू',
+                description: '9×9 ग्रिड में 1-9 संख्याएं रखने का तर्क पहेली। प्रत्येक पंक्ति, स्तंभ और 3×3 ब्लॉक में बिना दोहराव के रखें और तार्किक सोच का परीक्षण करें।',
+                players: '👥 1 खिलाड़ी',
+                duration: '⏱️ 5-40 मिनट'
+            },
+            minesweeper: {
+                tag: 'पहेली खेल',
+                title: 'माइनस्वीपर',
+                description: 'सभी वर्गों को खोलने का तार्किक पहेली बिना माइन को छुए। 3 कठिनाई स्तर और कस्टम मोड से अपनी चुनौती चुनें।',
+                players: '👥 1 खिलाड़ी',
+                duration: '⏱️ 1-20 मिनट'
+            },
+            poker: {
+                tag: 'कार्ड खेल',
+                title: 'पोकर',
+                description: 'फाइव कार्ड ड्रा पोकर के साथ मनोवैज्ञानिक युद्ध और भाग्य का आनंद लें। कंप्यूटर के खिलाफ अपनी रणनीति को तेज करें और हाथ बनाकर चिप्स जीतें।',
+                players: '👥 2-4 खिलाड़ी',
+                duration: '⏱️ 10-30 मिनट'
+            },
             playBtn: 'अभी खेलें →'
         },
         '2048': {
@@ -1958,6 +2000,27 @@ const translations = {
                 players: '👥 1 Jugador',
                 duration: '⏱️ 3-15 min'
             },
+            sudoku: {
+                tag: 'Juego de Puzzle',
+                title: 'Sudoku',
+                description: 'Un rompecabezas lógico donde colocas números del 1-9 en una cuadrícula 9×9. Prueba tu pensamiento lógico asegurando que no haya duplicados en cada fila, columna y bloque 3×3.',
+                players: '👥 1 Jugador',
+                duration: '⏱️ 5-40 min'
+            },
+            minesweeper: {
+                tag: 'Juego de Puzzle',
+                title: 'Buscaminas',
+                description: 'Un rompecabezas lógico donde revelas todos los cuadrados sin tocar minas. Elige entre 3 niveles de dificultad o modo personalizado para tu desafío.',
+                players: '👥 1 Jugador',
+                duration: '⏱️ 1-20 min'
+            },
+            poker: {
+                tag: 'Juego de Cartas',
+                title: 'Póker',
+                description: 'Disfruta del póker Five Card Draw con guerra psicológica y suerte. Afila tu estrategia contra la CPU y gana fichas creando manos.',
+                players: '👥 2-4 Jugadores',
+                duration: '⏱️ 10-30 min'
+            },
             playBtn: 'Jugar Ahora →'
         },
         '2048': {
@@ -2312,6 +2375,27 @@ const translations = {
                 description: 'Un jeu de puzzle où vous fusionnez des nombres pour atteindre 2048. Règles simples mais très stratégique, populaire dans le monde entier. Choisissez la difficulté de grille 3×3 à 5×5.',
                 players: '👥 1 Joueur',
                 duration: '⏱️ 3-15 min'
+            },
+            sudoku: {
+                tag: 'Jeu de Puzzle',
+                title: 'Sudoku',
+                description: 'Un casse-tête logique où vous placez les nombres 1-9 dans une grille 9×9. Testez votre pensée logique en vous assurant qu\'il n\'y a pas de doublons dans chaque ligne, colonne et bloc 3×3.',
+                players: '👥 1 Joueur',
+                duration: '⏱️ 5-40 min'
+            },
+            minesweeper: {
+                tag: 'Jeu de Puzzle',
+                title: 'Démineur',
+                description: 'Un casse-tête logique où vous révélez tous les carrés sans toucher les mines. Choisissez parmi 3 niveaux de difficulté ou le mode personnalisé pour votre défi.',
+                players: '👥 1 Joueur',
+                duration: '⏱️ 1-20 min'
+            },
+            poker: {
+                tag: 'Jeu de Cartes',
+                title: 'Poker',
+                description: 'Profitez du Poker Five Card Draw avec guerre psychologique et chance. Affûtez votre stratégie contre le CPU et gagnez des jetons en créant des mains.',
+                players: '👥 2-4 Joueurs',
+                duration: '⏱️ 10-30 min'
             },
             playBtn: 'Jouer Maintenant →'
         },
