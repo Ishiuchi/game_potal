@@ -329,6 +329,608 @@ getPathPosition(30) // => {row: 10, col: 4} // 緑スタート
 
 ---
 
+## 2. 関数仕様
+
+### 2.1 初期化関数
+
+#### 2.1.1 `document.addEventListener('DOMContentLoaded', callback)`
+
+**目的**: ページロード時の初期化処理
+
+**実行タイミング**: HTMLドキュメントの読み込み完了時
+
+**処理フロー**:
+```
+1. デフォルトで4人プレイボタンを選択状態に設定
+2. gameState.playerCountSelected = true
+3. renderPlayerSetup()を呼び出してUI生成
+4. コンソールに起動メッセージ出力
+```
+
+**副作用**:
+- DOM操作: `.setup-button:nth-child(4)`に`active`クラス追加
+- 状態変更: `gameState.playerCountSelected`を`true`に設定
+- UI生成: プレイヤー設定UIを表示
+
+---
+
+#### 2.1.2 `setPlayerCount(count)`
+
+**目的**: プレイヤー人数を設定
+
+**パラメータ**:
+| 名前 | 型 | 必須 | 説明 |
+|-----|-----|-----|-----|
+| count | number | ✓ | プレイヤー人数（2, 3, 4のいずれか） |
+
+**戻り値**: なし（`void`）
+
+**処理ロジック**:
+```
+1. gameState.playerCount = count
+2. gameState.playerCountSelected = true
+3. 全ての人数ボタンから'active'クラスを削除
+4. クリックされたボタンに'active'クラスを追加
+5. renderPlayerSetup()でUI再生成
+```
+
+**副作用**:
+- 状態変更: `gameState.playerCount`, `gameState.playerCountSelected`
+- DOM操作: ボタンの`active`クラス制御
+- UI更新: プレイヤー設定欄の再描画
+
+**使用箇所**: プレイヤー人数選択ボタンのonclickイベント
+
+---
+
+#### 2.1.3 `renderPlayerSetup()`
+
+**目的**: プレイヤー設定UIを動的生成
+
+**パラメータ**: なし
+
+**戻り値**: なし（`void`）
+
+**処理ロジック**:
+```
+1. コンテナ要素(#playerSetup)を取得
+2. 既存のHTML内容をクリア
+3. gameState.playerCount回ループ:
+   a. 各プレイヤーの色をCOLORS配列から取得
+   b. プレイヤー設定用div要素を生成
+   c. 色インジケーター、ラベル、セレクトボックスを追加
+   d. セレクトボックスのオプション:
+      - 'human': プレイヤー
+      - 'ai1': CPU レベル1
+      - 'ai2': CPU レベル2
+      - 'ai3': CPU レベル3
+   e. コンテナに追加
+```
+
+**生成されるHTML構造**:
+```html
+<div class="player-config">
+    <div class="player-color-indicator" style="background-color: #色"></div>
+    <label>色名</label>
+    <select id="player-N-type">
+        <option value="human">プレイヤー</option>
+        <option value="ai1">CPU レベル1</option>
+        <option value="ai2">CPU レベル2</option>
+        <option value="ai3">CPU レベル3</option>
+    </select>
+</div>
+```
+
+**副作用**:
+- DOM操作: `#playerSetup`の内容を完全に書き換え
+
+**呼び出し元**: 
+- DOMContentLoadedイベント
+- `setPlayerCount()`関数
+
+---
+
+#### 2.1.4 `startGame()`
+
+**目的**: ゲームを開始
+
+**パラメータ**: なし
+
+**戻り値**: なし（`void`）
+
+**処理ロジック**:
+```
+1. プレイヤー情報を収集:
+   - gameState.players配列を初期化
+   - 各プレイヤーのセレクトボックスから色とタイプを取得
+   - players配列に{color, type}オブジェクトを追加
+
+2. トークン初期化:
+   - initTokens()を呼び出し
+
+3. 画面切り替え:
+   - #gameSetupを非表示
+   - #gameContainerを表示
+
+4. ゲーム状態設定:
+   - gameState.gameStarted = true
+   - currentPlayerIndex = 0（最初のプレイヤー）
+
+5. ボード描画とUI更新:
+   - renderBoard()
+   - updateStatus()
+   - ログに「ゲーム開始」メッセージ
+
+6. CPUターン開始処理:
+   - 最初のプレイヤーがCPUの場合、aiStartTurn()を呼び出し
+```
+
+**副作用**:
+- 状態変更: `gameState.players`, `gameState.tokens`, `gameState.gameStarted`
+- DOM操作: 設定画面とゲーム画面の表示切り替え
+- 画面描画: ボードとトークンの初期描画
+
+**条件分岐**:
+- 最初のプレイヤーのtypeが'human'以外の場合 → CPU自動ターン開始
+
+---
+
+#### 2.1.5 `initTokens()`
+
+**目的**: 全プレイヤーのトークンを初期化
+
+**パラメータ**: なし
+
+**戻り値**: なし（`void`）
+
+**処理ロジック**:
+```
+1. デバッグモード判定:
+   - #debugModeチェックボックスの状態を確認
+
+2. gameState.tokensオブジェクトを空に初期化
+
+3. 各プレイヤーごとにループ:
+   a. 色を取得: COLORS[i]
+   b. gameState.tokens[color]を空配列で初期化
+   
+   c. デバッグモード時のみ:
+      - players[i].finishedTokens = 3を設定
+   
+   d. 4つのトークンを生成:
+      - デバッグモード かつ j < 3の場合:
+        * position: 1003（ゴール位置）
+        * isFinished: true
+        * コンソールログ出力
+      
+      - 通常モードまたはj === 3の場合:
+        * position: -1（ベース）
+        * isInHomePath: false
+        * homePathPosition: -1
+        * isFinished: false
+```
+
+**TokenObject生成ルール**:
+
+**通常モード**:
+```javascript
+{
+    id: j,                  // 0-3
+    position: -1,           // ベース
+    isInHomePath: false,
+    homePathPosition: -1,
+    isFinished: false
+}
+```
+
+**デバッグモード（トークン0-2）**:
+```javascript
+{
+    id: j,
+    position: 1003,         // ゴール
+    isInHomePath: true,
+    homePathPosition: 3,
+    isFinished: true
+}
+```
+
+**デバッグモード（トークン3）**:
+```javascript
+{
+    id: 3,
+    position: -1,           // ベース
+    isInHomePath: false,
+    homePathPosition: -1,
+    isFinished: false
+}
+```
+
+**副作用**:
+- 状態変更: `gameState.tokens`を完全に再構築
+- コンソール出力: デバッグモード時のログ
+
+**使用箇所**: 
+- `startGame()`関数
+- `resetGame()`関数
+
+---
+
+### 2.2 描画関数
+
+#### 2.2.1 `renderBoard()`
+
+**目的**: ゲームボードのDOM要素を生成
+
+**パラメータ**: なし
+
+**戻り値**: なし（`void`）
+
+**処理ロジック**:
+```
+1. #ludoBoardコンテナ要素を取得
+2. 既存のHTML内容をクリア
+3. 11×11グリッドを生成:
+   for row in 0..10:
+     for col in 0..10:
+       a. div要素を生成
+       b. クラス名: 'board-cell'
+       c. データ属性: data-row, data-col
+       d. setCellType(cell, row, col)で種別設定
+       e. ボードに追加
+4. renderTokens()でトークン配置
+```
+
+**生成されるセル数**: 121個（11×11）
+
+**副作用**:
+- DOM操作: `#ludoBoard`の内容を完全に書き換え
+- 呼び出し: `setCellType()`, `renderTokens()`
+
+**使用箇所**:
+- `startGame()`
+- `resetGame()`
+
+---
+
+#### 2.2.2 `setCellType(cell, row, col)`
+
+**目的**: ボードセルの種別とスタイルを設定
+
+**パラメータ**:
+| 名前 | 型 | 必須 | 説明 |
+|-----|-----|-----|-----|
+| cell | HTMLElement | ✓ | 設定対象のdiv要素 |
+| row | number | ✓ | 行番号（0-10） |
+| col | number | ✓ | 列番号（0-10） |
+
+**戻り値**: なし（`void`）
+
+**処理ロジック（座標判定）**:
+
+**1. ベースエリア判定**:
+```javascript
+// 赤ベース（左上）: row=0-3, col=0-3
+if (row === 0 && col === 0) {
+    // 4×4エリアの統合セル
+    gridRow: '1 / 5', gridColumn: '1 / 5'
+    クラス: 'base-area red base-container'
+    内部HTML: 4つのスロット円
+} else if (row < 4 && col < 4) {
+    display: 'none'  // 他のセルは非表示
+}
+
+// 青ベース（右上）: row=0-3, col=7-10
+// 黄ベース（右下）: row=7-10, col=7-10
+// 緑ベース（左下）: row=7-10, col=0-3
+// ※同様のロジック
+```
+
+**2. スタートマス判定**:
+```javascript
+if (row === 4 && col === 0) {
+    クラス: 'path start red'
+    内容: '➡️'  // 赤スタート
+} else if (row === 0 && col === 6) {
+    クラス: 'path start blue'
+    内容: '⬇️'  // 青スタート
+} else if (row === 6 && col === 10) {
+    クラス: 'path start yellow'
+    内容: '⬅️'  // 黄スタート
+} else if (row === 10 && col === 4) {
+    クラス: 'path start green'
+    内容: '⬆️'  // 緑スタート
+}
+```
+
+**3. ホームパス判定**:
+```javascript
+// 赤ホームパス: row=5, col=1-4
+if (row === 5 && col >= 1 && col <= 4) {
+    クラス: 'home-path red'
+}
+// 青ホームパス: row=1-4, col=5
+else if (col === 5 && row >= 1 && row <= 4) {
+    クラス: 'home-path blue'
+}
+// 黄ホームパス: row=5, col=6-9
+else if (row === 5 && col >= 6 && col <= 9) {
+    クラス: 'home-path yellow'
+}
+// 緑ホームパス: row=6-9, col=5
+else if (col === 5 && row >= 6 && row <= 9) {
+    クラス: 'home-path green'
+}
+```
+
+**4. 通常パス**:
+```javascript
+else {
+    クラス: 'path'
+}
+```
+
+**副作用**:
+- DOM操作: セル要素のクラス、スタイル、内容を設定
+
+**座標マッピング表**:
+| エリア | row範囲 | col範囲 | 統合セル座標 |
+|-------|--------|---------|------------|
+| 赤ベース | 0-3 | 0-3 | (0,0) |
+| 青ベース | 0-3 | 7-10 | (0,7) |
+| 黄ベース | 7-10 | 7-10 | (7,7) |
+| 緑ベース | 7-10 | 0-3 | (7,0) |
+
+---
+
+#### 2.2.3 `renderTokens()`
+
+**目的**: 全トークンをボード上に描画
+
+**パラメータ**: なし
+
+**戻り値**: なし（`void`）
+
+**処理ロジック**:
+```
+1. 既存のトークン要素を全削除:
+   - document.querySelectorAll('.token').forEach(t => t.remove())
+
+2. gameState.tokensオブジェクトをループ:
+   for each color:
+     for each token (index 0-3):
+       a. トークン要素を生成:
+          - div要素
+          - クラス: 'token' + color
+          - 表示テキスト: index + 1（1-4）
+          - データ属性: data-color, data-id
+       
+       b. ゴール済み判定:
+          if token.isFinished:
+            - クラス追加: 'finished'
+            - ゴール座標に配置
+            - return（次のトークンへ）
+       
+       c. 移動可能判定:
+          if gameState.movableTokensに含まれる:
+            - クラス追加: 'movable'
+            - onclick: moveToken(color, index)
+       
+       d. 位置計算:
+          - pos = getTokenDOMPosition(color, token)
+          - 該当セルを取得
+          - セル内にトークンを追加
+```
+
+**ゴール位置マッピング**:
+```javascript
+const goalPositions = {
+    red: [{ row: 5, col: 4 }],
+    blue: [{ row: 4, col: 5 }],
+    yellow: [{ row: 5, col: 6 }],
+    green: [{ row: 6, col: 5 }]
+};
+```
+
+**副作用**:
+- DOM操作: 全トークン要素を削除して再生成
+- イベント登録: 移動可能トークンにonclickイベント設定
+
+**使用箇所**:
+- `renderBoard()`
+- `performDiceRoll()`（movableTokens更新後）
+- ターン更新時
+
+---
+
+### 2.3 サイコロ関連関数
+
+#### 2.3.1 `rollDice()`
+
+**目的**: 人間プレイヤーがサイコロボタンをクリックした時の処理
+
+**パラメータ**: なし
+
+**戻り値**: なし（`void`）
+
+**処理ロジック**:
+```
+1. ゲーム終了チェック:
+   - 全プレイヤーの全トークンがゴール済みか確認
+   - ゴール済みなら何もせずreturn
+
+2. 二重クリック防止:
+   - gameState.isRolled === true なら return
+
+3. CPUターン判定:
+   - getCurrentPlayer().type !== 'human' なら return
+
+4. サイコロ実行:
+   - performDiceRoll()を呼び出し
+```
+
+**ガード条件**:
+- ゲーム終了済み
+- 既にサイコロ済み
+- CPUのターン
+
+**副作用**: なし（条件を満たす場合のみ`performDiceRoll()`を呼び出し）
+
+**使用箇所**: サイコロボタンのonclickイベント
+
+---
+
+#### 2.3.2 `performDiceRoll()`
+
+**目的**: サイコロの実際の処理（人間・CPU共通）
+
+**パラメータ**: なし
+
+**戻り値**: なし（`void`）
+
+**処理ロジック**:
+```
+1. 現在のプレイヤーとトークンを取得
+
+2. ゲーム終了チェック（二重確認）
+
+3. 全トークンゴール済みチェック:
+   - 該当プレイヤーの全トークンがゴール済みなら:
+     * ログ出力
+     * nextTurn()
+     * return
+
+4. ベース・ボード状況確認:
+   - tokensInBase: ベースにいるトークン数
+   - tokensOnBoard: ボード上のトークン数
+   
+5. 自動パス判定:
+   - ボード上にトークンなし かつ ベースにトークンあり
+   - かつ requireSixToStart === true
+   - かつ スタート位置に自分のトークンあり
+   → 動かせるトークンがないため自動パス
+
+6. サイコロアニメーション:
+   - #diceDisplayに'rolling'クラス追加
+   - 500ms待機
+
+7. サイコロ値決定（500ms後）:
+   - value = Math.floor(Math.random() * 6) + 1
+   - gameState.diceValue = value
+   - gameState.isRolled = true
+   - 画面に表示
+   - 'rolling'クラス削除
+   - ログ出力
+
+8. 移動可能トークン計算:
+   - calculateMovableTokens()
+
+9. 移動可能判定:
+   - movableTokens.length === 0の場合:
+     * ログ: 動かせるトークンなし
+     * 1.5秒後にnextTurn()
+   
+   - movableTokens.length > 0の場合:
+     * renderTokens()でトークン再描画
+     * CPUの場合: 1秒後にaiMove()
+```
+
+**タイミング制御**:
+- アニメーション: 500ms
+- 移動不可時の次ターン: 1500ms
+- CPUの思考開始: 1000ms
+
+**副作用**:
+- 状態変更: `diceValue`, `isRolled`, `movableTokens`
+- DOM操作: サイコロ表示、アニメーション
+- ログ出力
+
+---
+
+#### 2.3.3 `calculateMovableTokens()`
+
+**目的**: 現在のサイコロの目で動かせるトークンを計算
+
+**パラメータ**: なし
+
+**戻り値**: なし（`void`）
+
+**処理ロジック**:
+```
+1. movableTokens配列を初期化
+
+2. 現在のプレイヤーとトークンを取得
+
+3. 全トークンゴール済みチェック:
+   - 全トークンがisFinished === trueなら return
+
+4. 各トークンをループ:
+   for each token:
+     a. ゴール済みならスキップ
+     
+     b. ケース1: ベースにいる（position === -1）
+        - 条件: diceValue === 6 または !requireSixToStart
+        - スタート位置チェック:
+          * 自分の他のトークンがスタート位置にいないか確認
+          * いなければmovableTokensに追加
+     
+     c. ケース2: ホームパスにいる（position 1000-1003）
+        - 新位置計算: position + diceValue
+        - 条件分岐:
+          * exactRollToFinish === true:
+            - 新位置 === 1004（ぴったり）ならmovableTokensに追加
+          * exactRollToFinish === false:
+            - 新位置 >= 1004 ならmovableTokensに追加
+     
+     d. ケース3: メインパスにいる（position 0-39）
+        - 新位置計算: position + diceValue
+        - ホームパス入口判定:
+          * 自分の色のホームパス入口マスを通過するか確認
+          * 通過する場合:
+            - ホームパス内の新位置を計算
+            - exactRollToFinishルールに基づいて判定
+          * 通過しない場合:
+            - 新位置 = (position + diceValue) % PATH_LENGTH
+            - movableTokensに追加
+```
+
+**ホームパス入口マス**:
+```javascript
+const homePathEntry = {
+    red: 39,    // パス位置39の次がホームパス入口
+    blue: 9,
+    yellow: 19,
+    green: 29
+};
+```
+
+**移動可能判定フロー**:
+```
+トークン位置 → 条件チェック → movableTokensに追加
+
+ベース(-1):
+  └→ (6 または !requireSixToStart) かつ スタート位置が空
+     └→ 追加
+
+ホームパス(1000-1003):
+  └→ exactRollToFinish
+     ├→ true: 新位置 === 1004
+     └→ false: 新位置 >= 1004
+        └→ 追加
+
+メインパス(0-39):
+  ├→ ホームパス入口通過
+  │  └→ ホームパス内位置判定
+  └→ 通常移動
+     └→ 追加
+```
+
+**副作用**:
+- 状態変更: `gameState.movableTokens`
+
+**使用箇所**: `performDiceRoll()`
+
+---
+
 ## 次回更新予定
 
-次回は「2. 関数仕様」を追加します。
+次回は「3. アルゴリズム・処理フロー」を追加します。
