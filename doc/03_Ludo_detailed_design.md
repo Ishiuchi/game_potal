@@ -1982,6 +1982,934 @@ stateDiagram-v2
 
 ---
 
-## 次回更新予定
+## 5. UI/UX設計
 
-次回は「5. UI/UX設計」を追加します。
+### 5.1 画面レイアウト構成
+
+```
+┌──────────────────────────────────────────┐
+│            ゲームタイトル                 │
+│             LUDO GAME                    │
+├──────────────────────────────────────────┤
+│  設定画面 (#gameSetup)                   │
+│  ┌────────────────────────────────┐     │
+│  │ プレイヤー人数選択              │     │
+│  │ [2人] [3人] [4人*]             │     │
+│  ├────────────────────────────────┤     │
+│  │ プレイヤー設定                  │     │
+│  │ 🔴赤  [プレイヤー▼]           │     │
+│  │ 🔵青  [CPU Lv1▼]              │     │
+│  │ 🟡黄  [CPU Lv2▼]              │     │
+│  │ 🟢緑  [CPU Lv3▼]              │     │
+│  ├────────────────────────────────┤     │
+│  │ ルール設定                      │     │
+│  │ ☑ 6で出発                     │     │
+│  │ ☑ 6で追加ターン                │     │
+│  │ ☑ ゴールに正確な目が必要        │     │
+│  │ ☑ CPU思考時間表示              │     │
+│  │ ☐ デバッグモード                │     │
+│  ├────────────────────────────────┤     │
+│  │        [ゲーム開始]             │     │
+│  └────────────────────────────────┘     │
+└──────────────────────────────────────────┘
+
+┌──────────────────────────────────────────┐
+│  ゲーム画面 (#gameContainer)             │
+│  ┌────────┬──────────┬────────┐         │
+│  │ステータス│ ボード   │ ログ   │         │
+│  │        │          │        │         │
+│  │現在:赤  │ 11x11    │移動履歴│         │
+│  │        │ グリッド  │        │         │
+│  │サイコロ │          │        │         │
+│  │  [?]   │  🔴🔵   │        │         │
+│  │        │  🟡🟢   │        │         │
+│  │スコア   │          │        │         │
+│  │赤: 0/4 │          │        │         │
+│  │青: 0/4 │          │        │         │
+│  │黄: 0/4 │          │        │         │
+│  │緑: 0/4 │          │        │         │
+│  │        │          │        │         │
+│  │[戻る]  │          │[クリア]│         │
+│  └────────┴──────────┴────────┘         │
+└──────────────────────────────────────────┘
+```
+
+---
+
+### 5.2 DOM構造
+
+#### 5.2.1 設定画面構造
+
+```html
+<div id="gameSetup">
+  <h2>プレイヤー人数を選択</h2>
+  <div class="player-count-buttons">
+    <button class="setup-button" onclick="setPlayerCount(2)">2人</button>
+    <button class="setup-button" onclick="setPlayerCount(3)">3人</button>
+    <button class="setup-button active" onclick="setPlayerCount(4)">4人</button>
+  </div>
+  
+  <h3>プレイヤー設定</h3>
+  <div id="playerSetup">
+    <!-- 動的生成 -->
+    <div class="player-config">
+      <div class="player-color-indicator" style="background-color: #色"></div>
+      <label>赤</label>
+      <select id="player-0-type">
+        <option value="human">プレイヤー</option>
+        <option value="ai1">CPU レベル1</option>
+        <option value="ai2">CPU レベル2</option>
+        <option value="ai3">CPU レベル3</option>
+      </select>
+    </div>
+    <!-- 以下同様に生成 -->
+  </div>
+  
+  <h3>ルール設定</h3>
+  <div class="settings-group">
+    <label>
+      <input type="checkbox" id="requireSixToStart" checked>
+      ベースからコマを出すのに6が必要
+    </label>
+    <label>
+      <input type="checkbox" id="extraTurnOnSix" checked>
+      6が出たら追加ターン
+    </label>
+    <label>
+      <input type="checkbox" id="exactRollToFinish" checked>
+      ゴールにぴったりの目が必要
+    </label>
+    <label>
+      <input type="checkbox" id="cpuThinkingTime" checked>
+      CPUの思考時間を表示
+    </label>
+    <label>
+      <input type="checkbox" id="debugMode">
+      デバッグモード（3コマゴール済み）
+    </label>
+  </div>
+  
+  <button class="start-button" onclick="startGame()">ゲーム開始</button>
+</div>
+```
+
+#### 5.2.2 ゲーム画面構造
+
+```html
+<div id="gameContainer" style="display: none;">
+  <div class="game-layout">
+    <!-- 左パネル: ステータス -->
+    <div class="left-panel">
+      <div class="status-section">
+        <h3>現在のターン</h3>
+        <div id="currentPlayerText" style="color: #色">赤のターン</div>
+      </div>
+      
+      <div class="dice-section">
+        <h3>サイコロ</h3>
+        <div id="diceDisplay" class="dice">?</div>
+        <button id="rollButton" onclick="rollDice()">振る</button>
+      </div>
+      
+      <div class="score-section">
+        <h3>スコア</h3>
+        <div id="playerScores">
+          <div class="player-score" style="background-color: #色">
+            赤: 0/4
+          </div>
+          <!-- 以下同様 -->
+        </div>
+      </div>
+      
+      <button class="back-button" onclick="backToSetup()">設定に戻る</button>
+    </div>
+    
+    <!-- 中央パネル: ボード -->
+    <div class="center-panel">
+      <div id="ludoBoard" class="ludo-board">
+        <!-- 動的生成: 11x11グリッド -->
+        <div class="board-cell" data-row="0" data-col="0">
+          <!-- ベースエリアまたはパスセル -->
+        </div>
+        <!-- ...121個のセル -->
+        
+        <!-- トークンは各セル内に動的追加 -->
+        <div class="token red" data-color="red" data-id="0">1</div>
+      </div>
+    </div>
+    
+    <!-- 右パネル: ログ -->
+    <div class="right-panel">
+      <h3>ゲームログ</h3>
+      <button onclick="document.getElementById('logContent').innerHTML=''">
+        クリア
+      </button>
+      <div id="logContent" class="log-container">
+        <div class="log-entry">ゲーム開始</div>
+        <!-- 新しいログが上に追加される -->
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+#### 5.2.3 モーダル構造
+
+```html
+<div id="winModal" class="modal">
+  <div class="modal-content">
+    <div id="winnerInfo">
+      <h3>🏆 最終順位 🏆</h3>
+      <div>
+        <p>🥇 1位: 赤 (プレイヤー)</p>
+        <p>🥈 2位: 青 (CPU Lv2)</p>
+        <p>🥉 3位: 黄 (CPU Lv1)</p>
+        <p>🏅 4位: 緑 (CPU Lv3)</p>
+      </div>
+    </div>
+    <div class="modal-buttons">
+      <button onclick="resetGame()">もう一度</button>
+      <button onclick="closeWinModal()">閉じる</button>
+    </div>
+  </div>
+</div>
+```
+
+---
+
+### 5.3 CSSクラス定義
+
+#### 5.3.1 ボードセルクラス
+
+| クラス名 | 用途 | スタイル概要 |
+|---------|------|------------|
+| `.board-cell` | 基本セル | グリッドアイテム、境界線 |
+| `.base-area` | ベースエリア | 大きな正方形、色付き背景 |
+| `.base-container` | ベースコンテナ | Grid統合セル（4×4） |
+| `.base-slots` | スロット親要素 | 2×2グリッドレイアウト |
+| `.slot-circle` | トークンスロット | 円形、枠線 |
+| `.path` | 通常パス | 白背景、境界線 |
+| `.start` | スタートマス | 色付き背景、絵文字表示 |
+| `.home-path` | ホームパス | 半透明色背景 |
+| `.red`, `.blue`, `.yellow`, `.green` | 色修飾子 | 各色に対応した背景色 |
+
+#### 5.3.2 トークンクラス
+
+| クラス名 | 用途 | スタイル概要 |
+|---------|------|------------|
+| `.token` | 基本トークン | 円形、影付き、数字表示 |
+| `.token.red` | 赤トークン | 赤背景 |
+| `.token.blue` | 青トークン | 青背景 |
+| `.token.yellow` | 黄トークン | 黄背景 |
+| `.token.green` | 緑トークン | 緑背景 |
+| `.token.movable` | 移動可能 | カーソル:pointer、拡大アニメ |
+| `.token.finished` | ゴール済み | 透明度50%、王冠アイコン |
+
+#### 5.3.3 サイコロクラス
+
+| クラス名 | 用途 | スタイル概要 |
+|---------|------|------------|
+| `.dice` | サイコロ表示 | 大きなフォント、境界線 |
+| `.dice.rolling` | アニメーション中 | 回転アニメーション(0.5秒) |
+
+#### 5.3.4 モーダルクラス
+
+| クラス名 | 用途 | スタイル概要 |
+|---------|------|------------|
+| `.modal` | モーダル背景 | 全画面オーバーレイ、非表示 |
+| `.modal.show` | 表示状態 | display: flex |
+| `.modal-content` | モーダル本体 | 中央配置、白背景、角丸 |
+
+---
+
+### 5.4 イベントハンドラ割り当て
+
+#### 5.4.1 静的イベント（HTML属性）
+
+| 要素 | イベント | ハンドラ | 説明 |
+|-----|---------|---------|------|
+| 人数ボタン | onclick | `setPlayerCount(n)` | プレイヤー人数選択 |
+| ゲーム開始ボタン | onclick | `startGame()` | ゲーム開始 |
+| サイコロボタン | onclick | `rollDice()` | サイコロを振る（人間のみ） |
+| 戻るボタン | onclick | `backToSetup()` | 設定画面に戻る |
+| ログクリアボタン | onclick | `logContent.innerHTML=''` | ログクリア |
+| もう一度ボタン | onclick | `resetGame()` | ゲームリセット |
+| 閉じるボタン | onclick | `closeWinModal()` | モーダルを閉じる |
+
+#### 5.4.2 動的イベント（JavaScript生成）
+
+| 要素 | イベント | ハンドラ | 生成タイミング | 条件 |
+|-----|---------|---------|--------------|-----|
+| トークン要素 | onclick | `moveToken(color, id)` | `renderTokens()` | `movable`クラス付与時 |
+
+**トークンイベント設定ロジック**:
+```javascript
+if (gameState.movableTokens.some(t => t.color === color && t.id === index)) {
+    tokenEl.classList.add('movable');
+    tokenEl.onclick = async () => await moveToken(color, index);
+}
+```
+
+---
+
+### 5.5 アニメーション仕様
+
+#### 5.5.1 サイコロアニメーション
+
+```css
+@keyframes diceRoll {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(90deg); }
+    50% { transform: rotate(180deg); }
+    75% { transform: rotate(270deg); }
+}
+
+.dice.rolling {
+    animation: diceRoll 0.5s linear;
+}
+```
+
+**タイミング**:
+1. `rolling`クラス追加（0ms）
+2. アニメーション実行（500ms）
+3. `rolling`クラス削除、結果表示（500ms）
+
+#### 5.5.2 トークン移動アニメーション
+
+**実装方法**: 段階的レンダリング
+```javascript
+for (let i = 1; i <= diceValue; i++) {
+    token.position = 新位置;
+    renderTokens();      // 再描画
+    await delay(300);    // 300ms待機
+}
+```
+
+**視覚効果**:
+- 1マスごとに300ms間隔で移動
+- 滑らかな視覚的フィードバック
+- サイコロの目が6の場合、1.8秒（6×300ms）
+
+#### 5.5.3 UI遷移アニメーション
+
+| 遷移 | タイミング | エフェクト |
+|-----|----------|-----------|
+| 設定→ゲーム | `startGame()` | フェードイン |
+| 思考中表示 | CPU思考時 | opacity 0.6、テキスト点滅 |
+| 移動可能強調 | サイコロ後 | トークン拡大(scale 1.1)、影強調 |
+| モーダル表示 | ゲーム終了 | 背景フェードイン、コンテンツスライドイン |
+
+---
+
+### 5.6 レスポンシブ対応
+
+#### 5.6.1 ブレークポイント
+
+| デバイス | 画面幅 | レイアウト変更 |
+|---------|-------|--------------|
+| PC | > 1024px | 3カラムレイアウト（ステータス-ボード-ログ） |
+| タブレット | 768px - 1024px | 2カラムレイアウト（ボード上、ステータス+ログ下） |
+| スマートフォン | < 768px | 1カラムレイアウト（縦積み） |
+
+#### 5.6.2 タッチデバイス対応
+
+```javascript
+// タッチイベント対応
+tokenEl.onclick = async () => await moveToken(color, index);
+// モバイルでもclickイベントで動作
+
+// ホバー効果の代替
+.token.movable {
+    transform: scale(1.1);  // 常時拡大表示
+}
+```
+
+---
+
+## 6. 座標・位置計算
+
+### 6.1 座標系定義
+
+#### 6.1.1 ボード座標系（Grid座標）
+
+```
+     col: 0  1  2  3  4  5  6  7  8  9 10
+row:0  [赤ベース---------] □ [青ベース---------]
+    1  [                ] ⬇ [                ]
+    2  [                ] ⬇ [                ]
+    3  [                ] ⬇ [                ]
+    4  ➡ □ □ □ ← ← ⬅ ← □ □ □
+    5  □ ← ← ← ← 🏠 → → → → □
+    6  □ □ □ □ ⬇ ⬇ ⬇ □ □ □ ⬅
+    7  [緑ベース---------] ⬇ [黄ベース---------]
+    8  [                ] ⬇ [                ]
+    9  [                ] ⬇ [                ]
+   10  □ □ □ ⬆ ⬆ ➡ ⬆ □ □ □ □
+```
+
+- **原点**: 左上 `(row=0, col=0)`
+- **範囲**: `row: 0-10`, `col: 0-10`
+- **使用目的**: DOM要素の配置、CSS Grid
+
+#### 6.1.2 パス座標系（論理座標）
+
+```
+パス位置 0-39: メインパス（円形通路）
+  - 位置 0: 赤スタート (row=4, col=0)
+  - 位置10: 青スタート (row=0, col=6)
+  - 位置20: 黄スタート (row=6, col=10)
+  - 位置30: 緑スタート (row=10, col=4)
+
+パス位置1000-1003: ホームパス（各色専用）
+  - 1000: ホームパス入口
+  - 1001: ホームパス中間1
+  - 1002: ホームパス中間2
+  - 1003: ゴール
+
+パス位置 -1: ベース（出発前）
+```
+
+---
+
+### 6.2 座標変換関数
+
+#### 6.2.1 `getPathPosition(position)` - パス→ボード変換
+
+**入力**: パス座標（0-39）  
+**出力**: ボード座標 `{row: number, col: number}`
+
+**変換テーブル**:
+```javascript
+const path = [
+    // 位置0-9: 赤スタート
+    { row: 4, col: 0 },   // 0: 赤スタート ➡
+    { row: 4, col: 1 },   // 1
+    { row: 4, col: 2 },   // 2
+    { row: 4, col: 3 },   // 3
+    { row: 4, col: 4 },   // 4
+    { row: 3, col: 4 },   // 5: ↑
+    { row: 2, col: 4 },   // 6: ↑
+    { row: 1, col: 4 },   // 7: ↑
+    { row: 0, col: 4 },   // 8: ↑
+    { row: 0, col: 5 },   // 9: →
+    
+    // 位置10-19: 青スタート
+    { row: 0, col: 6 },   // 10: 青スタート ⬇
+    { row: 1, col: 6 },   // 11: ↓
+    // ... 続く
+    
+    // 位置20-29: 黄スタート
+    { row: 6, col: 10 },  // 20: 黄スタート ⬅
+    // ... 続く
+    
+    // 位置30-39: 緑スタート
+    { row: 10, col: 4 },  // 30: 緑スタート ⬆
+    // ... 続く
+];
+
+return path[position] || { row: 5, col: 5 };  // デフォルトは中央
+```
+
+#### 6.2.2 `getHomePathPosition(color, homePathIndex)` - ホームパス座標
+
+**入力**: 
+- `color`: 'red', 'blue', 'yellow', 'green'
+- `homePathIndex`: 0-3
+
+**出力**: ボード座標 `{row: number, col: number}`
+
+**変換ロジック**:
+```javascript
+const homePathCoords = {
+    red: [
+        { row: 5, col: 1 },  // 0: 入口
+        { row: 5, col: 2 },  // 1
+        { row: 5, col: 3 },  // 2
+        { row: 5, col: 4 }   // 3: ゴール
+    ],
+    blue: [
+        { row: 1, col: 5 },  // 0: 入口
+        { row: 2, col: 5 },  // 1
+        { row: 3, col: 5 },  // 2
+        { row: 4, col: 5 }   // 3: ゴール
+    ],
+    yellow: [
+        { row: 5, col: 9 },  // 0: 入口
+        { row: 5, col: 8 },  // 1
+        { row: 5, col: 7 },  // 2
+        { row: 5, col: 6 }   // 3: ゴール
+    ],
+    green: [
+        { row: 9, col: 5 },  // 0: 入口
+        { row: 8, col: 5 },  // 1
+        { row: 7, col: 5 },  // 2
+        { row: 6, col: 5 }   // 3: ゴール
+    ]
+};
+
+return homePathCoords[color][homePathIndex];
+```
+
+#### 6.2.3 `getTokenDOMPosition(color, token)` - トークン位置計算
+
+**入力**:
+- `color`: プレイヤー色
+- `token`: TokenObjectフ
+
+**処理フロー**:
+```javascript
+if (token.position === -1) {
+    // ベースエリア内のスロットに配置
+    return null;  // ベースエリアはCSS Gridで管理
+}
+else if (token.position >= 1000 && token.position <= 1003) {
+    // ホームパス
+    const homeIndex = token.position - 1000;
+    return getHomePathPosition(color, homeIndex);
+}
+else if (token.position >= 0 && token.position < PATH_LENGTH) {
+    // メインパス
+    return getPathPosition(token.position);
+}
+else {
+    // 無効な位置
+    console.error('Invalid position:', token.position);
+    return { row: 5, col: 5 };  // デフォルト
+}
+```
+
+---
+
+### 6.3 位置計算アルゴリズム
+
+#### 6.3.1 相対位置から絶対位置への変換
+
+**目的**: 各プレイヤーの視点で0から始まる位置を、パス配列の絶対位置に変換
+
+**計算式**:
+```javascript
+const startPos = START_POSITIONS[color];
+const relativePos = (position - startPos + PATH_LENGTH) % PATH_LENGTH;
+```
+
+**例（赤プレイヤー）**:
+```
+startPos = 0
+position = 5 → relativePos = (5 - 0 + 40) % 40 = 5
+position = 38 → relativePos = (38 - 0 + 40) % 40 = 38
+```
+
+**例（青プレイヤー）**:
+```
+startPos = 10
+position = 15 → relativePos = (15 - 10 + 40) % 40 = 5
+position = 5 → relativePos = (5 - 10 + 40) % 40 = 35
+```
+
+#### 6.3.2 移動後の新位置計算
+
+**通常移動**:
+```javascript
+const newRelativePos = relativePos + diceValue;
+const newAbsolutePos = (startPos + newRelativePos) % PATH_LENGTH;
+```
+
+**ホームパス進入判定**:
+```javascript
+if (newRelativePos >= PATH_LENGTH) {
+    const excessSteps = newRelativePos - PATH_LENGTH;
+    if (excessSteps < HOME_PATH_LENGTH) {
+        // ホームパスへ
+        const newPosition = 1000 + excessSteps;
+    }
+}
+```
+
+**例（赤、相対位置38、サイコロ4）**:
+```
+newRelativePos = 38 + 4 = 42
+excessSteps = 42 - 40 = 2
+newPosition = 1000 + 2 = 1002（ホームパス中間2）
+```
+
+---
+
+## 7. ルールエンジン
+
+### 7.1 移動可能判定条件
+
+#### 7.1.1 ベースからの出発条件
+
+```javascript
+// 条件1: サイコロの目
+const canLeaveBase = (diceValue === 6) || (!settings.requireSixToStart);
+
+// 条件2: スタート位置の空き確認
+const startPos = START_POSITIONS[color];
+const isStartOccupied = tokens.some((t, idx) => 
+    idx !== tokenId && t.position === startPos && !t.isFinished
+);
+
+// 総合判定
+const canMove = canLeaveBase && !isStartOccupied;
+```
+
+**判定表**:
+| requireSixToStart | diceValue | スタート占有 | 結果 |
+|------------------|-----------|------------|------|
+| true | 6 | No | ✓ 移動可能 |
+| true | 6 | Yes | ✗ 移動不可 |
+| true | 1-5 | - | ✗ 移動不可 |
+| false | 1-6 | No | ✓ 移動可能 |
+| false | 1-6 | Yes | ✗ 移動不可 |
+
+#### 7.1.2 ホームパス内移動条件
+
+```javascript
+const homePos = token.position - 1000;  // 0-3
+const newHomePos = homePos + diceValue;
+
+// exactRollToFinishルール
+if (settings.exactRollToFinish) {
+    // ぴったりゴールできるか
+    canMove = (newHomePos === HOME_PATH_LENGTH);  // === 4
+} else {
+    // 超過してもOK
+    canMove = (newHomePos >= HOME_PATH_LENGTH);  // >= 4
+}
+
+// 移動先の占有確認（ゴールでない場合）
+if (canMove && newHomePos < HOME_PATH_LENGTH) {
+    const targetHomePos = 1000 + newHomePos;
+    const isOccupied = tokens.some((t, idx) => 
+        idx !== tokenId && t.position === targetHomePos
+    );
+    canMove = !isOccupied;
+}
+```
+
+**判定表（exactRollToFinish = true）**:
+| 現在位置 | diceValue | 新位置 | 結果 |
+|---------|-----------|-------|------|
+| 1000 | 4 | 1004 | ✓ ゴール |
+| 1001 | 3 | 1004 | ✓ ゴール |
+| 1002 | 2 | 1004 | ✓ ゴール |
+| 1003 | 1 | 1004 | ✓ ゴール |
+| 1000 | 3 | 1003 | ✓ 移動可能 |
+| 1000 | 5 | 1005 | ✗ オーバー |
+
+#### 7.1.3 メインパス移動条件
+
+```javascript
+// 相対位置計算
+const startPos = START_POSITIONS[color];
+const relativePos = (token.position - startPos + PATH_LENGTH) % PATH_LENGTH;
+const newRelativePos = relativePos + diceValue;
+
+if (newRelativePos >= PATH_LENGTH) {
+    // ホームパス進入の場合
+    const excessSteps = newRelativePos - PATH_LENGTH;
+    canMove = (excessSteps < HOME_PATH_LENGTH);
+    
+    if (canMove && settings.exactRollToFinish && excessSteps === HOME_PATH_LENGTH - 1) {
+        // ゴール直前の場合、ぴったり判定
+        canMove = (diceValue === (PATH_LENGTH - relativePos + HOME_PATH_LENGTH));
+    }
+} else {
+    // 通常移動
+    const targetPos = (startPos + newRelativePos) % PATH_LENGTH;
+    const isOccupied = tokens.some((t, idx) => 
+        idx !== tokenId && t.position === targetPos && !t.isFinished
+    );
+    canMove = !isOccupied;
+}
+```
+
+---
+
+### 7.2 追加ターン処理
+
+#### 7.2.1 6の目の追加ターン
+
+```javascript
+if (gameState.diceValue === 6 && gameState.settings.extraTurnOnSix) {
+    addLog(`${COLOR_NAMES[color]}は6を出したので追加ターン！`);
+    gameState.isRolled = false;  // 再度サイコロを振れるようにする
+    updateStatus();
+    
+    if (getCurrentPlayer().type !== 'human') {
+        setTimeout(aiTurn, 1000);  // CPUは1秒後に自動実行
+    }
+    // 人間の場合はボタン待機
+} else {
+    nextTurn();  // 通常の次ターンへ
+}
+```
+
+**フロー**:
+```
+サイコロ: 6
+  ↓
+extraTurnOnSix?
+  ↓ true
+isRolled = false
+  ↓
+updateStatus()
+  ↓
+┌────────────┐
+│プレイヤー? │
+└────┬───────┘
+  ┌──┴──┐
+  ↓     ↓
+Human  CPU
+  ↓     ↓
+待機  1秒後aiTurn()
+```
+
+---
+
+### 7.3 パス処理
+
+#### 7.3.1 自動パス条件
+
+```javascript
+// 全トークンがベースにいる
+const tokensInBase = tokens.filter(t => t.position === -1 && !t.isFinished);
+const tokensOnBoard = tokens.filter(t => t.position !== -1 && !t.isFinished);
+
+if (tokensOnBoard.length === 0 && tokensInBase.length > 0) {
+    if (settings.requireSixToStart) {
+        // スタート位置が自分のトークンで埋まっている
+        const startPos = START_POSITIONS[color];
+        const hasOwnTokenAtStart = tokens.some(t => 
+            t.position === startPos && !t.isFinished
+        );
+        
+        if (hasOwnTokenAtStart) {
+            addLog(`${COLOR_NAMES[color]}は動かせるトークンがないため自動パス`);
+            nextTurn();
+            return;
+        }
+    }
+}
+```
+
+**自動パス条件**:
+1. ボード上にトークンが0個
+2. ベースにトークンが1個以上
+3. `requireSixToStart === true`
+4. スタート位置に自分の他のトークンがいる
+
+**理由**: この状態では、6を出してもトークンを出せないため
+
+---
+
+## 8. エラーハンドリング
+
+### 8.1 エラー検出機構
+
+| エラー種別 | 検出箇所 | 検出方法 | 処理 |
+|-----------|---------|---------|------|
+| 二重サイコロ | `rollDice()` | `isRolled`フラグ | 早期return |
+| CPUターン割込 | `rollDice()` | プレイヤータイプチェック | 早期return |
+| 無効トークンクリック | `moveToken()` | `movableTokens`照合 | イベント未登録 |
+| ゲーム終了後操作 | 各関数 | 全員ゴール判定 | 早期return |
+| 無効座標 | `getPathPosition()` | 範囲チェック | デフォルト座標 |
+| ホームパスオーバー | `moveToken()` | excessSteps判定 | ログ出力、ターン終了 |
+
+---
+
+### 8.2 デバッグ機能
+
+#### 8.2.1 デバッグモード
+
+**有効化**: 設定画面の「デバッグモード」チェックボックス
+
+**効果**:
+```javascript
+if (debugMode) {
+    // 各プレイヤーの最初の3トークンをゴール済みに
+    for (j = 0; j < 3; j++) {
+        tokens[j] = {
+            id: j,
+            position: 1003,      // ゴール位置
+            isFinished: true
+        };
+    }
+    
+    // 4番目のトークンはベース
+    tokens[3] = {
+        id: 3,
+        position: -1,
+        isFinished: false
+    };
+    
+    console.log('🔧 デバッグモード: 各プレイヤーの3コマがゴール済みでスタート');
+}
+```
+
+**用途**:
+- ゴール処理のテスト
+- 順位決定ロジックの検証
+- 勝利モーダルの動作確認
+
+#### 8.2.2 コンソールログ
+
+**重要ログポイント**:
+```javascript
+// ゲーム開始
+console.log('ゲーム開始', gameState);
+
+// トークン移動
+console.log(`${COLOR_NAMES[color]}のトークン${tokenId + 1}: ステップ${i}/${steps}, 相対位置=${relativePos}`);
+
+// ホームパス進入
+console.log(`ホームパス進入: excessSteps=${excessSteps}`);
+
+// 捕獲
+console.log(`${COLOR_NAMES[capturedColor]}のトークン${capturedToken.id + 1}を捕獲！`);
+
+// ゴール
+console.log(`${COLOR_NAMES[color]}のトークン${tokenId + 1}がゴール！`);
+```
+
+---
+
+## 9. パフォーマンス・制約事項
+
+### 9.1 描画最適化
+
+#### 9.1.1 再描画戦略
+
+**全体再描画が必要な場合**:
+- `renderBoard()`: ゲーム開始時のみ
+- `renderTokens()`: トークン状態変更時
+
+**部分更新**:
+- サイコロ表示: `diceDisplay.textContent = value`
+- ステータス: `updateStatus()`で必要部分のみ
+
+**最適化手法**:
+```javascript
+// ❌ 非効率: トークンごとに個別描画
+tokens.forEach(token => {
+    renderSingleToken(token);
+});
+
+// ✓ 効率的: 一括クリア→一括描画
+document.querySelectorAll('.token').forEach(t => t.remove());
+// 全トークンを一度に生成
+```
+
+---
+
+### 9.2 タイムアウト設定
+
+| 処理 | タイムアウト | 理由 |
+|-----|------------|------|
+| サイコロアニメーション | 500ms | 視覚的フィードバック |
+| トークン移動（1マス） | 300ms | 移動の視認性 |
+| 移動不可時の次ターン | 1500ms | ユーザーへの通知時間 |
+| CPU思考表示 | 600-1800ms | リアルな思考演出 |
+| CPU移動決定 | 500-1500ms | 自然な間 |
+| CPUターン開始 | 1000ms | 前の処理完了待ち |
+| 勝利モーダル表示 | 800ms | 最終アニメーション待ち |
+
+---
+
+### 9.3 ブラウザ互換性
+
+#### 9.3.1 対応ブラウザ
+
+| ブラウザ | 最小バージョン | 主要機能 |
+|---------|--------------|---------|
+| Chrome | 90+ | CSS Grid, async/await, ES6 |
+| Firefox | 88+ | CSS Grid, async/await, ES6 |
+| Safari | 14+ | CSS Grid, async/await, ES6 |
+| Edge | 90+ | CSS Grid, async/await, ES6 |
+
+#### 9.3.2 必要機能
+
+- **CSS Grid**: ボードレイアウト
+- **async/await**: トークン移動アニメーション
+- **ES6 Arrow Functions**: イベントハンドラ
+- **Template Literals**: HTML生成
+- **Array Methods**: `forEach`, `filter`, `some`, `every`
+- **Promise**: `delay()`関数
+
+---
+
+## 10. 多言語対応
+
+### 10.1 i18n連携
+
+**実装方法**: `i18n.js`との統合
+
+**翻訳キー**:
+```javascript
+// HTMLでのデータ属性使用
+<h2 data-i18n="games.ludo.title">ルドー</h2>
+<button data-i18n="games.ludo.startGame">ゲーム開始</button>
+```
+
+**動的テキスト**: `COLOR_NAMES`オブジェクトで管理
+```javascript
+const COLOR_NAMES = { 
+    red: '赤',    // ja: '赤', en: 'Red'
+    blue: '青',   // ja: '青', en: 'Blue'
+    yellow: '黄', // ja: '黄', en: 'Yellow'
+    green: '緑'   // ja: '緑', en: 'Green'
+};
+```
+
+---
+
+## 11. 将来拡張可能性
+
+### 11.1 オンライン対戦
+
+**必要な変更**:
+1. WebSocket通信層の追加
+2. サーバーサイド状態管理
+3. ターン同期メカニズム
+4. 切断時の再接続処理
+
+### 11.2 リプレイ機能
+
+**実装方針**:
+```javascript
+// ターンごとに行動を記録
+const gameHistory = [];
+
+function recordAction(action) {
+    gameHistory.push({
+        turn: gameState.turnCount,
+        player: gameState.currentPlayerIndex,
+        action: action,  // 'roll', 'move'
+        data: { diceValue, tokenId, ... }
+    });
+}
+```
+
+### 11.3 統計情報
+
+**追跡データ**:
+- 総プレイ回数
+- 勝率（色別、タイプ別）
+- 平均ターン数
+- 捕獲数
+
+---
+
+## まとめ
+
+本詳細設計書は、ルドーゲーム（ludo.js）の実装における全ての変数、データ構造、処理ロジック、アルゴリズムを網羅的に定義しました。
+
+**主要ポイント**:
+1. **データ構造**: 13プロパティを持つ`gameState`オブジェクトが全状態を管理
+2. **座標系**: パス座標（論理）とボード座標（物理）の2系統
+3. **AI**: レベル1-3の異なる戦略アルゴリズム
+4. **状態管理**: 明確な状態遷移と条件分岐
+5. **UI/UX**: レスポンシブ対応と段階的アニメーション
+
+この仕様書により、コードの保守性、拡張性、および新規開発者のオンボーディングが大幅に向上します。
