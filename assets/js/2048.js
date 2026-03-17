@@ -1,4 +1,4 @@
-// 2048 ゲームロジック
+﻿// 2048 ゲームロジック
 
 class Game2048 {
     constructor(size = 4) {
@@ -425,8 +425,8 @@ class GameUI {
         const directions = {
             'up': '↑',
             'down': '↓',
-            'left': '←',
-            'right': '→'
+            'left': '',
+            'right': ''
         };
         
         this.hintBtn.textContent = `💡 ${directions[bestMove]}`;
@@ -497,3 +497,5 @@ let gameUI;
 document.addEventListener('DOMContentLoaded', () => {
     gameUI = new GameUI();
 });
+
+

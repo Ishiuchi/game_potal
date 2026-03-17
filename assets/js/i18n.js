@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 多言語対応システム
  * 対応言語: 日本語、英語、中国語、ヒンディー語、スペイン語、フランス語
  */
@@ -16,7 +16,7 @@ const translations = {
             cta: 'ゲームを始める'
         },
         common: {
-            backHome: '← ホームに戻る',
+            backHome: ' ホームに戻る',
             howToPlay: '遊び方・ルール',
             reset: 'リセット',
             close: '閉じる',
@@ -222,7 +222,7 @@ const translations = {
                 players: '👥 2-4プレイヤー',
                 duration: '⏱️ 10-30分'
             },
-            playBtn: 'プレイする →'
+            playBtn: 'プレイする '
         },
         '2048': {
             title: '2048',
@@ -260,7 +260,7 @@ const translations = {
                 move: '矢印キーまたはスワイプでタイルを移動',
                 merge: '同じ数字のタイルを合体させる',
                 goal: '2048を作ることが目標',
-                keyboard: 'キーボード: ← ↑ → ↓',
+                keyboard: 'キーボード:  ↑  ↓',
                 touch: 'タッチ: スワイプで移動'
             }
         },
@@ -484,7 +484,7 @@ const translations = {
             },
             established: '制定日：2025年11月26日',
             updated: '最終更新日：2025年11月26日',
-            backHome: '← ホームに戻る'
+            backHome: ' ホームに戻る'
         }
     },
     en: {
@@ -499,7 +499,7 @@ const translations = {
             cta: 'Start Playing'
         },
         common: {
-            backHome: '← Back to Home',
+            backHome: ' Back to Home',
             howToPlay: 'How to Play · Rules',
             reset: 'Reset',
             close: 'Close',
@@ -679,7 +679,7 @@ const translations = {
                 players: '👥 2-4 Players',
                 duration: '⏱️ 10-30 min'
             },
-            playBtn: 'Play Now →'
+            playBtn: 'Play Now '
         },
         '2048': {
             title: '2048',
@@ -717,7 +717,7 @@ const translations = {
                 move: 'Move tiles with arrow keys or swipe',
                 merge: 'Merge tiles with the same number',
                 goal: 'Reach 2048 tile',
-                keyboard: 'Keyboard: ← ↑ → ↓',
+                keyboard: 'Keyboard:  ↑  ↓',
                 touch: 'Touch: Swipe to move'
             }
         },
@@ -941,7 +941,7 @@ const translations = {
             },
             established: 'Established: November 26, 2025',
             updated: 'Last Updated: November 26, 2025',
-            backHome: '← Back to Home'
+            backHome: ' Back to Home'
         }
     },
     zh: {
@@ -956,7 +956,7 @@ const translations = {
             cta: '开始游戏'
         },
         common: {
-            backHome: '← 返回主页',
+            backHome: ' 返回主页',
             howToPlay: '玩法·规则',
             reset: '重置',
             close: '关闭',
@@ -1162,7 +1162,7 @@ const translations = {
                 players: '👥 2-4名玩家',
                 duration: '⏱️ 10-30分钟'
             },
-            playBtn: '开始游戏 →'
+            playBtn: '开始游戏 '
         },
         '2048': {
             title: '2048',
@@ -1200,7 +1200,7 @@ const translations = {
                 move: '用方向键或滑动移动方块',
                 merge: '合并相同数字的方块',
                 goal: '达到2048方块',
-                keyboard: '键盘: ← ↑ → ↓',
+                keyboard: '键盘:  ↑  ↓',
                 touch: '触摸: 滑动移动'
             }
         },
@@ -1424,7 +1424,7 @@ const translations = {
             },
             established: '制定日期：2025年11月26日',
             updated: '最后更新日期：2025年11月26日',
-            backHome: '← 返回主页'
+            backHome: ' 返回主页'
         }
     },
     hi: {
@@ -1439,7 +1439,7 @@ const translations = {
             cta: 'खेलना शुरू करें'
         },
         common: {
-            backHome: '← होम पर वापस जाएं',
+            backHome: ' होम पर वापस जाएं',
             howToPlay: 'कैसे खेलें · नियम',
             reset: 'रीसेट',
             close: 'बंद करें',
@@ -1645,7 +1645,7 @@ const translations = {
                 players: '👥 2-4 खिलाड़ी',
                 duration: '⏱️ 10-30 मिनट'
             },
-            playBtn: 'अभी खेलें →'
+            playBtn: 'अभी खेलें '
         },
         '2048': {
             title: '2048',
@@ -1683,7 +1683,7 @@ const translations = {
                 move: 'तीर कुंजी या स्वाइप से टाइलें हिलाएं',
                 merge: 'समान संख्या वाली टाइलें मर्ज करें',
                 goal: '2048 टाइल तक पहुंचें',
-                keyboard: 'कीबोर्ड: ← ↑ → ↓',
+                keyboard: 'कीबोर्ड:  ↑  ↓',
                 touch: 'टच: स्वाइप करके हिलाएं'
             }
         },
@@ -1800,7 +1800,7 @@ const translations = {
             },
             established: 'स्थापित: 26 नवंबर, 2025',
             updated: 'अंतिम अपडेट: 26 नवंबर, 2025',
-            backHome: '← होम पर वापस जाएं'
+            backHome: ' होम पर वापस जाएं'
         }
     },
     es: {
@@ -1815,7 +1815,7 @@ const translations = {
             cta: 'Comenzar a Jugar'
         },
         common: {
-            backHome: '← Volver al Inicio',
+            backHome: ' Volver al Inicio',
             howToPlay: 'Cómo Jugar · Reglas',
             reset: 'Reiniciar',
             close: 'Cerrar',
@@ -2021,7 +2021,7 @@ const translations = {
                 players: '👥 2-4 Jugadores',
                 duration: '⏱️ 10-30 min'
             },
-            playBtn: 'Jugar Ahora →'
+            playBtn: 'Jugar Ahora '
         },
         '2048': {
             title: '2048',
@@ -2059,7 +2059,7 @@ const translations = {
                 move: 'Mueve fichas con teclas de flecha o desliza',
                 merge: 'Fusiona fichas con el mismo número',
                 goal: 'Alcanza la ficha 2048',
-                keyboard: 'Teclado: ← ↑ → ↓',
+                keyboard: 'Teclado:  ↑  ↓',
                 touch: 'Táctil: Desliza para mover'
             }
         },
@@ -2176,7 +2176,7 @@ const translations = {
             },
             established: 'Establecido: 26 de noviembre de 2025',
             updated: 'Última actualización: 26 de noviembre de 2025',
-            backHome: '← Volver al Inicio'
+            backHome: ' Volver al Inicio'
         }
     },
     fr: {
@@ -2191,7 +2191,7 @@ const translations = {
             cta: 'Commencer à Jouer'
         },
         common: {
-            backHome: '← Retour à l\'Accueil',
+            backHome: ' Retour à l\'Accueil',
             howToPlay: 'Comment Jouer · Règles',
             reset: 'Réinitialiser',
             close: 'Fermer',
@@ -2397,7 +2397,7 @@ const translations = {
                 players: '👥 2-4 Joueurs',
                 duration: '⏱️ 10-30 min'
             },
-            playBtn: 'Jouer Maintenant →'
+            playBtn: 'Jouer Maintenant '
         },
         '2048': {
             title: '2048',
@@ -2435,7 +2435,7 @@ const translations = {
                 move: 'Déplacez les tuiles avec les flèches ou glissez',
                 merge: 'Fusionnez les tuiles avec le même nombre',
                 goal: 'Atteignez la tuile 2048',
-                keyboard: 'Clavier: ← ↑ → ↓',
+                keyboard: 'Clavier:  ↑  ↓',
                 touch: 'Tactile: Glissez pour déplacer'
             }
         },
@@ -2552,7 +2552,7 @@ const translations = {
             },
             established: 'Établi : 26 novembre 2025',
             updated: 'Dernière mise à jour : 26 novembre 2025',
-            backHome: '← Retour à l\'Accueil'
+            backHome: ' Retour à l\'Accueil'
         }
     }
 };
@@ -2656,3 +2656,5 @@ function updateLanguageButton() {
     
     langBtn.textContent = langNames[currentLanguage] || '🌐 日本語';
 }
+
+

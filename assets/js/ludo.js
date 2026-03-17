@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ルドーゲーム実装
  * 仕様書 v1 に基づく実装
  */
@@ -583,50 +583,50 @@ function getTokenDOMPosition(color, token) {
 function getPathPosition(position) {
     const path = [
         // 位置0-9: 赤スタート(row:4, col:0)から時計回り
-        { row: 4, col: 0 },  // 0: →　赤スタート
-        { row: 4, col: 1 },  // 1: →
-        { row: 4, col: 2 },  // 2: →
-        { row: 4, col: 3 },  // 3: →
+        { row: 4, col: 0 },  // 0: 　赤スタート
+        { row: 4, col: 1 },  // 1: 
+        { row: 4, col: 2 },  // 2: 
+        { row: 4, col: 3 },  // 3: 
         { row: 4, col: 4 },  // 4: ↑
         { row: 3, col: 4 },  // 5: ↑
         { row: 2, col: 4 },  // 6: ↑
         { row: 1, col: 4 },  // 7: ↑
-        { row: 0, col: 4 },  // 8: →
-        { row: 0, col: 5 },  // 9: →（赤のホームパス入口手前）
+        { row: 0, col: 4 },  // 8: 
+        { row: 0, col: 5 },  // 9: （赤のホームパス入口手前）
         
         // 位置10-19: 青スタート(row:0, col:6)
         { row: 0, col: 6 },  // 10: ↓　青スタート
         { row: 1, col: 6 },  // 11: ↓
         { row: 2, col: 6 },  // 12: ↓
         { row: 3, col: 6 },  // 13: ↓
-        { row: 4, col: 6 },  // 14: →
-        { row: 4, col: 7 },  // 15: →
-        { row: 4, col: 8 },  // 16: →
-        { row: 4, col: 9 },  // 17: →
+        { row: 4, col: 6 },  // 14: 
+        { row: 4, col: 7 },  // 15: 
+        { row: 4, col: 8 },  // 16: 
+        { row: 4, col: 9 },  // 17: 
         { row: 4, col: 10 }, // 18: ↓
         { row: 5, col: 10 }, // 19: ↓（青のホームパス入口手前）
         
         // 位置20-29: 黄スタート(row:6, col:10)
-        { row: 6, col: 10 }, // 20: ← 黄スタート
-        { row: 6, col: 9 },  // 21: ←
-        { row: 6, col: 8 },  // 22: ←
-        { row: 6, col: 7 },  // 23: ←
+        { row: 6, col: 10 }, // 20:  黄スタート
+        { row: 6, col: 9 },  // 21: 
+        { row: 6, col: 8 },  // 22: 
+        { row: 6, col: 7 },  // 23: 
         { row: 6, col: 6 },  // 24: ↓
         { row: 7, col: 6 },  // 25: ↓
         { row: 8, col: 6 },  // 26: ↓
         { row: 9, col: 6 },  // 27: ↓
-        { row: 10, col: 6 }, // 28: ←
-        { row: 10, col: 5 }, // 29: ←（黄のホームパス入口手前）
+        { row: 10, col: 6 }, // 28: 
+        { row: 10, col: 5 }, // 29: （黄のホームパス入口手前）
         
         // 位置30-39: 緑スタート(row:10, col:4)
         { row: 10, col: 4 }, // 30: ↑　緑スタート
         { row: 9, col: 4 }, // 31: ↑
         { row: 8, col: 4 }, // 32: ↑
         { row: 7, col: 4 }, // 33: ↑
-        { row: 6, col: 4 }, // 34: ←
-        { row: 6, col: 3 },  // 35: ←
-        { row: 6, col: 2 },  // 36: ←
-        { row: 6, col: 1 },  // 37: ←
+        { row: 6, col: 4 }, // 34: 
+        { row: 6, col: 3 },  // 35: 
+        { row: 6, col: 2 },  // 36: 
+        { row: 6, col: 1 },  // 37: 
         { row: 6, col: 0 },  // 38: ↑
         { row: 5, col: 0 },  // 39: ↑（緑のホームパス入口手前）
     ];
@@ -1063,7 +1063,7 @@ function nextTurn() {
         return;
     }
     
-    // 次のプレイヤーに移行（0→1→2→3→0...と循環）
+    // 次のプレイヤーに移行（01230...と循環）
     // %（剰余演算子）を使って人数で割った余りを取得することで循環させる
     gameState.currentPlayerIndex = (gameState.currentPlayerIndex + 1) % gameState.playerCount;
     
@@ -1362,3 +1362,5 @@ function backToSetup() {
     document.getElementById('gameSetup').style.display = 'block';
     gameState.gameStarted = false;
 }
+
+

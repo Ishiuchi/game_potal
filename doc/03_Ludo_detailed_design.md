@@ -1,4 +1,4 @@
-# ルドーゲーム 詳細設計書
+﻿# ルドーゲーム 詳細設計書
 
 ## ドキュメント管理
 
@@ -320,7 +320,7 @@ let gameState = {
 パス座標からボード座標への変換は`getPathPosition(position)`関数で実行：
 
 ```javascript
-// 例：パス位置0（赤スタート）→ ボード座標{row: 4, col: 0}
+// 例：パス位置0（赤スタート） ボード座標{row: 4, col: 0}
 getPathPosition(0)  // => {row: 4, col: 0}
 getPathPosition(10) // => {row: 0, col: 6}  // 青スタート
 getPathPosition(20) // => {row: 6, col: 10} // 黄スタート
@@ -471,7 +471,7 @@ getPathPosition(30) // => {row: 10, col: 4} // 緑スタート
 - 画面描画: ボードとトークンの初期描画
 
 **条件分岐**:
-- 最初のプレイヤーのtypeが'human'以外の場合 → CPU自動ターン開始
+- 最初のプレイヤーのtypeが'human'以外の場合  CPU自動ターン開始
 
 ---
 
@@ -807,7 +807,7 @@ const goalPositions = {
    - ボード上にトークンなし かつ ベースにトークンあり
    - かつ requireSixToStart === true
    - かつ スタート位置に自分のトークンあり
-   → 動かせるトークンがないため自動パス
+    動かせるトークンがないため自動パス
 
 6. サイコロアニメーション:
    - #diceDisplayに'rolling'クラス追加
@@ -905,23 +905,23 @@ const homePathEntry = {
 
 **移動可能判定フロー**:
 ```
-トークン位置 → 条件チェック → movableTokensに追加
+トークン位置  条件チェック  movableTokensに追加
 
 ベース(-1):
-  └→ (6 または !requireSixToStart) かつ スタート位置が空
-     └→ 追加
+  └ (6 または !requireSixToStart) かつ スタート位置が空
+     └ 追加
 
 ホームパス(1000-1003):
-  └→ exactRollToFinish
-     ├→ true: 新位置 === 1004
-     └→ false: 新位置 >= 1004
-        └→ 追加
+  └ exactRollToFinish
+     ├ true: 新位置 === 1004
+     └ false: 新位置 >= 1004
+        └ 追加
 
 メインパス(0-39):
-  ├→ ホームパス入口通過
-  │  └→ ホームパス内位置判定
-  └→ 通常移動
-     └→ 追加
+  ├ ホームパス入口通過
+  │  └ ホームパス内位置判定
+  └ 通常移動
+     └ 追加
 ```
 
 **副作用**:
@@ -1172,7 +1172,7 @@ movableTokensに追加
 3. 300ms待機
 4. ログ出力: "スタートしました"
 5. checkCapture(color, position)
-6. → ターン終了処理へ
+6.  ターン終了処理へ
 ```
 
 **[移動処理]**:
@@ -1780,19 +1780,19 @@ stateDiagram-v2
 **遷移条件**:
 
 ```
-ベース → スタート:
+ベース  スタート:
   - diceValue == 6 (requireSixToStartがtrue)
   - または任意の目 (requireSixToStartがfalse)
   - かつ START_POSITIONSに自分の他トークンなし
 
-スタート/メインパス → ベース:
+スタート/メインパス  ベース:
   - 敵トークンが同じpositionに移動（捕獲）
 
-メインパス → ホームパス:
+メインパス  ホームパス:
   - 相対位置 >= PATH_LENGTH
   - かつ excessSteps < HOME_PATH_LENGTH
 
-ホームパス → ゴール:
+ホームパス  ゴール:
   - position == 1003に到達
   - isFinished = trueに変更
 ```
@@ -2294,7 +2294,7 @@ for (let i = 1; i <= diceValue; i++) {
 
 | 遷移 | タイミング | エフェクト |
 |-----|----------|-----------|
-| 設定→ゲーム | `startGame()` | フェードイン |
+| 設定ゲーム | `startGame()` | フェードイン |
 | 思考中表示 | CPU思考時 | opacity 0.6、テキスト点滅 |
 | 移動可能強調 | サイコロ後 | トークン拡大(scale 1.1)、影強調 |
 | モーダル表示 | ゲーム終了 | 背景フェードイン、コンテンツスライドイン |
@@ -2338,8 +2338,8 @@ row:0  [赤ベース---------] □ [青ベース---------]
     1  [                ] ⬇ [                ]
     2  [                ] ⬇ [                ]
     3  [                ] ⬇ [                ]
-    4  ➡ □ □ □ ← ← ⬅ ← □ □ □
-    5  □ ← ← ← ← 🏠 → → → → □
+    4  ➡ □ □ □   ⬅  □ □ □
+    5  □     🏠     □
     6  □ □ □ □ ⬇ ⬇ ⬇ □ □ □ ⬅
     7  [緑ベース---------] ⬇ [黄ベース---------]
     8  [                ] ⬇ [                ]
@@ -2373,7 +2373,7 @@ row:0  [赤ベース---------] □ [青ベース---------]
 
 ### 6.2 座標変換関数
 
-#### 6.2.1 `getPathPosition(position)` - パス→ボード変換
+#### 6.2.1 `getPathPosition(position)` - パスボード変換
 
 **入力**: パス座標（0-39）  
 **出力**: ボード座標 `{row: number, col: number}`
@@ -2391,7 +2391,7 @@ const path = [
     { row: 2, col: 4 },   // 6: ↑
     { row: 1, col: 4 },   // 7: ↑
     { row: 0, col: 4 },   // 8: ↑
-    { row: 0, col: 5 },   // 9: →
+    { row: 0, col: 5 },   // 9: 
     
     // 位置10-19: 青スタート
     { row: 0, col: 6 },   // 10: 青スタート ⬇
@@ -2495,15 +2495,15 @@ const relativePos = (position - startPos + PATH_LENGTH) % PATH_LENGTH;
 **例（赤プレイヤー）**:
 ```
 startPos = 0
-position = 5 → relativePos = (5 - 0 + 40) % 40 = 5
-position = 38 → relativePos = (38 - 0 + 40) % 40 = 38
+position = 5  relativePos = (5 - 0 + 40) % 40 = 5
+position = 38  relativePos = (38 - 0 + 40) % 40 = 38
 ```
 
 **例（青プレイヤー）**:
 ```
 startPos = 10
-position = 15 → relativePos = (15 - 10 + 40) % 40 = 5
-position = 5 → relativePos = (5 - 10 + 40) % 40 = 35
+position = 15  relativePos = (15 - 10 + 40) % 40 = 5
+position = 5  relativePos = (5 - 10 + 40) % 40 = 35
 ```
 
 #### 6.3.2 移動後の新位置計算
@@ -2796,7 +2796,7 @@ tokens.forEach(token => {
     renderSingleToken(token);
 });
 
-// ✓ 効率的: 一括クリア→一括描画
+// ✓ 効率的: 一括クリア一括描画
 document.querySelectorAll('.token').forEach(t => t.remove());
 // 全トークンを一度に生成
 ```
@@ -2913,3 +2913,5 @@ function recordAction(action) {
 5. **UI/UX**: レスポンシブ対応と段階的アニメーション
 
 この仕様書により、コードの保守性、拡張性、および新規開発者のオンボーディングが大幅に向上します。
+
+

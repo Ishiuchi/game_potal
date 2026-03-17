@@ -1071,3 +1071,134 @@ section {
         font-size: 0.9rem;
     }
 }
+
+/* ========================================
+   Global Button Simplification
+   ======================================== */
+
+:root {
+    --btn-bg: #475569;
+    --btn-bg-hover: #334155;
+    --btn-text: #ffffff;
+    --btn-border: #334155;
+    --btn-muted-bg: #f1f5f9;
+    --btn-muted-text: #334155;
+    --btn-muted-border: #cbd5e1;
+}
+
+button:not(.hamburger),
+.btn,
+.game-card-btn,
+.control-button,
+.control-btn,
+.mode-button,
+.mode-btn,
+.level-button,
+.setup-button,
+.start-game-button,
+.difficulty-btn,
+.size-btn,
+.num-btn,
+.action-btn,
+.game-btn,
+.primary-button,
+.secondary-button,
+.setting-btn,
+.promotion-button,
+.emoji-btn,
+.period-btn {
+    background: var(--btn-bg) !important;
+    color: var(--btn-text) !important;
+    border: 1px solid var(--btn-border) !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+button:not(.hamburger):hover,
+.btn:hover,
+.game-card-btn:hover,
+.control-button:hover,
+.control-btn:hover,
+.mode-button:hover,
+.mode-btn:hover,
+.level-button:hover,
+.setup-button:hover,
+.start-game-button:hover,
+.difficulty-btn:hover,
+.size-btn:hover,
+.num-btn:hover,
+.action-btn:hover,
+.game-btn:hover,
+.primary-button:hover,
+.secondary-button:hover,
+.setting-btn:hover,
+.promotion-button:hover,
+.emoji-btn:hover,
+.period-btn:hover {
+    background: var(--btn-bg-hover) !important;
+    color: var(--btn-text) !important;
+    border-color: var(--btn-bg-hover) !important;
+    transform: none !important;
+}
+
+button:not(.hamburger):active,
+.btn:active,
+.game-card-btn:active,
+.control-button:active,
+.control-btn:active,
+.mode-button:active,
+.mode-btn:active,
+.level-button:active,
+.setup-button:active,
+.start-game-button:active,
+.difficulty-btn:active,
+.size-btn:active,
+.num-btn:active,
+.action-btn:active,
+.game-btn:active,
+.primary-button:active,
+.secondary-button:active,
+.setting-btn:active,
+.promotion-button:active,
+.emoji-btn:active,
+.period-btn:active {
+    background: var(--btn-bg-hover) !important;
+    transform: none !important;
+}
+
+button:not(.hamburger):disabled,
+.btn:disabled,
+.control-button:disabled,
+.control-btn:disabled,
+.mode-button:disabled,
+.mode-btn:disabled,
+.level-button:disabled,
+.setup-button:disabled,
+.start-game-button:disabled,
+.difficulty-btn:disabled,
+.size-btn:disabled,
+.num-btn:disabled,
+.action-btn:disabled,
+.game-btn:disabled,
+.primary-button:disabled,
+.secondary-button:disabled,
+.setting-btn:disabled,
+.promotion-button:disabled,
+.emoji-btn:disabled,
+.period-btn:disabled {
+    background: var(--btn-muted-bg) !important;
+    color: var(--btn-muted-text) !important;
+    border-color: var(--btn-muted-border) !important;
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.mode-button::before,
+.level-button::before,
+.setup-button::before,
+.start-game-button::before,
+.game-controls button::before {
+    display: none !important;
+}
