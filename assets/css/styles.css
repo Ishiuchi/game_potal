@@ -1077,10 +1077,10 @@ section {
    ======================================== */
 
 :root {
-    --btn-bg: #475569;
-    --btn-bg-hover: #334155;
+    --btn-bg: #2563eb;
+    --btn-bg-hover: #1d4ed8;
     --btn-text: #ffffff;
-    --btn-border: #334155;
+    --btn-border: #1d4ed8;
     --btn-muted-bg: #f1f5f9;
     --btn-muted-text: #334155;
     --btn-muted-border: #cbd5e1;

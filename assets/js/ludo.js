@@ -24,6 +24,13 @@ const COLORS = ['red', 'blue', 'yellow', 'green'];
 // 色名を日本語で表示するための対応表
 const COLOR_NAMES = { red: '赤', blue: '青', yellow: '黄', green: '緑' };
 
+// 人数に応じて使用する色を返す（2人時は対角線の赤と黄を使用）
+function getActiveColors(playerCount = gameState.playerCount) {
+    if (playerCount === 2) return ['red', 'yellow'];
+    if (playerCount === 3) return ['red', 'blue', 'yellow'];
+    return COLORS.slice(0, playerCount);
+}
+
 // 各プレイヤーが持つコマの数（1人4個）
 const TOKENS_PER_PLAYER = 4;
 
@@ -128,10 +135,12 @@ function renderPlayerSetup() {
     // 既存の内容をクリア
     container.innerHTML = '';
     
+    const activeColors = getActiveColors();
+
     // 選択されたプレイヤー人数分だけループ
-    for (let i = 0; i < gameState.playerCount; i++) {
-        // i番目のプレイヤーの色を取得（0=赤、1=青、2=黄、3=緑）
-        const color = COLORS[i];
+    for (let i = 0; i < activeColors.length; i++) {
+        // i番目のプレイヤーの色を取得
+        const color = activeColors[i];
         
         // 各プレイヤーの設定用のdiv要素を作成
         const div = document.createElement('div');
@@ -195,14 +204,16 @@ function startGame() {
     // プレイヤー設定を読み込む
     gameState.players = []; // プレイヤー配列を初期化
     
+    const activeColors = getActiveColors();
+
     // 選択された人数分のプレイヤー情報を作成
-    for (let i = 0; i < gameState.playerCount; i++) {
+    for (let i = 0; i < activeColors.length; i++) {
         // セレクトボックスから選択された値を取得（'human'または'ai1'/'ai2'/'ai3'）
         const type = document.getElementById(`player-${i}-type`).value;
         
         // プレイヤー情報をオブジェクトとして配列に追加
         gameState.players.push({
-            color: COLORS[i],        // プレイヤーの色
+            color: activeColors[i],  // プレイヤーの色
             type: type,              // プレイヤーのタイプ（人間またはCPU）
             finishedTokens: 0        // ゴールしたコマの数（初期値は0）
         });
@@ -272,8 +283,8 @@ function initTokens() {
     const debugMode = document.getElementById('debugMode') && document.getElementById('debugMode').checked;
     
     // 各プレイヤーごとにコマを初期化
-    for (let i = 0; i < gameState.playerCount; i++) {
-        const color = COLORS[i];  // プレイヤーの色を取得
+    for (let i = 0; i < gameState.players.length; i++) {
+        const color = gameState.players[i].color;
         gameState.tokens[color] = [];  // この色のコマ配列を初期化
         
         // デバッグモード時は、プレイヤーのfinishedTokensを3に設定
@@ -287,9 +298,9 @@ function initTokens() {
             if (debugMode && j < 3) {
                 gameState.tokens[color].push({
                     id: j,
-                    position: 1003,          // ホームパスの最後（ゴール位置）
-                    isInHomePath: true,
-                    homePathPosition: 3,
+                    position: 9999,          // 盤外（ゴール済みは盤面に置かない）
+                    isInHomePath: false,
+                    homePathPosition: -1,
                     isFinished: true         // ゴール済み
                 });
             } else {
@@ -461,6 +472,10 @@ function renderTokens() {
     document.querySelectorAll('.token').forEach(t => t.remove());
     
     for (const color in gameState.tokens) {
+        const finishedIds = gameState.tokens[color]
+            .map((t, i) => (t.isFinished ? i : -1))
+            .filter(i => i !== -1);
+
         gameState.tokens[color].forEach((token, index) => {
             const tokenEl = document.createElement('div');
             tokenEl.className = `token ${color}`;
@@ -468,20 +483,44 @@ function renderTokens() {
             tokenEl.dataset.color = color;
             tokenEl.dataset.id = index;
             
-            // ゴールしたトークンはホームパスの最後のマスに配置
+            // ゴール済みトークンは各色のホームパス上に表示
             if (token.isFinished) {
-                const goalPositions = {
-                    red: [{ row: 5, col: 4 }],   // ホームパス3
-                    blue: [{ row: 4, col: 5 }],  // ホームパス3
-                    yellow: [{ row: 5, col: 6 }], // ホームパス3
-                    green: [{ row: 6, col: 5 }]  // ホームパス3
+                const finishedDisplayCells = {
+                    red: [
+                        { row: 5, col: 4 },
+                        { row: 5, col: 3 },
+                        { row: 5, col: 2 },
+                        { row: 5, col: 1 }
+                    ],
+                    blue: [
+                        { row: 4, col: 5 },
+                        { row: 3, col: 5 },
+                        { row: 2, col: 5 },
+                        { row: 1, col: 5 }
+                    ],
+                    yellow: [
+                        { row: 5, col: 6 },
+                        { row: 5, col: 7 },
+                        { row: 5, col: 8 },
+                        { row: 5, col: 9 }
+                    ],
+                    green: [
+                        { row: 6, col: 5 },
+                        { row: 7, col: 5 },
+                        { row: 8, col: 5 },
+                        { row: 9, col: 5 }
+                    ]
                 };
-                const pos = goalPositions[color][0];
-                const cell = document.querySelector(`[data-row="${pos.row}"][data-col="${pos.col}"]`);
+                const order = Math.max(0, finishedIds.indexOf(index));
+                const displayList = finishedDisplayCells[color] || [];
+                const cellPos = displayList[Math.min(order, displayList.length - 1)];
+                const cell = cellPos
+                    ? document.querySelector(`[data-row="${cellPos.row}"][data-col="${cellPos.col}"]`)
+                    : null;
                 if (cell) {
                     tokenEl.classList.add('finished');
+                    tokenEl.style.pointerEvents = 'none';
                     cell.appendChild(tokenEl);
-                    console.log(`${color}のトークン${index + 1}をゴール位置(${pos.row},${pos.col})に配置`);
                 }
                 return;
             }
@@ -790,9 +829,7 @@ function calculateMovableTokens() {
             if (gameState.diceValue === 6 || !gameState.settings.requireSixToStart) {
                 // スタート位置に自分の他のコマがいないかチェック
                 const startPos = START_POSITIONS[player.color];
-                const hasOwnTokenAtStart = tokens.some((t, idx) => 
-                    idx !== id && t.position === startPos && !t.isFinished
-                );
+                const hasOwnTokenAtStart = hasOwnTokenAtPosition(player.color, id, startPos);
                 // スタート位置が空いていればこのコマは動かせる
                 if (!hasOwnTokenAtStart) {
                     gameState.movableTokens.push({ color: player.color, id: id });
@@ -814,9 +851,7 @@ function calculateMovableTokens() {
             if (newHomePos < HOME_PATH_LENGTH) {
                 // ホームパス内での移動の場合、移動先に自分のコマがないかチェック
                 const targetHomePos = 1000 + newHomePos;
-                const hasOwnTokenAtTarget = tokens.some((t, idx) => 
-                    idx !== id && t.position === targetHomePos
-                );
+                const hasOwnTokenAtTarget = hasOwnTokenAtPosition(player.color, id, targetHomePos);
                 if (!hasOwnTokenAtTarget) {
                     gameState.movableTokens.push({ color: player.color, id: id });
                 }
@@ -838,9 +873,7 @@ function calculateMovableTokens() {
                 if (excessSteps < HOME_PATH_LENGTH) {
                     // ホームパス内への移動の場合、移動先に自分のコマがないかチェック
                     const targetHomePos = 1000 + excessSteps;
-                    const hasOwnTokenAtTarget = tokens.some((t, idx) => 
-                        idx !== id && t.position === targetHomePos
-                    );
+                    const hasOwnTokenAtTarget = hasOwnTokenAtPosition(player.color, id, targetHomePos);
                     if (!hasOwnTokenAtTarget) {
                         gameState.movableTokens.push({ color: player.color, id: id });
                     }
@@ -850,15 +883,21 @@ function calculateMovableTokens() {
                 // 通常の移動
                 const targetPos = (startPos + newRelativePos) % PATH_LENGTH;
                 // 移動先に自分のコマがないかチェック
-                const hasOwnTokenAtTarget = tokens.some((t, idx) => 
-                    idx !== id && t.position === targetPos && !t.isFinished
-                );
+                const hasOwnTokenAtTarget = hasOwnTokenAtPosition(player.color, id, targetPos);
                 if (!hasOwnTokenAtTarget) {
                     gameState.movableTokens.push({ color: player.color, id: id });
                 }
             }
         }
     });
+}
+
+/**
+ * 同じ色の別トークンが指定位置にいるか判定
+ */
+function hasOwnTokenAtPosition(color, tokenId, targetPosition) {
+    const ownTokens = gameState.tokens[color] || [];
+    return ownTokens.some((t, idx) => idx !== tokenId && t.position === targetPosition);
 }
 
 /**
@@ -869,8 +908,18 @@ async function moveToken(color, tokenId) {
     const token = gameState.tokens[color][tokenId];
     
     if (token.position === -1) {
+        const startPos = START_POSITIONS[color];
+        if (hasOwnTokenAtPosition(color, tokenId, startPos)) {
+            addLog(`${COLOR_NAMES[color]}のトークン${tokenId + 1}は移動先に自分のコマがあるため移動できません`);
+            gameState.isRolled = false;
+            gameState.movableTokens = [];
+            renderTokens();
+            nextTurn();
+            return;
+        }
+
         // ベースからスタート
-        token.position = START_POSITIONS[color];
+        token.position = startPos;
         renderTokens();
         await delay(300);
         addLog(`${COLOR_NAMES[color]}のトークン${tokenId + 1}がスタートしました`);
@@ -889,6 +938,16 @@ async function moveToken(color, tokenId) {
             const newHomePos = homePos + gameState.diceValue;
             
             if (newHomePos < HOME_PATH_LENGTH) {
+                const targetHomePos = 1000 + newHomePos;
+                if (hasOwnTokenAtPosition(color, tokenId, targetHomePos)) {
+                    addLog(`${COLOR_NAMES[color]}のトークン${tokenId + 1}は移動先に自分のコマがあるため移動できません`);
+                    gameState.isRolled = false;
+                    gameState.movableTokens = [];
+                    renderTokens();
+                    nextTurn();
+                    return;
+                }
+
                 // ホームパスを1マスずつアニメーション移動
                 for (let i = 1; i <= gameState.diceValue; i++) {
                     token.position = 1000 + homePos + i;
@@ -898,6 +957,7 @@ async function moveToken(color, tokenId) {
                 // 位置1003（ホームパスの最後）に到達したらゴール扱い
                 if (token.position === 1003) {
                     token.isFinished = true;
+                    token.position = 9999; // ゴール済みは盤外へ退避
                     addLog(`${COLOR_NAMES[color]}のトークン${tokenId + 1}がゴールしました！`);
                 } else {
                     addLog(`${COLOR_NAMES[color]}のトークン${tokenId + 1}がホームパスを移動`);
@@ -914,6 +974,32 @@ async function moveToken(color, tokenId) {
         } else {
             // メインパス上の移動 - 1マスずつアニメーション
             const steps = gameState.diceValue;
+            const finalRelativePos = relativePos + steps;
+
+            if (finalRelativePos >= PATH_LENGTH) {
+                const finalExcessSteps = finalRelativePos - PATH_LENGTH;
+                if (finalExcessSteps < HOME_PATH_LENGTH) {
+                    const targetHomePos = 1000 + finalExcessSteps;
+                    if (hasOwnTokenAtPosition(color, tokenId, targetHomePos)) {
+                        addLog(`${COLOR_NAMES[color]}のトークン${tokenId + 1}は移動先に自分のコマがあるため移動できません`);
+                        gameState.isRolled = false;
+                        gameState.movableTokens = [];
+                        renderTokens();
+                        nextTurn();
+                        return;
+                    }
+                }
+            } else {
+                const targetPos = (startPos + finalRelativePos) % PATH_LENGTH;
+                if (hasOwnTokenAtPosition(color, tokenId, targetPos)) {
+                    addLog(`${COLOR_NAMES[color]}のトークン${tokenId + 1}は移動先に自分のコマがあるため移動できません`);
+                    gameState.isRolled = false;
+                    gameState.movableTokens = [];
+                    renderTokens();
+                    nextTurn();
+                    return;
+                }
+            }
             
             for (let i = 1; i <= steps; i++) {
                 relativePos++;
@@ -932,6 +1018,7 @@ async function moveToken(color, tokenId) {
                             // 位置1003（ホームパスの最後）に到達したらゴール扱い
                             if (token.position === 1003) {
                                 token.isFinished = true;
+                                token.position = 9999; // ゴール済みは盤外へ退避
                                 addLog(`${COLOR_NAMES[color]}のトークン${tokenId + 1}がゴールしました！`);
                             } else {
                                 addLog(`${COLOR_NAMES[color]}のトークン${tokenId + 1}がホームパスへ進入！`);
